@@ -1,0 +1,26 @@
+<div class="container">
+
+    <div>
+        <img class="logo" src="https://logodix.com/logo/1745941.png" />
+    </div>
+
+    <div class="divider"></div>
+
+    <form action="">
+        <h1>Inicio de sesion</h1>
+        <mat-form-field class="form-field">
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Ingresa la contraseña</mat-label>
+            <input matInput [type]="hide() ? 'password' : 'text'" />
+            <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide()">
+                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <button (click)="Login()" mat-flat-button color="accent">Iniciar sesion</button>
+    </form>
+</div>

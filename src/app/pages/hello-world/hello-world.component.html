@@ -10,14 +10,13 @@
           <mat-form-field appearance="fill">
             <mat-label>Nombre</mat-label>
             <input matInput formControlName="name" placeholder="Introduce tu nombre" />
-            <mat-error *ngIf="form.get('name')?.hasError('required')">El nombre es obligatorio</mat-error>
+           
           </mat-form-field>
   
           <mat-form-field appearance="fill">
             <mat-label>Fecha de nacimiento</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Selecciona tu fecha de nacimiento" />
             <mat-datepicker #picker></mat-datepicker>
-            <mat-error *ngIf="form.get('birthDate')?.hasError('required')">La fecha es obligatoria</mat-error>
           </mat-form-field>
   
           <div class="button-group">

@@ -1,0 +1,134 @@
+<div class="container">
+    <h2>Crear Nota de Evolución</h2>
+
+    <form (ngSubmit)="guardarNota()" #notaForm="ngForm">
+
+        <!-- idUsuario visible -->
+        <mat-form-field appearance="fill">
+            <mat-label>ID de Usuario</mat-label>
+            <input matInput [(ngModel)]="idUsuario" name="idUsuario" type="number" required>
+        </mat-form-field>
+
+        <!-- idPaciente visible -->
+        <mat-form-field appearance="fill">
+            <mat-label>ID de Paciente</mat-label>
+            <input matInput [(ngModel)]="idPaciente" name="idPaciente" type="number" required>
+        </mat-form-field>
+        
+        <!-- Interrogatorio -->
+        <mat-form-field appearance="fill">
+            <mat-label>Interrogatorio</mat-label>
+            <textarea matInput [(ngModel)]="notaEvolucion.interrogatorio" name="interrogatorio" required></textarea>
+        </mat-form-field>
+
+        <!-- Peso -->
+        <mat-form-field appearance="fill">
+            <mat-label>Peso (kg)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.peso" name="peso" type="number" required>
+        </mat-form-field>
+
+        <!-- Talla -->
+        <mat-form-field appearance="fill">
+            <mat-label>Talla (cm)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.talla" name="talla" type="number" required>
+        </mat-form-field>
+
+        <!-- IMC -->
+        <mat-form-field appearance="fill">
+            <mat-label>IMC</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.imc" name="imc" type="number" required>
+        </mat-form-field>
+
+        <!-- TA (Tensión Arterial) -->
+        <mat-form-field appearance="fill">
+            <mat-label>TA (Tensión Arterial)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.ta" name="ta" type="text" required>
+        </mat-form-field>
+
+        <!-- FC (Frecuencia Cardíaca) -->
+        <mat-form-field appearance="fill">
+            <mat-label>FC (Frecuencia Cardíaca)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.fc" name="fc" type="number" required>
+        </mat-form-field>
+
+        <!-- FR (Frecuencia Respiratoria) -->
+        <mat-form-field appearance="fill">
+            <mat-label>FR (Frecuencia Respiratoria)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.fr" name="fr" type="number" required>
+        </mat-form-field>
+
+        <!-- Temperatura -->
+        <mat-form-field appearance="fill">
+            <mat-label>Temperatura (°C)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.temperatura" name="temperatura" type="number" required>
+        </mat-form-field>
+
+        <!-- Saturación -->
+        <mat-form-field appearance="fill">
+            <mat-label>Saturación (%)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.saturacion" name="saturacion" type="number" required>
+        </mat-form-field>
+
+        <!-- Glicemia -->
+        <mat-form-field appearance="fill">
+            <mat-label>Glicemia (mg/dl)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.glicemia" name="glicemia" type="number" required>
+        </mat-form-field>
+
+        <!-- Hemoglobina -->
+        <mat-form-field appearance="fill">
+            <mat-label>Hemoglobina (g/dl)</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.hemoglobina" name="hemoglobina" type="number" required>
+        </mat-form-field>
+
+        <!-- Hemotipo -->
+        <mat-form-field appearance="fill">
+            <mat-label>Hemotipo</mat-label>
+            <input matInput [(ngModel)]="notaEvolucion.hemotipo" name="hemotipo" required>
+        </mat-form-field>
+
+        <!-- Padecimiento -->
+        <mat-form-field appearance="fill">
+            <mat-label>Padecimiento</mat-label>
+            <textarea matInput [(ngModel)]="notaEvolucion.padecimiento" name="padecimiento" required></textarea>
+        </mat-form-field>
+
+        <!-- Exploración -->
+        <mat-form-field appearance="fill">
+            <mat-label>Exploración</mat-label>
+            <textarea matInput [(ngModel)]="notaEvolucion.exploracion" name="exploracion" required></textarea>
+        </mat-form-field>
+
+        <!-- Análisis -->
+        <mat-form-field appearance="fill">
+            <mat-label>Análisis</mat-label>
+            <textarea matInput [(ngModel)]="notaEvolucion.analisis" name="analisis" required></textarea>
+        </mat-form-field>
+
+        <!-- Plan -->
+        <mat-form-field appearance="fill">
+            <mat-label>Plan</mat-label>
+            <textarea matInput [(ngModel)]="notaEvolucion.plan" name="plan" required></textarea>
+        </mat-form-field>
+
+        <!-- Diagnóstico -->
+        <mat-form-field appearance="fill">
+            <mat-label>Diagnóstico</mat-label>
+            <textarea matInput [(ngModel)]="notaEvolucion.diagnostico" name="diagnostico" required></textarea>
+        </mat-form-field>
+
+        <!-- Tratamiento -->
+        <mat-form-field appearance="fill">
+            <mat-label>Tratamiento</mat-label>
+            <textarea matInput [(ngModel)]="notaEvolucion.tratamiento" name="tratamiento" required></textarea>
+        </mat-form-field>
+
+        <!-- Botón de Guardar Nota -->
+        <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!notaForm.valid">
+                Guardar Nota
+            </button>
+        </div>
+
+    </form>
+</div>
