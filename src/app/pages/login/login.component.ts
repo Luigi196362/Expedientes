@@ -26,6 +26,6 @@ export class LoginComponent {
   }
 
   Login() {
-    this.router.navigate(['/navigation/hello-world']);
+    this.router.navigate(['/hello-world']);
   }
 }

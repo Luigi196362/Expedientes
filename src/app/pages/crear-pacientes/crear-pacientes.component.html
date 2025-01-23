@@ -1,0 +1,27 @@
+<app-nav-bar>
+    <div navbar>
+        Crear Paciente
+    </div>
+    <div content>
+    <div class="container">
+        <h2>Crear Paciente</h2>
+
+        <form (ngSubmit)="guardarPaciente()" #notaForm="ngForm">
+
+            <!--
+        <mat-form-field appearance="fill">
+            <mat-label>Tratamiento</mat-label>
+            <textarea matInput [(ngModel)]="notaEvolucion.tratamiento" name="tratamiento" required></textarea>
+        </mat-form-field>
+    -->
+            <!-- Botón de Guardar Nota -->
+            <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!notaForm.valid">
+                    Guardar Paciente
+                </button>
+            </div>
+
+        </form>
+    </div>
+    </div>
+</app-nav-bar>

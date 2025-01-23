@@ -8,6 +8,8 @@ import { Nota_Evolucion } from '../../models/nota-evolucion';
 import { NotasEvolucionService } from '../../services/Notas-Evolucion/notas-evolucion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NotasEvolucionComponent } from "../notas-evolucion/notas-evolucion.component";
+import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-crear-notas-evolucion',
@@ -18,7 +20,10 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatButtonModule,
     MatCardModule,
-    MatSelectModule,],
+    MatSelectModule,
+    NotasEvolucionComponent,
+    NavBarComponent
+],
   templateUrl: './crear-notas-evolucion.component.html',
   styleUrl: './crear-notas-evolucion.component.css'
 })

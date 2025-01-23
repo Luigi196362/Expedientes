@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-hello-world',
@@ -22,14 +23,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NavBarComponent
   ],
   templateUrl: './hello-world.component.html',
   styleUrls: ['./hello-world.component.css']
 })
 export class HelloWorldComponent {
   title = 'Angular Material Theme Test';
-  
+
   // Definir el formulario reactivo
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),

@@ -1,0 +1,8 @@
+
+.navbarButtons {
+    width: 100%;
+    display: flex;
+    background-color: red;
+    justify-content: space-between;
+  }
+  

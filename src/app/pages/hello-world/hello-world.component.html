@@ -1,6 +1,10 @@
+<app-nav-bar>
 
-  
-  <div class="example-container">
+  <div navbar>
+    Hello-world
+  </div>
+
+  <div content class="example-container">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Formulario de Prueba</mat-card-title>
@@ -10,15 +14,16 @@
           <mat-form-field appearance="fill">
             <mat-label>Nombre</mat-label>
             <input matInput formControlName="name" placeholder="Introduce tu nombre" />
-           
+
           </mat-form-field>
-  
+
           <mat-form-field appearance="fill">
             <mat-label>Fecha de nacimiento</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Selecciona tu fecha de nacimiento" />
+            <input matInput [matDatepicker]="picker" formControlName="birthDate"
+              placeholder="Selecciona tu fecha de nacimiento" />
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-  
+
           <div class="button-group">
             <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Enviar</button>
             <button mat-raised-button color="accent" type="button" (click)="form.reset()">Restablecer</button>
@@ -27,4 +32,4 @@
       </mat-card-content>
     </mat-card>
   </div>
-  
+</app-nav-bar>

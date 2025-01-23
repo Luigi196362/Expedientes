@@ -6,11 +6,12 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Rol } from '../../models/Rol';
 import { RolService } from '../../services/Rol/rol.service';
+import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-roles',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, NavBarComponent],
   templateUrl: './roles.component.html',
   styleUrl: './roles.component.css'
 })

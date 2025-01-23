@@ -12,9 +12,15 @@ th {
     width: 25%;
 }
 
-.container {
 
-    padding-top: 1vh;
-    padding-left: 1vw;
-    padding-right: 1vw;
+.actions{
+    display: grid;
+    grid-template-columns: 90% 10%;
+    justify-items: center;
+}
+
+button{
+    width: 90%;
+    height: 50%;
+    margin-top: 1vh;
 }
