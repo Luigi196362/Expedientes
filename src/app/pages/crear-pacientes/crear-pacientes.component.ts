@@ -1,17 +1,69 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-crear-pacientes',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, NavBarComponent],
+  providers: [provideNativeDateAdapter()],
+  imports: [
+    MatFormFieldModule,
+    MatTabsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    RouterLink
+    ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './crear-pacientes.component.html',
-  styleUrl: './crear-pacientes.component.css'
+  styleUrls: ['./crear-pacientes.component.css']
 })
 export class CrearPacientesComponent {
-  guardarPaciente(): void {
-    // Lógica para guardar un paciente
+  pacienteForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private dialog: MatDialog) {
+    this.pacienteForm = this.fb.group({
+      nombre: ['', Validators.required],
+      estadoCivil: [''],
+      origen: [''],
+      fechaNacimiento: [null, Validators.required],
+      sexo: [null, Validators.required],
+      matricula: [''],
+      semestre: [''],
+      facultad: [''],
+      grupo: [''],
+      programaEducativo: [''],
+      nss: [''],
+      seguroFacultativo: [''],
+      religion: [''],
+      escolaridad: [''],
+      telefono: [''],
+      residencia: ['']
+    });
+  }
+
+  isFormDirty(): boolean {
+    return this.pacienteForm.dirty;  // Devuelve true si el formulario tiene cambios
+  }
+
+
+  onSave(): void {
+    if (this.pacienteForm.valid) {
+      // Lógica para guardar el paciente
+      console.log('Paciente guardado', this.pacienteForm.value);
+    } else {
+      console.log('Formulario inválido');
+    }
   }
 }

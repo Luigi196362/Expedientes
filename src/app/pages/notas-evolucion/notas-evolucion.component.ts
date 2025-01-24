@@ -23,7 +23,6 @@ export class NotasEvolucionComponent  implements AfterViewInit, OnInit {
     'usuario',
     'diagnostico',
     'paciente',
-    'diagnostico',
     'fecha_creacion'
   ];
 
@@ -45,7 +44,7 @@ export class NotasEvolucionComponent  implements AfterViewInit, OnInit {
         this.dataSource.data = this.notas_evolucion;
       },
       (error) => {
-        console.error('Error al obtener los roles:', error);
+        console.error('Error al obtener las notas:', error);
       }
     );
   }

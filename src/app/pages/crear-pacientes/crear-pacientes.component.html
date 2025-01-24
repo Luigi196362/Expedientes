@@ -1,27 +1,135 @@
-<app-nav-bar>
-    <div navbar>
-        Crear Paciente
-    </div>
-    <div content>
-    <div class="container">
-        <h2>Crear Paciente</h2>
-
-        <form (ngSubmit)="guardarPaciente()" #notaForm="ngForm">
-
-            <!--
-        <mat-form-field appearance="fill">
-            <mat-label>Tratamiento</mat-label>
-            <textarea matInput [(ngModel)]="notaEvolucion.tratamiento" name="tratamiento" required></textarea>
-        </mat-form-field>
-    -->
-            <!-- Botón de Guardar Nota -->
-            <div class="form-actions">
-                <button mat-raised-button color="primary" type="submit" [disabled]="!notaForm.valid">
-                    Guardar Paciente
-                </button>
-            </div>
-
+<div>
+    <mat-tab-group animationDuration="0s" class="Formulario">
+  
+      <!-- Datos Personales -->
+      <mat-tab label="Datos Personales">
+        <form [formGroup]="pacienteForm" class="seccion">
+  
+          <mat-form-field class="form-field">
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput formControlName="nombre">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Estado civil</mat-label>
+            <input matInput formControlName="estadoCivil">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Origen</mat-label>
+            <input matInput formControlName="origen">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Elige una fecha</mat-label>
+            <input matInput [matDatepicker]="datepicker" formControlName="fechaNacimiento" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker>
+              <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>Cancelar</button>
+                <button mat-raised-button matDatepickerApply>Aplicar</button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+  
+          <mat-radio-group class="radio-button" formControlName="sexo" aria-label="Select an option" color="primary">
+            <label>Sexo:</label>
+            <mat-radio-button value="1">Masculino</mat-radio-button>
+            <mat-radio-button value="2">Femenino</mat-radio-button>
+          </mat-radio-group>
+  
         </form>
-    </div>
-    </div>
-</app-nav-bar>
+      </mat-tab>
+  
+      <!-- Información académica -->
+      <mat-tab label="Información académica">
+        <form class="seccion" [formGroup]="pacienteForm">
+  
+          <mat-form-field class="form-field">
+            <mat-label>Matrícula</mat-label>
+            <input matInput formControlName="matricula">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Semestre</mat-label>
+            <input matInput formControlName="semestre">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Facultad</mat-label>
+            <input matInput formControlName="facultad">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Grupo</mat-label>
+            <input matInput formControlName="grupo">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Programa Educativo</mat-label>
+            <input matInput formControlName="programaEducativo">
+          </mat-form-field>
+  
+        </form>
+      </mat-tab>
+  
+      <!-- Seguridad Social -->
+      <mat-tab label="Seguridad Social">
+        <form class="seccion" [formGroup]="pacienteForm">
+  
+          <mat-form-field class="form-field">
+            <mat-label>NSS</mat-label>
+            <input matInput formControlName="nss">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Seguro Facultativo</mat-label>
+            <input matInput formControlName="seguroFacultativo">
+          </mat-form-field>
+  
+        </form>
+      </mat-tab>
+  
+      <!-- Información adicional -->
+      <mat-tab label="Información adicional">
+        <form class="seccion" [formGroup]="pacienteForm">
+  
+          <mat-form-field class="form-field">
+            <mat-label>Religión</mat-label>
+            <input matInput formControlName="religion">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Escolaridad</mat-label>
+            <input matInput formControlName="escolaridad">
+          </mat-form-field>
+  
+        </form>
+      </mat-tab>
+  
+      <!-- Información de contacto -->
+      <mat-tab label="Información de contacto">
+        <form class="seccion" [formGroup]="pacienteForm">
+  
+          <mat-form-field class="form-field">
+            <mat-label>Número de teléfono</mat-label>
+            <input matInput formControlName="telefono">
+          </mat-form-field>
+  
+          <mat-form-field class="form-field">
+            <mat-label>Residencia</mat-label>
+            <input matInput formControlName="residencia">
+          </mat-form-field>
+  
+        </form>
+      </mat-tab>
+  
+    </mat-tab-group>
+  </div>
+  
+  <div class="form-actions">
+    <button mat-raised-button routerLink="/Menu/Pacientes" color="warn">Cancelar</button>
+    <button mat-raised-button color="accent" (click)="onSave()">Guardar Paciente</button>
+  </div>
+  

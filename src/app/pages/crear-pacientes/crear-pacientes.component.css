@@ -1,0 +1,33 @@
+.form-actions{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.Formulario{
+    
+    overflow: hidden;
+    height: 70vh;
+    background-color: rgb(230, 230, 230);
+
+    margin-bottom: 1vh;
+}
+
+.mat-label{
+    background-color: red;
+}
+
+.seccion{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+
+.radio-button{
+    margin-top: 2vh;
+    
+}
