@@ -11,9 +11,14 @@ import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dia
 })
 export class UnsavedChangesGuard implements CanDeactivate<any> {
     constructor(private dialog: MatDialog) {}
-  
+
     canDeactivate(component: any): Observable<boolean> | Promise<boolean> | boolean {
-      if (component.isFormDirty && component.isFormDirty()) {
+        
+    if (component.isSaving) {
+      return true;
+    }
+
+    if (component.isFormDirty && component.isFormDirty()) {
         const dialogRef = this.dialog.open(ConfirmDialogComponent);
   
         return dialogRef.afterClosed().toPromise().then(result => {

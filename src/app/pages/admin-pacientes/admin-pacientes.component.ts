@@ -6,14 +6,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Paciente } from '../../models/Paciente';
 import { PacienteService } from '../../services/Paciente/paciente.service';
-import { NavBarComponent } from '../../components/nav-bar/nav-bar.component';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-pacientes',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule,NavBarComponent,MatButton,RouterLink],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule,MatButton,RouterLink],
   templateUrl: './admin-pacientes.component.html',
   styleUrls: ['./admin-pacientes.component.css'],
 })

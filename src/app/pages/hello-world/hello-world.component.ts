@@ -9,7 +9,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -25,7 +24,6 @@ import { RouterOutlet } from '@angular/router';
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    NavBarComponent,
     RouterOutlet
   ],
   templateUrl: './hello-world.component.html',

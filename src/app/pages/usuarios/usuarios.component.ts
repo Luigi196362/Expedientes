@@ -7,12 +7,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Usuario } from '../../models/Usario';
 import { UsuarioService } from '../../services/Usuario/usuario.service';
 import { MatIcon } from '@angular/material/icon';
-import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [MatIcon, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, NavBarComponent],
+  imports: [MatIcon, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })

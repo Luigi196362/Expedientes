@@ -7,12 +7,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Nota_Evolucion } from '../../models/nota-evolucion';
 import { NotasEvolucionService } from '../../services/Notas-Evolucion/notas-evolucion.service';
 import { DatePipe } from '@angular/common';
-import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-notas-evolucion',
   standalone: true,
-  imports: [DatePipe, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, NavBarComponent],
+  imports: [DatePipe, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
   templateUrl: './notas-evolucion.component.html',
   styleUrl: './notas-evolucion.component.css'
 })

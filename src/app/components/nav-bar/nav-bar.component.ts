@@ -103,11 +103,14 @@ export class NavBarComponent implements OnInit {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MensajeComponent {
+  constructor(private router: Router) {}
+
   readonly dialogRef = inject(MatDialogRef<MensajeComponent>);
 
 
   CerrarSesion() {
     this.dialogRef.close();
-    window.location.href = ' ';
-  }
+    this.router.navigate(['/']);
+}
+
 }

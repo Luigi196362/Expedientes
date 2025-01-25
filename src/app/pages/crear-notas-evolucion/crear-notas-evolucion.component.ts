@@ -8,7 +8,6 @@ import { Nota_Evolucion } from '../../models/nota-evolucion';
 import { NotasEvolucionService } from '../../services/Notas-Evolucion/notas-evolucion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-crear-notas-evolucion',
@@ -19,8 +18,7 @@ import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
     MatFormFieldModule,
     MatButtonModule,
     MatCardModule,
-    MatSelectModule,
-    NavBarComponent
+    MatSelectModule
 ],
   templateUrl: './crear-notas-evolucion.component.html',
   styleUrl: './crear-notas-evolucion.component.css'
@@ -32,7 +30,6 @@ export class CrearNotasEvolucionComponent {
 
   constructor(
     private notasEvolucionService: NotasEvolucionService,
-    private route: ActivatedRoute, // Para obtener parámetros de la URL si es necesario
     private router: Router
   ) { }
 

@@ -8,7 +8,6 @@ export class Paciente {
     semestre: number = 0;
     telefono: String = "";
     programa_educativo: String = "";
-    seguro_facultativo: String = "";
     ocupacion: String = "";
     residencia: String = "";
     religion: String = "";
