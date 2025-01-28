@@ -1,13 +1,10 @@
 <div class="container">
 
-    <div>
-        <img class="logo" src="https://logodix.com/logo/1745941.png" />
-    </div>
-
+    <img class="logo" src="https://logodix.com/logo/1745941.png" />
     <div class="divider"></div>
 
     <form action="">
-        <h1>Inicio de sesion</h1>
+        <h1>Inicio de sesión</h1>
         <mat-form-field class="form-field">
             <mat-label>Nombre de usuario</mat-label>
             <input matInput>
@@ -21,6 +18,8 @@
                 <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
         </mat-form-field>
-        <button (click)="Login()" mat-flat-button color="accent">Iniciar sesion</button>
+
+        <button (click)="Login()" type="button" mat-flat-button color="accent">Iniciar sesión</button>
+
     </form>
 </div>

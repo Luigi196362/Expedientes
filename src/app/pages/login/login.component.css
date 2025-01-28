@@ -1,28 +1,58 @@
-form{
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-form .form-field{
+form .form-field {
     width: 60%;
 }
 
-.container{
+.container {
     justify-content: center;
     display: grid;
-    grid-template-columns: 49.5% 1% 49.5%  ;
+    grid-template-columns: 49.5% 1% 49.5%;
+    /* Tres columnas para desktop */
     height: 100%;
-text-align: center;
+    text-align: center;
     align-items: center;
 }
 
-.logo{
+.logo {
     width: 90%;
 }
 
-.divider{
+.divider {
     width: 100%;
     height: 100%;
     background-color: rgb(4, 73, 141);
+}
+
+@media (max-width: 568px) {
+    .logo {
+        display: none;
+        /* Oculta el logo en pantallas pequeñas */
+    }
+
+    .divider {
+        display: none;
+        /* Oculta la línea divisora en pantallas pequeñas */
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        /* Una sola columna en móviles */
+        justify-content: center;
+        /* Centra el formulario horizontalmente */
+    }
+
+    form {
+        width: 100%;
+        /* Asegura que el formulario ocupe todo el espacio disponible */
+    }
+
+    form .form-field {
+        width: 80%;
+        /* Ajusta el ancho de los campos para pantallas pequeñas */
+    }
 }

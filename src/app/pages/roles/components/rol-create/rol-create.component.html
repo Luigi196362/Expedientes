@@ -1,0 +1,36 @@
+<div>
+    <mat-tab-group animationDuration="0s" class="Formulario" color="accent">
+
+        <!-- Información del Rol -->
+        <mat-tab label="Información del rol">
+            <form [formGroup]="rolForm" class="seccion" autocomplete="off">
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>Nombre del rol</mat-label>
+                    <input matInput formControlName="nombre">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>Descripcion</mat-label>
+                    <input matInput formControlName="descripcion">
+                </mat-form-field>
+
+                <!--Despues puede cambiar a permisos del rol-->
+                <mat-radio-group formControlName="admin" aria-label="Seleccione el tipo de rol" color="accent">
+                    <label>Permiso:</label>
+                    <mat-radio-button [value]=true>Administrador</mat-radio-button>
+                    <mat-radio-button [value]=false>Medico</mat-radio-button>
+                </mat-radio-group>
+
+
+            </form>
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
+
+<div class="form-actions">
+    <button mat-raised-button routerLink="/layout/roles" color="warn">Cancelar</button>
+    <button mat-raised-button color="accent" (click)="onSave()">Guardar
+        Paciente</button>
+</div>

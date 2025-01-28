@@ -1,0 +1,34 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <!--<a mat-list-item class="lista" routerLink="/hello-world" routerLinkActive="active-link">Test</a>-->
+      <a mat-list-item routerLink="pacientes" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: false }">Administrar pacientes</a>
+      <a mat-list-item routerLink="usuarios" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: false }">Administrar usuarios</a>
+      <a mat-list-item routerLink="roles" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: false }">Administrar roles</a>
+      <a mat-list-item routerLink="registros" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: false }">Administrar notas</a>
+      <a mat-list-item (click)="openDialog('1000ms', '0ms')">Cerrar sesión</a>
+
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      @if (isHandset$ | async) {
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      }
+      <span>{{ pageTitle }}</span>
+    </mat-toolbar>
+    <div class="contenido">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

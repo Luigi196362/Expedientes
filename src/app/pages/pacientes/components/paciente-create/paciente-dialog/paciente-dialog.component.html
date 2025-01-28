@@ -1,0 +1,88 @@
+<h2 mat-dialog-title>Verifica la Información del paciente</h2>
+
+<mat-dialog-content>
+    <h3>Información Personal</h3>
+    <table>
+        <tr>
+            <td><strong>Nombre:</strong></td>
+            <td>{{paciente.nombre}}</td>
+        </tr>
+        <tr>
+            <td><strong>Fecha de Nacimiento:</strong></td>
+            <td>{{paciente.fecha_nacimiento | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+            <td><strong>Estado Civil:</strong></td>
+            <td>{{paciente.estado_civil}}</td>
+        </tr>
+        <tr>
+            <td><strong>Origen:</strong></td>
+            <td>{{paciente.origen}}</td>
+        </tr>
+        <tr>
+            <td><strong>Ocupación:</strong></td>
+            <td>{{paciente.ocupacion}}</td>
+        </tr>
+        <tr>
+            <td><strong>Residencia:</strong></td>
+            <td>{{paciente.residencia}}</td>
+        </tr>
+        <tr>
+            <td><strong>Sexo:</strong></td>
+            <td>{{ paciente.sexo == 1 ? 'Masculino' : 'Femenino' }}</td>
+        </tr>
+    </table>
+
+    <h3>Información Académica</h3>
+    <table>
+        <tr>
+            <td><strong>Matrícula:</strong></td>
+            <td>{{paciente.matricula}}</td>
+        </tr>
+        <tr>
+            <td><strong>Semestre:</strong></td>
+            <td>{{paciente.semestre}}</td>
+        </tr>
+        <tr>
+            <td><strong>Facultad:</strong></td>
+            <td>{{paciente.facultad}}</td>
+        </tr>
+        <tr>
+            <td><strong>Grupo:</strong></td>
+            <td>{{paciente.grupo}}</td>
+        </tr>
+        <tr>
+            <td><strong>Programa Educativo:</strong></td>
+            <td>{{paciente.programa_educativo}}</td>
+        </tr>
+    </table>
+
+    <h3>Contacto y Seguridad Social</h3>
+    <table>
+        <tr>
+            <td><strong>Teléfono:</strong></td>
+            <td>{{paciente.telefono}}</td>
+        </tr>
+        <tr>
+            <td><strong>NSS:</strong></td>
+            <td>{{paciente.nss}}</td>
+        </tr>
+    </table>
+
+    <h3>Información Adicional</h3>
+    <table>
+        <tr>
+            <td><strong>Religión:</strong></td>
+            <td>{{paciente.religion}}</td>
+        </tr>
+        <tr>
+            <td><strong>Escolaridad:</strong></td>
+            <td>{{paciente.escolaridad}}</td>
+        </tr>
+    </table>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="cancelar()" style="color: gray;">Cancelar</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="confirmar()" color="accent">Crear paciente</button>
+</mat-dialog-actions>
