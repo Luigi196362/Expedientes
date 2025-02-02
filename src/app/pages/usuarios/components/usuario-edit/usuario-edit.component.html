@@ -1,0 +1,51 @@
+<div>
+    <mat-tab-group animationDuration="0s" class="Formulario" color="accent">
+
+        <!-- Información Personal -->
+        <mat-tab label="Información Personal">
+            <form [formGroup]="usuarioForm" class="seccion" autocomplete="off">
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>Nombre completo</mat-label>
+                    <input matInput formControlName="nombre" autocomplete="username">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>Número de teléfono</mat-label>
+                    <span matTextPrefix style="color: gray;">+52 &nbsp;</span>
+                    <input matInput formControlName="telefono" (paste)="onPaste($event, 10)"
+                        (keypress)="blockInvalidChars($event, 10)" (input)="formatPhoneNumber($event,10)">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>Facultad</mat-label>
+                    <input matInput formControlName="facultad" inputmode="text" aria-label="Nombre de la facultad"
+                        autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>Rol</mat-label>
+                    <input type="number" matInput formControlName="rol" inputmode="numeric" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Ingresa la contraseña</mat-label>
+                    <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password"
+                        autocomplete="new-password" />
+                    <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide()">
+                        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+
+            </form>
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
+
+<div class="form-actions">
+    <button mat-raised-button routerLink="/layout/usuarios" color="warn">Cancelar</button>
+    <button mat-raised-button color="accent" (click)="onSave()">Guardar
+        Paciente</button>
+</div>

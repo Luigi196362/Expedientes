@@ -1,0 +1,19 @@
+td {
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 8px;
+    width: 13vw;
+    text-align: left;
+}
+
+td:last-child {
+    border-right: none;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+table {
+    border: 1px solid #ddd;
+}

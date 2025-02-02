@@ -1,32 +1,65 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgModule, signal, ChangeDetectorRef } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../core/services/Auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, RouterLink],
+  imports: [MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, RouterLink, FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
+  loginData = { username: '', password: '' };
+  errorMessage: string = '';
 
   constructor(
-    private router: Router) {
-  }
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef // Añadir ChangeDetectorRef
+  ) { }
 
   hide = signal(true);
+
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
 
-  Login() {
-    console.log("test");
-    this.router.navigate(['/layout/pacientes']);
+  onLogin() {
+    // Reiniciar el mensaje de error
+    this.errorMessage = '';
+
+    // Verificar que los campos no estén vacíos
+    if (!this.loginData.username || !this.loginData.password) {
+      this.errorMessage = 'Por favor, ingresa tu usuario y contraseña.';
+      this.cdr.detectChanges(); // Forzar la detección de cambios
+      return;
+    }
+
+    // Realizar la solicitud de login
+    this.authService.login(this.loginData).subscribe(
+      response => {
+        // Si se recibe el token, redirigir al usuario
+        if (response?.token) {
+          sessionStorage.setItem('token', response.token);
+          this.router.navigate(['/layout/pacientes']);
+        }
+      },
+      error => {
+        // Si ocurre un error, mostrar mensaje
+        this.errorMessage = 'Usuario o contraseña incorrectos';
+        this.cdr.detectChanges(); // Forzar la detección de cambios
+      }
+    );
   }
 }

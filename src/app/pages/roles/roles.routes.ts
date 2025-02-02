@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { RolListComponent } from './components/rol-list/rol-list.component';
 import { RolCreateComponent } from './components/rol-create/rol-create.component';
-import { UnsavedChangesGuard } from '../../core/guards/unsaved-changes.guard';
+import { UnsavedChangesGuard } from '../../core/guards/UnsavedChanges.guard';
 
 export const rolesRoutes: Routes = [
     {

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/Auth/auth.service';
 
 @Component({
   selector: 'app-logout-confirm-dialog',
@@ -12,14 +13,17 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LogoutConfirmDialogComponent {
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   readonly dialogRef = inject(MatDialogRef<LogoutConfirmDialogComponent>);
 
 
   CerrarSesion() {
     this.dialogRef.close();
-    this.router.navigate(['/']);
+    this.authService.logout();
   }
 
 }

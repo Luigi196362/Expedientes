@@ -6,22 +6,24 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
-import { MatIcon } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuario-list',
   standalone: true,
   imports: [
-    MatIcon,
+    MatIconModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatButton,
-    RouterLink
+    MatButtonModule,
+    RouterLink,
+    CommonModule
   ],
   templateUrl: './usuario-list.component.html',
   styleUrl: './usuario-list.component.css'
@@ -33,7 +35,10 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
     'nombre',
     'telefono',
     'facultad',
-    'boton'
+    'fecha_creacion',
+    'nombre_rol',
+    //'admin',
+    'actions'
   ];
 
   dataSource: MatTableDataSource<Usuario>;
@@ -41,7 +46,7 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private usuarioService: UsuarioService) {
+  constructor(private usuarioService: UsuarioService, private router: Router) {
     // Inicializar la dataSource con los datos vacíos al principio
     this.dataSource = new MatTableDataSource<Usuario>();
   }
@@ -81,6 +86,10 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  editar(usuario: Usuario) {
+    this.router.navigate(['/layout/usuarios/editar'], { state: { usuario } });
   }
 
 }

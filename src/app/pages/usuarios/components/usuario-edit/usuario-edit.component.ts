@@ -1,21 +1,21 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router, RouterLink } from '@angular/router';
 import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { Usuario } from '../../models/usuario.model';
+import { UsuarioDialogComponent } from '../usuario-create/usuario-dialog/usuario-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { UsuarioService } from '../../services/usuario.service';
-import { UsuarioDialogComponent } from './usuario-dialog/usuario-dialog.component';
 
 @Component({
-  selector: 'app-usuario-create',
+  selector: 'app-usuario-edit',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -28,14 +28,25 @@ import { UsuarioDialogComponent } from './usuario-dialog/usuario-dialog.componen
     MatAutocompleteModule,
     MatIconModule
   ],
-  templateUrl: './usuario-create.component.html',
-  styleUrl: './usuario-create.component.css'
+  templateUrl: './usuario-edit.component.html',
+  styleUrl: './usuario-edit.component.css'
 })
-export class UsuarioCreateComponent {
-
+export class UsuarioEditComponent implements OnInit {
   nuevoUsuario: Usuario = new Usuario();
   usuarioForm: FormGroup;
   isSaving: boolean = false;
+  usuario: Usuario | null = null;
+
+  ngOnInit(): void {
+    const state = window.history.state;
+    if (state.usuario) {
+      this.usuario = state.usuario;
+      this.usuarioForm.patchValue(state.usuario);
+    } else {
+      // Redirigir si no hay datos (por ejemplo, si se accede directamente a la URL)
+      this.router.navigate(['/layout/usuarios']);
+    }
+  }
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
@@ -141,5 +152,4 @@ export class UsuarioCreateComponent {
 
     inputElement.value = formattedNumber;
   }
-
 }

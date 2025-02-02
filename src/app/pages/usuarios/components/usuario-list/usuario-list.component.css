@@ -13,8 +13,15 @@ table {
     justify-items: center;
 }
 
-button {
+.bar {
     width: 90%;
     height: 50%;
     margin-top: 1vh;
+}
+
+.table-actions {
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    padding-right: 20px;
 }

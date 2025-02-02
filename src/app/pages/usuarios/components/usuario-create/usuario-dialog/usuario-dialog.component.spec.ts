@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InvalidFormComponent } from './invalid-form.component';
+import { UsuarioDialogComponent } from './usuario-dialog.component';
 
-describe('InvalidFormComponent', () => {
-  let component: InvalidFormComponent;
-  let fixture: ComponentFixture<InvalidFormComponent>;
+describe('UsuarioDialogComponent', () => {
+  let component: UsuarioDialogComponent;
+  let fixture: ComponentFixture<UsuarioDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InvalidFormComponent]
+      imports: [UsuarioDialogComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(InvalidFormComponent);
+    fixture = TestBed.createComponent(UsuarioDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

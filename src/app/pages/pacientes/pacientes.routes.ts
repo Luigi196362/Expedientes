@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { PacienteListComponent } from '../pacientes/components/paciente-list/paciente-list.component';
 import { PacienteCreateComponent } from './components/paciente-create/paciente-create.component';
-import { UnsavedChangesGuard } from '../../core/guards/unsaved-changes.guard';
+import { UnsavedChangesGuard } from '../../core/guards/UnsavedChanges.guard';
 
 export const pacientesRoutes: Routes = [
     {

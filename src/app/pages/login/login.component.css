@@ -56,3 +56,10 @@ form .form-field {
         /* Ajusta el ancho de los campos para pantallas pequeñas */
     }
 }
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}

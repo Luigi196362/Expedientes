@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
 import { Paciente } from '../../models/paciente.model';
 import { PacienteService } from '../../services/paciente.service';
-import { InvalidFormComponent } from '../../../../shared/invalid-form/invalid-form.component';
+import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
 import { PacienteDialogComponent } from './paciente-dialog/paciente-dialog.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
@@ -79,7 +79,7 @@ export class PacienteCreateComponent {
               this.isSaving = false;  // Desactivar la bandera después de guardar
             },
             error: (error) => {
-              this.dialog.open(InvalidFormComponent, {
+              this.dialog.open(ErrorDialogComponent, {
                 data: { message: 'Error al guardar el paciente' }
               });
               console.error('Error al guardar el paciente:', error);
@@ -95,7 +95,7 @@ export class PacienteCreateComponent {
     } else {
       // Mostrar diálogo de error si el formulario no es válido
       //const dialogRef = this.dialog.open(VerificarPacienteComponent, { data: { paciente: this.pacienteForm.value } });
-      this.dialog.open(InvalidFormComponent, {
+      this.dialog.open(ErrorDialogComponent, {
         data: { message: 'Formulario inválido' }
       });
       this.isSaving = false;  // Desactivar la bandera en caso de error

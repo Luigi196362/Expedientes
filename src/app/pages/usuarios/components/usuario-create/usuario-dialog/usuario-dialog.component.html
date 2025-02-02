@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Verifica la Información del usuario</h2>
+
+<mat-dialog-content>
+    <h3>Información del usuario</h3>
+    <table>
+        <tr>
+            <td><strong>Nombre:</strong></td>
+            <td>{{usuario.nombre}}</td>
+        </tr>
+        <tr>
+            <td><strong>Teléfono:</strong></td>
+            <td>{{usuario.telefono}}</td>
+        </tr>
+        <tr>
+            <td><strong>Facultad:</strong></td>
+            <td>{{usuario.facultad}}</td>
+        </tr>
+        <tr>
+            <td><strong>Nombre:</strong></td>
+            <td>{{usuario.rol}}</td>
+        </tr>
+        <tr>
+            <td><strong>contraseña</strong></td>
+            <td>{{usuario.password}}</td>
+        </tr>
+    </table>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="cancelar()" style="color: gray;">Cancelar</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="confirmar()" color="accent">Crear
+        usuario</button>
+</mat-dialog-actions>

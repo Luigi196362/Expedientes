@@ -4,18 +4,18 @@ import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDi
 import { Inject } from '@angular/core';
 
 @Component({
-  selector: 'app-invalid-form',
+  selector: 'app-error-dialog',
   standalone: true,
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
-  templateUrl: './invalid-form.component.html',
-  styleUrl: './invalid-form.component.css',
+  templateUrl: './error-dialog.component.html',
+  styleUrl: './error-dialog.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InvalidFormComponent {
+export class ErrorDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { message: string },
-    private dialogRef: MatDialogRef<InvalidFormComponent>
-  ) {}
+    private dialogRef: MatDialogRef<ErrorDialogComponent>
+  ) { }
 
   closeDialog(): void {
     this.dialogRef.close();

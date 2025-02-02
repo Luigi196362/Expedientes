@@ -1,25 +1,30 @@
 <div class="container">
-
-    <img class="logo" src="https://logodix.com/logo/1745941.png" />
+    <img class="logo" src="assets/img/logo.png" />
     <div class="divider"></div>
 
-    <form action="">
+    <!-- Agregamos (ngSubmit) para manejar el envío del formulario -->
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
         <h1>Inicio de sesión</h1>
+
+        <!-- Mensaje de error -->
+        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
         <mat-form-field class="form-field">
             <mat-label>Nombre de usuario</mat-label>
-            <input matInput>
+            <input matInput [(ngModel)]="loginData.username" name="username" required>
         </mat-form-field>
 
         <mat-form-field class="form-field">
             <mat-label>Ingresa la contraseña</mat-label>
-            <input matInput [type]="hide() ? 'password' : 'text'" />
-            <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide()">
-                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <input matInput [(ngModel)]="loginData.password" name="password" [type]="hide() ? 'password' : 'text'"
+                required>
+            <button mat-icon-button matSuffix type="button" (click)="clickEvent($event)"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+                <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
         </mat-form-field>
 
-        <button (click)="Login()" type="button" mat-flat-button color="accent">Iniciar sesión</button>
-
+        <!-- Cambiamos el botón a type="submit" para que el formulario lo maneje correctamente -->
+        <button type="submit" mat-flat-button color="accent" [disabled]="loginForm.invalid">Iniciar sesión</button>
     </form>
 </div>

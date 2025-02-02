@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { RolService } from '../../services/rol.service';
 import { Rol } from '../../models/rol.model';
 import { RolDialogComponent } from './rol-dialog/rol-dialog.component';
-import { InvalidFormComponent } from '../../../../shared/invalid-form/invalid-form.component';
+import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
 
 
 @Component({
@@ -66,7 +66,7 @@ export class RolCreateComponent {
               this.isSaving = false;  // Desactivar la bandera después de guardar
             },
             error: (error) => {
-              this.dialog.open(InvalidFormComponent, {
+              this.dialog.open(ErrorDialogComponent, {
                 data: { message: 'Error al guardar el rol' }
               });
               console.error('Error al guardar el rol:', error);
@@ -81,7 +81,7 @@ export class RolCreateComponent {
 
     } else {
       // Mostrar diálogo de error si el formulario no es válido
-      this.dialog.open(InvalidFormComponent, {
+      this.dialog.open(ErrorDialogComponent, {
         data: { message: 'Formulario inválido' }
       });
       this.isSaving = false;  // Desactivar la bandera en caso de error
