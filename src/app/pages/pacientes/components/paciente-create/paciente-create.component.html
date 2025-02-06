@@ -12,20 +12,23 @@
 
         <mat-form-field class="form-field" color="accent">
           <mat-label>Fecha de nacimiento</mat-label>
-          <input type="date" matInput formControlName="fecha_nacimiento">
+          <input type="date" matInput formControlName="fecha_nacimiento" min="1900-01-01"
+            (input)="validarFecha($event)">
         </mat-form-field>
 
 
-        <mat-radio-group formControlName="estado_civil" aria-label="Estado civil" color="accent">
-          <label>Estado civil:</label>
-          <mat-radio-button value="Soltero(a)">Soltero(a)</mat-radio-button>
-          <mat-radio-button value="Casado(a)">Casado(a)</mat-radio-button>
-          <mat-radio-button value="Divorciado(a)">Divorciado(a)</mat-radio-button>
-          <mat-radio-button value="'Viudo(a)">Viudo(a)</mat-radio-button>
-          <mat-radio-button value="Unión Libre">Unión Libre</mat-radio-button>
-          <mat-radio-button value="Separado(a)">Separado(a)</mat-radio-button>
-          <mat-radio-button value="Otros">Otro</mat-radio-button>
-        </mat-radio-group>
+        <mat-form-field class="form-field" color="accent">
+          <mat-label>Estado civil</mat-label>
+          <mat-select formControlName="estado_civil">
+            <mat-option value="Soltero(a)">Soltero(a)</mat-option>
+            <mat-option value="Casado(a)">Casado(a)</mat-option>
+            <mat-option value="Divorciado(a)">Divorciado(a)</mat-option>
+            <mat-option value="Viudo(a)">Viudo(a)</mat-option>
+            <mat-option value="Unión Libre">Unión Libre</mat-option>
+            <mat-option value="Separado(a)">Separado(a)</mat-option>
+            <mat-option value="Otros">Otro</mat-option>
+          </mat-select>
+        </mat-form-field>
 
 
         <mat-form-field class="form-field" color="accent">
@@ -43,11 +46,15 @@
           <input matInput formControlName="residencia">
         </mat-form-field>
 
-        <mat-radio-group formControlName="sexo" aria-label="Seleccione un género" color="accent">
-          <label>Sexo:</label>
-          <mat-radio-button value=1>Masculino</mat-radio-button>
-          <mat-radio-button value=2>Femenino</mat-radio-button>
-        </mat-radio-group>
+        <mat-form-field class="form-field" color="accent">
+          <mat-label>Sexo</mat-label>
+          <mat-select formControlName="sexo">
+            <mat-option value="1">Masculino</mat-option>
+            <mat-option value="2">Femenino</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
 
       </form>
     </mat-tab>

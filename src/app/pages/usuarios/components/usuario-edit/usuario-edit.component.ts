@@ -56,7 +56,7 @@ export class UsuarioEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private usuarioService: UsuarioService, private router: Router) {
     this.usuarioForm = this.fb.group({
-      nombre: ['', Validators.required],
+      username: ['', Validators.required],
       telefono: ['', Validators.required],
       rol: [null, Validators.required],
       facultad: ['', Validators.required],

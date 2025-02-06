@@ -1,6 +1,6 @@
 export class Usuario {
     id: number = 0;
-    nombre: String = "";
+    username: String = "";
     telefono: String = "";
     facultad: String = "";
     password: String = "";

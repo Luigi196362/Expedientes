@@ -12,9 +12,9 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
         <!-- nombre Column -->
-        <ng-container matColumnDef="nombre">
+        <ng-container matColumnDef="username">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-            <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+            <td mat-cell *matCellDef="let row"> {{row.username}} </td>
         </ng-container>
 
         <!-- telefono Column -->
@@ -38,16 +38,8 @@
         <!-- facultad Column -->
         <ng-container matColumnDef="nombre_rol">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre del Rol</th>
-            <td mat-cell *matCellDef="let row"> {{row.rolNombre }} </td>
+            <td mat-cell *matCellDef="let row"> {{row.rolNombre }}</td>
         </ng-container>
-
-        <!-- Administrador Column 
-        <ng-container matColumnDef="admin">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Rol</th>
-            <td mat-cell *matCellDef="let row"> <mat-icon [fontIcon]="row.rol.admin ? ' star ' : ' person '"></mat-icon>
-            </td>
-        </ng-container>
-        -->
 
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef></th>
@@ -57,7 +49,7 @@
                         extended>
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button style="border-radius: 10px;" mat-mini-fab extended color="warn">
+                    <button (click)="eliminar(row)" style="border-radius: 10px;" mat-mini-fab extended color="warn">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>

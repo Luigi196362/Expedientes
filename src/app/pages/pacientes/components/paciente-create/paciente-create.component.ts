@@ -13,6 +13,7 @@ import { PacienteService } from '../../services/paciente.service';
 import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
 import { PacienteDialogComponent } from './paciente-dialog/paciente-dialog.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-paciente-create',
@@ -23,7 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatTabsModule,
     MatInputModule,
     MatButtonModule,
-    MatRadioModule,
+    MatSelectModule,
     ReactiveFormsModule,
     RouterLink,
     MatAutocompleteModule
@@ -162,6 +163,15 @@ export class PacienteCreateComponent {
     }
 
     inputElement.value = formattedNumber;
+  }
+
+  validarFecha(event: any) {
+    const inputDate = new Date(event.target.value);
+    const minDate = new Date(1900, 0, 1);
+
+    if (inputDate < minDate) {
+      event.target.value = '1900-01-01';
+    }
   }
 
 }

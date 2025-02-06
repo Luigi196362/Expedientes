@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,10 +9,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Router, RouterLink } from '@angular/router';
 import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { UsuarioDialogComponent } from './usuario-dialog/usuario-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { Rol } from '../../../roles/models/rol.model';
+import { RolService } from '../../../roles/services/rol.service';
+
+interface Roles {
+  value: number;
+  viewValue: String;
+}
 
 @Component({
   selector: 'app-usuario-create',
@@ -26,31 +34,47 @@ import { UsuarioDialogComponent } from './usuario-dialog/usuario-dialog.componen
     ReactiveFormsModule,
     RouterLink,
     MatAutocompleteModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   templateUrl: './usuario-create.component.html',
   styleUrl: './usuario-create.component.css'
 })
-export class UsuarioCreateComponent {
+export class UsuarioCreateComponent implements OnInit {
 
   nuevoUsuario: Usuario = new Usuario();
   usuarioForm: FormGroup;
   isSaving: boolean = false;
+  roles: Roles[] = [];
 
   hide = signal(true);
-  clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
-  }
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private usuarioService: UsuarioService, private router: Router) {
+
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private rolService: RolService, private usuarioService: UsuarioService, private router: Router) {
     this.usuarioForm = this.fb.group({
-      nombre: ['', Validators.required],
+      username: ['', Validators.required],
       telefono: ['', Validators.required],
-      rol: [null, Validators.required],
+      rol: ['', Validators.required],
       facultad: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  ngOnInit(): void {
+    this.rolService.getRolesNombres().subscribe(
+      (roles: Rol[]) => {
+        this.roles = roles.map(role => ({ value: role.id, viewValue: role.nombre }));
+      },
+      (error: any) => {
+        console.error('Error al obtener usuarios:', error);
+      }
+    );
+  }
+
+
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
   isFormDirty(): boolean {
@@ -62,7 +86,8 @@ export class UsuarioCreateComponent {
       this.isSaving = true; // Activar la bandera antes de abrir el diálogo
 
       // Abrir el diálogo de confirmación y esperar la respuesta del usuario
-      const dialogRef = this.dialog.open(UsuarioDialogComponent, { data: { usuario: this.usuarioForm.value } });
+      const selectedRole = this.roles.find(role => role.value === this.usuarioForm.value.rol);
+      const dialogRef = this.dialog.open(UsuarioDialogComponent, { data: { usuario: { ...this.usuarioForm.value, rol: selectedRole?.viewValue } } });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {  // Si el usuario confirma

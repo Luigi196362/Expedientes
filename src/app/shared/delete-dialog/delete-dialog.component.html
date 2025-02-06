@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Confirmación</h2>
+
+<mat-dialog-content>
+    <p>¿Estas seguro que quieres eliminar el {{data.message}}?</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="onCancel()" style="color: gray;">Cancelar</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="onConfirm()" color="warn">Confirmar</button>
+</mat-dialog-actions>

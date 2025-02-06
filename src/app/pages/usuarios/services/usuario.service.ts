@@ -8,7 +8,7 @@ import { Usuario } from '../models/usuario.model';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private endpoint = '/usuario';
+  private endpoint = '/api/usuarios';
 
   constructor(
     private http: HttpClient,
@@ -17,31 +17,31 @@ export class UsuarioService {
 
   // Obtener todos los usuarios
   getUsuarios(): Observable<Usuario[]> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver`;
     return this.http.get<Usuario[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Guardar un usuario
   guardarUsuario(usuario: Usuario): Observable<Usuario> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/crear`;
     return this.http.post<Usuario>(url, usuario, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Obtener un usuario por ID
   obtenerUsuarioPorId(id: number): Observable<Usuario> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver/${id}`;
     return this.http.get<Usuario>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Actualizar un usuario por ID
   actualizarUsuario(id: number, usuario: Usuario): Observable<Usuario> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/editar/${id}`;
     return this.http.put<Usuario>(url, usuario, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Eliminar un usuario por ID
   eliminarUsuario(id: number): Observable<string> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/eliminar/${id}`;
     return this.http.delete<string>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 }

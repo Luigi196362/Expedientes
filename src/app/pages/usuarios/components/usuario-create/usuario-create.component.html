@@ -7,7 +7,7 @@
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Nombre completo</mat-label>
-                    <input matInput formControlName="nombre" autocomplete="username">
+                    <input matInput formControlName="username" autocomplete="username">
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
@@ -25,8 +25,13 @@
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Rol</mat-label>
-                    <input type="number" matInput formControlName="rol" inputmode="numeric" autocomplete="off">
+                    <mat-select formControlName="rol">
+                        @for (rol of roles; track rol) {
+                        <mat-option [value]="rol.value">{{rol.viewValue}}</mat-option>
+                        }
+                    </mat-select>
                 </mat-form-field>
+
 
                 <mat-form-field class="form-field">
                     <mat-label>Ingresa la contraseña</mat-label>

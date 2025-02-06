@@ -10,6 +10,8 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-usuario-list',
@@ -29,10 +31,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './usuario-list.component.css'
 })
 export class UsuarioListComponent implements AfterViewInit, OnInit {
+
   Usuarios: Usuario[] = [];
 
   displayedColumns: string[] = [
-    'nombre',
+    'username',
     'telefono',
     'facultad',
     'fecha_creacion',
@@ -46,7 +49,7 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private usuarioService: UsuarioService, private router: Router) {
+  constructor(private usuarioService: UsuarioService, private router: Router, private dialog: MatDialog) {
     // Inicializar la dataSource con los datos vacíos al principio
     this.dataSource = new MatTableDataSource<Usuario>();
   }
@@ -90,6 +93,31 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
 
   editar(usuario: Usuario) {
     this.router.navigate(['/layout/usuarios/editar'], { state: { usuario } });
+  }
+
+  eliminar(usuario: Usuario) {
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, { data: { message: 'usuario ' + usuario.username } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+        this.usuarioService.eliminarUsuario(usuario.id).subscribe(
+          () => {
+            // Actualizar la lista de usuarios después de eliminar
+            this.Usuarios = this.Usuarios.filter(u => u.id !== usuario.id);
+            this.dataSource.data = this.Usuarios;
+          },
+          (error: any) => {
+            console.error('Error al eliminar usuario:', error);
+          }
+        );
+      } else {
+        console.log('El usuario canceló la operación');
+
+      }
+    });
+
   }
 
 }

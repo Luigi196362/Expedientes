@@ -8,7 +8,7 @@ import { Rol } from '../models/rol.model';
   providedIn: 'root'
 })
 export class RolService {
-  private endpoint = '/rol';
+  private endpoint = '/api/roles';
 
   constructor(
     private http: HttpClient,
@@ -17,13 +17,19 @@ export class RolService {
 
   // Obtener todos los roles
   getRoles(): Observable<Rol[]> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver`;
+    return this.http.get<Rol[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  }
+
+  // Obtener todos los roles
+  getRolesNombres(): Observable<Rol[]> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver/nombres`;
     return this.http.get<Rol[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Guardar un Rol
   guardarRol(rol: Rol): Observable<Rol> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/crear`;
     return this.http.post<Rol>(url, rol, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
