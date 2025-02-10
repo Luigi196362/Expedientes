@@ -1,0 +1,22 @@
+.home-container {
+    text-align: center;
+    margin-top: 10vh;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #3f51b5;
+    /* Color primario */
+}
+
+.rol {
+    font-size: 1.5rem;
+    color: #757575;
+}
+
+.descripcion {
+    font-size: 1.2rem;
+    margin-top: 15px;
+    color: #616161;
+}

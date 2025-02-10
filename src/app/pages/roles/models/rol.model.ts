@@ -4,5 +4,5 @@ export class Rol {
     id: number = 0;
     nombre: String = "";
     descripcion: String = "";
-    permisos: Permiso = new Permiso;
+    permisos: Permiso[] = [];
 }

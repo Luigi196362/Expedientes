@@ -52,14 +52,15 @@ export class LoginComponent {
         // Si se recibe el token, redirigir al usuario
         if (response?.token) {
           sessionStorage.setItem('token', response.token);
-          this.router.navigate(['/layout/pacientes']);
+          this.router.navigate(['/layout/home']);
         }
       },
       error => {
-        // Si ocurre un error, mostrar mensaje
-        this.errorMessage = 'Usuario o contraseña incorrectos';
+        // Se asigna el mensaje de error proveniente del servicio
+        this.errorMessage = error.message;
         this.cdr.detectChanges(); // Forzar la detección de cambios
       }
     );
   }
+
 }

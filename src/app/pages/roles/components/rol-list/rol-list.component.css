@@ -1,6 +1,10 @@
 table {
     width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
 }
+
+
 
 .mat-mdc-form-field {
     font-size: 14px;
@@ -9,12 +13,20 @@ table {
 
 .actions {
     display: grid;
-    grid-template-columns: 90% 10%;
+    grid-template-columns: 9fr 1fr;
+    gap: 10px;
     justify-items: center;
 }
 
-button {
+.bar {
     width: 90%;
     height: 50%;
     margin-top: 1vh;
+}
+
+.table-actions {
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    padding-right: 20px;
 }

@@ -6,8 +6,10 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Rol } from '../../models/rol.model';
 import { RolService } from '../../services/rol.service';
-import { MatButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { Router, RouterLink } from '@angular/router';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../../core/services/Auth/auth.service';
 
 @Component({
   selector: 'app-rol-list',
@@ -18,8 +20,9 @@ import { RouterLink } from '@angular/router';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatButton,
-    RouterLink
+    MatButtonModule,
+    RouterLink,
+    MatIconModule
   ],
   templateUrl: './rol-list.component.html',
   styleUrl: './rol-list.component.css'
@@ -30,6 +33,7 @@ export class RolListComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = [
     'nombre',
     'descripcion',
+    'actions'
   ];
 
   dataSource: MatTableDataSource<Rol>;
@@ -37,7 +41,7 @@ export class RolListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private rolService: RolService) {
+  constructor(private rolService: RolService, public authService: AuthService, private router: Router) {
     // Inicializar la dataSource con los datos vacíos al principio
     this.dataSource = new MatTableDataSource<Rol>();
   }
@@ -74,6 +78,10 @@ export class RolListComponent implements AfterViewInit, OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  editar(rol: Rol) {
+    this.router.navigate(['/layout/roles/editar'], { state: { rol } });
   }
 
 }

@@ -4,7 +4,8 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Juan Pérez" #input>
   </mat-form-field>
 
-  <button mat-raised-button color="accent" routerLink="crear">Crear paciente</button>
+  <button [disabled]="!authService.tienePermiso('pacientes', 'Crear')" mat-raised-button color="accent"
+    routerLink="crear">Crear paciente</button>
 
 </div>
 

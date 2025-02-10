@@ -25,11 +25,16 @@
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Rol</mat-label>
-                    <input type="number" matInput formControlName="rol" inputmode="numeric" autocomplete="off">
+                    <mat-select formControlName="rol">
+                        @for (rol of roles; track rol) {
+                        <mat-option [value]="rol.value">{{rol.viewValue}}</mat-option>
+                        }
+                    </mat-select>
                 </mat-form-field>
 
+
                 <mat-form-field class="form-field">
-                    <mat-label>Ingresa la contraseña</mat-label>
+                    <mat-label>Nueva contraseña</mat-label>
                     <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password"
                         autocomplete="new-password" />
                     <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
@@ -46,6 +51,5 @@
 
 <div class="form-actions">
     <button mat-raised-button routerLink="/layout/usuarios" color="warn">Cancelar</button>
-    <button mat-raised-button color="accent" (click)="onSave()">Guardar
-        Paciente</button>
+    <button mat-raised-button color="accent" (click)="onSave()">Guardar cambios</button>
 </div>

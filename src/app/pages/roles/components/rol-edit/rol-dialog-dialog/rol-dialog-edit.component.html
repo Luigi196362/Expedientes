@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Verifica la Información del rol</h2>
+
+<mat-dialog-content>
+    <h3>Información del rol</h3>
+    <table>
+        <tr>
+            <td><strong>Nombre:</strong></td>
+            <td>{{rol.nombre}}</td>
+        </tr>
+        <tr>
+            <td><strong>Descripción:</strong></td>
+            <td>{{rol.descripcion}}</td>
+        </tr>
+
+    </table>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="cancelar()" style="color: gray;">Cancelar</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="confirmar()" color="accent">Crear rol</button>
+</mat-dialog-actions>

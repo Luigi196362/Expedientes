@@ -10,6 +10,7 @@ import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { AuthService } from '../../../../core/services/Auth/auth.service';
 
 @Component({
   selector: 'app-paciente-list',
@@ -45,7 +46,7 @@ export class PacienteListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private pacienteService: PacienteService) {
+  constructor(private pacienteService: PacienteService, public authService: AuthService) {
     // Inicializar la dataSource con los datos vacíos al principio
     this.dataSource = new MatTableDataSource<Paciente>();
   }

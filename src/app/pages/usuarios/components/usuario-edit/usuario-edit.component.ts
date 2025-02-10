@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule, MatIconButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,15 @@ import { Usuario } from '../../models/usuario.model';
 import { UsuarioDialogComponent } from '../usuario-create/usuario-dialog/usuario-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UsuarioService } from '../../services/usuario.service';
+import { RolService } from '../../../roles/services/rol.service';
+import { Rol } from '../../../roles/models/rol.model';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { UsuarioDialogEditComponent } from './usuario-dialog-edit/usuario-dialog-edit.component';
+
+interface Roles {
+  value: number;
+  viewValue: String;
+}
 
 @Component({
   selector: 'app-usuario-edit',
@@ -26,27 +35,52 @@ import { UsuarioService } from '../../services/usuario.service';
     ReactiveFormsModule,
     RouterLink,
     MatAutocompleteModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   templateUrl: './usuario-edit.component.html',
   styleUrl: './usuario-edit.component.css'
 })
 export class UsuarioEditComponent implements OnInit {
-  nuevoUsuario: Usuario = new Usuario();
   usuarioForm: FormGroup;
   isSaving: boolean = false;
   usuario: Usuario | null = null;
+  roles: Roles[] = [];
+
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private usuarioService: UsuarioService, private router: Router, private rolService: RolService) {
+    this.usuarioForm = this.fb.group({
+      username: ['', Validators.required],
+      telefono: ['', Validators.required],
+      rol: [null, Validators.required],
+      facultad: ['', Validators.required],
+      password: ['']
+    });
+  }
 
   ngOnInit(): void {
     const state = window.history.state;
     if (state.usuario) {
       this.usuario = state.usuario;
+      if (this.usuario) {
+        this.usuario.rol = state.usuario.rolId;
+      }
+      console.log('Usuario cargado para edición:', this.usuario);
       this.usuarioForm.patchValue(state.usuario);
     } else {
       // Redirigir si no hay datos (por ejemplo, si se accede directamente a la URL)
       this.router.navigate(['/layout/usuarios']);
     }
+
+    this.rolService.getRolesNombres().subscribe(
+      (roles: Rol[]) => {
+        this.roles = roles.map(role => ({ value: role.id, viewValue: role.nombre }));
+      },
+      (error: any) => {
+        console.error('Error al obtener usuarios:', error);
+      }
+    );
   }
+
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
@@ -54,91 +88,95 @@ export class UsuarioEditComponent implements OnInit {
     event.stopPropagation();
   }
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private usuarioService: UsuarioService, private router: Router) {
-    this.usuarioForm = this.fb.group({
-      username: ['', Validators.required],
-      telefono: ['', Validators.required],
-      rol: [null, Validators.required],
-      facultad: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-  }
-
   isFormDirty(): boolean {
     return this.usuarioForm.dirty;  // Devuelve true si el formulario tiene cambios
   }
-
   onSave(): void {
     if (this.usuarioForm.valid) {
-      this.isSaving = true; // Activar la bandera antes de abrir el diálogo
+      this.isSaving = true;
 
-      // Abrir el diálogo de confirmación y esperar la respuesta del usuario
-      const dialogRef = this.dialog.open(UsuarioDialogComponent, { data: { usuario: this.usuarioForm.value } });
+      // Obtenemos el valor actual del formulario.
+      const formData = this.usuarioForm.value;
+
+      // Buscamos en el arreglo 'roles' el rol cuyo 'value' (id) coincida con el seleccionado.
+      const selectedRole = this.roles.find(role => role.value === formData.rol);
+
+      // Creamos un objeto para la verificación que muestre el nombre del rol en lugar del id.
+      const usuarioParaVerificacion = {
+        ...formData,
+        rol: selectedRole ? selectedRole.viewValue : formData.rol
+      };
+
+      // Abrimos el diálogo de verificación pasando el objeto transformado.
+      const dialogRef = this.dialog.open(UsuarioDialogEditComponent, { data: { usuario: usuarioParaVerificacion } });
 
       dialogRef.afterClosed().subscribe(result => {
-        if (result) {  // Si el usuario confirma
-          const nuevoUsuario: Usuario = { ...this.usuarioForm.value };
+        if (result) {
+          // Si el usuario confirma, se utiliza el objeto original (que contiene el id del rol) para actualizar.
+          const nuevoUsuario: Usuario = { ...formData };
 
-          this.usuarioService.guardarUsuario(nuevoUsuario).subscribe({
-            next: () => {
-              this.usuarioForm.markAsPristine();  // Restablecer el formulario
-              this.router.navigate(['/layout/usuarios']);
-              this.isSaving = false;  // Desactivar la bandera después de guardar
-            },
-            error: (error) => {
-              this.dialog.open(ErrorDialogComponent, {
-                data: { message: 'Error al guardar el usuario' }
-              });
-              console.error('Error al guardar el usuario:', error);
-              this.isSaving = false;
-            }
-          });
+          if (this.usuario && this.usuario.id) {
+            this.usuarioService.actualizarUsuario(this.usuario.id, nuevoUsuario).subscribe({
+              next: () => {
+                this.usuarioForm.markAsPristine();
+                this.router.navigate(['/layout/usuarios']);
+                this.isSaving = false;
+              },
+              error: (error) => {
+                this.dialog.open(ErrorDialogComponent, {
+                  data: { message: 'Error al guardar el usuario' }
+                });
+                console.error('Error al guardar el usuario:', error);
+                this.isSaving = false;
+              }
+            });
+          } else {
+            console.error('No se pudo actualizar: usuario no definido.');
+            this.dialog.open(ErrorDialogComponent, {
+              data: { message: 'Error: No se encontró el usuario a editar' }
+            });
+            this.isSaving = false;
+          }
         } else {
           console.log('El usuario canceló la operación');
-          this.isSaving = false;  // Desactivar la bandera si el usuario cancela
+          this.isSaving = false;
         }
       });
-
     } else {
-      // Mostrar diálogo de error si el formulario no es válido
       this.dialog.open(ErrorDialogComponent, {
         data: { message: 'Formulario inválido' }
       });
-      this.isSaving = false;  // Desactivar la bandera en caso de error
+      this.isSaving = false;
       console.log('Formulario inválido');
     }
   }
 
 
-  // Bloquear caracteres no numéricos
+  // Bloquear caracteres no numéricos en el campo de teléfono
   blockInvalidChars(event: KeyboardEvent, maxDigits: number): void {
-    // Permitir solo números del 0 al 9
     if (!/^[0-9]$/.test(event.key)) {
       event.preventDefault();
     }
   }
 
-  // Controlar el pegado de texto
+  // Controlar el pegado de texto en el campo de teléfono
   onPaste(event: ClipboardEvent, maxDigits: number): void {
     const pastedText = event.clipboardData?.getData('text') || '';
 
-    // Si el texto pegado tiene más de los dígitos permitidos, prevenir el pegado
     if (pastedText.length > maxDigits) {
       event.preventDefault();
     }
   }
+
   formatPhoneNumber(event: Event, maxLength: number): void {
     const inputElement = event.target as HTMLInputElement;
 
-    // Eliminar todos los caracteres no numéricos
     let cleaned = inputElement.value.replace(/\D/g, '');
 
-    // Limitar la longitud máxima a 10 dígitos
     if (cleaned.length > maxLength) {
       cleaned = cleaned.substring(0, maxLength);
     }
 
-    // Aplicar formato dinámico durante la escritura
     let formattedNumber = '';
     if (cleaned.length > 0) {
       formattedNumber += '(' + cleaned.substring(0, Math.min(3, cleaned.length));

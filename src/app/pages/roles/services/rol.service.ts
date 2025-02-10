@@ -33,22 +33,22 @@ export class RolService {
     return this.http.post<Rol>(url, rol, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
-  /*
-    // Obtener un paciente por ID
-    obtenerPacientePorId(id: number): Observable<Paciente> {
-      const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
-      return this.http.get<Paciente>(url, { headers: this.httpConnection.getDefaultHeaders() });
-    }
-  
-    // Actualizar un paciente por ID
-    actualizarPaciente(id: number, paciente: Paciente): Observable<Paciente> {
-      const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
-      return this.http.put<Paciente>(url, paciente, { headers: this.httpConnection.getDefaultHeaders() });
-    }
-  
-    // Eliminar un paciente por ID
-    eliminarPaciente(id: number): Observable<string> {
-      const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
-      return this.http.delete<string>(url, { headers: this.httpConnection.getDefaultHeaders() });
-    }*/
+
+  // // Obtener un paciente por ID
+  // obtenerPacientePorId(id: number): Observable<Paciente> {
+  //   const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
+  //   return this.http.get<Paciente>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  // }
+
+  // Actualizar un rol por ID
+  actualizarRol(id: number, rol: Rol): Observable<Rol> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/editar/${id}`;
+    return this.http.put<Rol>(url, rol, { headers: this.httpConnection.getDefaultHeaders() });
+  }
+
+  // // Eliminar un paciente por ID
+  // eliminarPaciente(id: number): Observable<string> {
+  //   const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
+  //   return this.http.delete<string>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  // }
 }

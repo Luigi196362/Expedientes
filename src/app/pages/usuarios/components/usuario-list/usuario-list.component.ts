@@ -12,6 +12,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../../../../core/services/Auth/auth.service';
 
 @Component({
   selector: 'app-usuario-list',
@@ -40,7 +41,6 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
     'facultad',
     'fecha_creacion',
     'nombre_rol',
-    //'admin',
     'actions'
   ];
 
@@ -49,7 +49,7 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private usuarioService: UsuarioService, private router: Router, private dialog: MatDialog) {
+  constructor(private usuarioService: UsuarioService, private router: Router, private dialog: MatDialog, public authService: AuthService) {
     // Inicializar la dataSource con los datos vacíos al principio
     this.dataSource = new MatTableDataSource<Usuario>();
   }
@@ -94,6 +94,11 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
   editar(usuario: Usuario) {
     this.router.navigate(['/layout/usuarios/editar'], { state: { usuario } });
   }
+
+  crear(modo: String) {
+    this.router.navigate(['/layout/usuarios/editar'], { state: { modo } });
+  }
+
 
   eliminar(usuario: Usuario) {
 

@@ -5,6 +5,6 @@ export class Usuario {
     facultad: String = "";
     password: String = "";
     rol: number = 0;
-    activo: boolean = true;
+    rolNombre: String = "";
     fecha_creacion: Date = new Date();
 }
