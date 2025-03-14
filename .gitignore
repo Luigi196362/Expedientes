@@ -6,6 +6,7 @@
 /out-tsc
 /bazel-out
 /Test-win32-x64
+/out
 
 # Node
 /node_modules
