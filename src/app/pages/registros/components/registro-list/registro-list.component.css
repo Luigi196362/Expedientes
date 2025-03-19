@@ -1,0 +1,36 @@
+table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+    gap: 10px;
+    justify-items: center;
+}
+
+.bar {
+    width: 90%;
+    height: 50%;
+    margin-top: 1vh;
+}
+
+.table-actions {
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    padding-right: 20px;
+}
+
+table tr:hover:not(:has(th)) {
+    background-color: rgba(0, 0, 0, 0.085);
+}

@@ -1,26 +1,22 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Nota_Evolucion } from '../../models/nota-evolucion';
-import { RegistroService } from '../../services/registros/registros.service';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { PacienteDataComponent } from "../../../pacientes/components/paciente-data/paciente-data.component";
-import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
-import { PacienteDialogComponent } from '../../../pacientes/components/paciente-create/paciente-dialog/paciente-dialog.component';
-import { Token } from '@angular/compiler';
+import { MatTabsModule } from '@angular/material/tabs';
+import { Router, RouterLink } from '@angular/router';
+import { Historia_clinica } from '../../models/historia-clinica';
+import { MatDialog } from '@angular/material/dialog';
+import { RegistroService } from '../../services/registros/registros.service';
 import { AuthService } from '../../../../core/services/Auth/auth.service';
-import { Paciente } from '../../../pacientes/models/paciente.model';
+import { PacienteDialogComponent } from '../../../pacientes/components/paciente-create/paciente-dialog/paciente-dialog.component';
+import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
 
 @Component({
-  selector: 'app-crear-notas-evolucion',
+  selector: 'app-crear-historia-clinica',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -31,19 +27,18 @@ import { Paciente } from '../../../pacientes/models/paciente.model';
     ReactiveFormsModule,
     RouterLink,
     MatAutocompleteModule,
-    MatSidenavModule,
-  ],
-  templateUrl: './crear-notas-evolucion.component.html',
-  styleUrl: './crear-notas-evolucion.component.css'
+    MatSidenavModule,],
+  templateUrl: './crear-historia-clinica.component.html',
+  styleUrl: './crear-historia-clinica.component.css'
 })
-export class CrearNotasEvolucionComponent implements OnInit {
-  nota_evolucion: Nota_Evolucion = new Nota_Evolucion();
-  notaForm: FormGroup;
+export class CrearHistoriaClinicaComponent implements OnInit {
+  historia_clinica: Historia_clinica = new Historia_clinica();
+  historiaForm: FormGroup;
   isSaving: boolean = false;
-  // imc: number = 0.0;
   nameUser: string = "";
   idPaciente: number = 0;
   nombrePaciente: string = "";
+
   ngOnInit(): void {
     const state = window.history.state;
     if (state.paciente) {
@@ -59,31 +54,24 @@ export class CrearNotasEvolucionComponent implements OnInit {
       //this.router.navigate(['/layout/pacientes']);
     }
   }
+
   constructor(private fb: FormBuilder, private dialog: MatDialog, private registrosService: RegistroService, private router: Router, private token: AuthService) {
-    this.notaForm = this.fb.group({
-      interrogatorio: ['', Validators.required],
-      peso: ['', Validators.required],
-      talla: ['', Validators.required],
-      imc: ['', Validators.required],
-      ta: ['', Validators.required],
-      fc: ['', Validators.required],
-      fr: ['', Validators.required],
-      temperatura: ['', Validators.required],
-      saturacion: ['', Validators.required],
-      glicemia: ['', Validators.required],
-      hemoglobina: ['', Validators.required],
-      hemotipo: ['', Validators.required],
-      padecimiento: ['', Validators.required],
-      exploracion: ['', Validators.required],
-      analisis: ['', Validators.required],
-      plan: ['', Validators.required],
-      diagnostico: ['', Validators.required],
-      tratamiento: ['', Validators.required]
+    this.historiaForm = this.fb.group({
+      id: [0, Validators.required],
+      antecedentes_heredo_familiares: ['', Validators.required],
+      antecedentes_personales_no_patologicos: ['', Validators.required],
+      antecedentes_personales_patologicos: ['', Validators.required],
+      medicamentos_actuales: ['', Validators.required],
+      diagnostico_inicial: ['', Validators.required],
+      tratamiento: ['', Validators.required],
+      observaciones: ['', Validators.required],
+      alergias: ['', Validators.required],
+
     });
   }
 
   isFormDirty(): boolean {
-    return this.notaForm.dirty;
+    return this.historiaForm.dirty;
   }
 
   toggleSidenav(sidenav: any): void {
@@ -94,19 +82,19 @@ export class CrearNotasEvolucionComponent implements OnInit {
   onSave(): void {
     this.nameUser = this.token.getUsuario().sub;
     console.log(this.nameUser);
-    if (this.notaForm.valid) {
+    if (this.historiaForm.valid) {
       this.isSaving = true; // Activar la bandera antes de abrir el diálogo
 
       // Abrir el diálogo de confirmación y esperar la respuesta del usuario
-      const dialogRef = this.dialog.open(PacienteDialogComponent, { data: { paciente: this.notaForm.value } });
+      const dialogRef = this.dialog.open(PacienteDialogComponent, { data: { paciente: this.historiaForm.value } });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {  // Si el usuario confirma
-          const nuevaNota: Nota_Evolucion = { ...this.notaForm.value };
+          const nuevaHistoria: Historia_clinica = { ...this.historiaForm.value };
 
-          this.registrosService.guardarNota(this.nameUser, this.idPaciente, nuevaNota).subscribe({
+          this.registrosService.guardarHistoria(this.nameUser, this.idPaciente, nuevaHistoria).subscribe({
             next: () => {
-              this.notaForm.markAsPristine();  // Restablecer el formulario
+              this.historiaForm.markAsPristine();  // Restablecer el formulario
               this.router.navigate(['/layout/pacientes']);
               this.isSaving = false;  // Desactivar la bandera después de guardar
             },
@@ -127,7 +115,6 @@ export class CrearNotasEvolucionComponent implements OnInit {
     } else {
       // Mostrar diálogo de error si el formulario no es válido
       //const dialogRef = this.dialog.open(VerificarPacienteComponent, { data: { paciente: this.pacienteForm.value } });
-      console.log(this.notaForm.value);
       this.dialog.open(ErrorDialogComponent, {
         data: { message: 'Formulario inválido' }
       });
@@ -135,5 +122,4 @@ export class CrearNotasEvolucionComponent implements OnInit {
       console.log('Formulario inválido');
     }
   }
-
 }
