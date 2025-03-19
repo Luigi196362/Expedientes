@@ -1,15 +1,18 @@
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+}
+
 .Formulario {
     height: 77vh;
-    width: 97%;
-    justify-self: center;
     box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
     margin-bottom: 3vh;
 }
 
 
 .seccion {
-    width: 95%;
-    justify-self: center;
     border-top: gray 1px solid;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -19,11 +22,4 @@
     padding: 10px;
     border-radius: 5px;
 
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 10px;
 }

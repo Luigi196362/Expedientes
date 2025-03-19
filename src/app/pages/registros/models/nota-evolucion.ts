@@ -1,10 +1,8 @@
-import { Registro } from "../models/Registro";
+import { Registro } from "./Registro";
 
 export class Nota_Evolucion {
     id: number = 0;
-
-    registro: Registro = new Registro;
-
+    //registro: Registro = new Registro;
     interrogatorio: String = "";
     peso: number = 0;
     talla: number = 0;

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>¿Que tipo de registro quieres crear?</h2>
+<mat-dialog-content>
+    <mat-form-field class="registro">
+        <mat-label>Tipo de registro</mat-label>
+        <mat-select [(value)]="selectedValue">
+            <mat-option value="1">Historial clínico</mat-option>
+            <mat-option value="2">Nota de evolución</mat-option>
+            <!-- <mat-option value="3">Receta médica</mat-option>
+            <mat-option value="4">Examen de laboratorio</mat-option>
+            <mat-option value="5">Imagenología</mat-option>
+            <mat-option value="6">Referencia</mat-option> -->
+        </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close style="color: gray;" (click)="Cancelar()">Cancelar</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="CrearRegistro()" color="accent">Crear registro</button>
+</mat-dialog-actions>

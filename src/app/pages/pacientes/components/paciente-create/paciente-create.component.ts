@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
@@ -14,11 +14,16 @@ import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dial
 import { PacienteDialogComponent } from './paciente-dialog/paciente-dialog.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 
 @Component({
   selector: 'app-paciente-create',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-MX' },
+    provideNativeDateAdapter(),
+  ],
   imports: [
     MatFormFieldModule,
     MatTabsModule,
@@ -27,8 +32,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     ReactiveFormsModule,
     RouterLink,
-    MatAutocompleteModule
-  ],
+    MatAutocompleteModule,
+    MatFormFieldModule, MatInputModule, MatDatepickerModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './paciente-create.component.html',
   styleUrls: ['./paciente-create.component.css']
 })
@@ -36,6 +42,16 @@ export class PacienteCreateComponent {
   nuevoPaciente: Paciente = new Paciente();
   pacienteForm: FormGroup;
   isSaving: boolean = false;
+  minDate = new Date(1900, 0, 1);
+  maxDate = new Date();
+
+  // myFilter = (d: Date | null): boolean => {
+  //   const day = (d || new Date()).getDay();
+  //   // Prevent Saturday and Sunday from being selected.
+  //   return day !== 0 && day !== 6;
+  // };
+
+
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteSevice: PacienteService, private router: Router) {
     this.pacienteForm = this.fb.group({
@@ -57,6 +73,7 @@ export class PacienteCreateComponent {
       residencia: ['', Validators.required]
     });
   }
+
 
   isFormDirty(): boolean {
     return this.pacienteForm.dirty;  // Devuelve true si el formulario tiene cambios
@@ -164,6 +181,13 @@ export class PacienteCreateComponent {
 
     inputElement.value = formattedNumber;
   }
+
+  get numerosIngresadosTelefono(): string {
+    const telefono = this.pacienteForm.get('telefono')?.value || '';
+    const numeros = telefono.replace(/\D/g, '').length; // Solo números
+    return `${numeros}/10`; // Formato "0/10"
+  }
+
 
   validarFecha(event: any) {
     const inputDate = new Date(event.target.value);

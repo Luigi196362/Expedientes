@@ -3,7 +3,8 @@ import { Usuario } from "../../usuarios/models/usuario.model";
 
 export class Registro {
     id: number = 0;
-    usuario: Usuario = new Usuario();
-    paciente: Paciente = new Paciente();
+    usuario: String = "";
+    paciente: String = "";
     fecha_creacion: Date = new Date();
+    tipo_registro: String = "";
 }

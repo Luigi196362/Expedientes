@@ -4,7 +4,7 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Juan Pérez" #input>
   </mat-form-field>
 
-  <button [disabled]="!authService.tienePermiso('pacientes', 'Crear')" mat-raised-button color="accent"
+  <button [disabled]="!authService.tienePermiso('pacientes', 'Crear')" mat-raised-button color="accent" class="bar"
     routerLink="crear">Crear paciente</button>
 
 </div>
@@ -42,10 +42,16 @@
       <td mat-cell *matCellDef="let row"> {{row.fecha_creacion | date:'dd/MM/yyyy' }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="boton">
+    <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let row"> <mat-icon aria-hidden="false" aria-label="Example home icon"
-          fontIcon="description" class="icon"></mat-icon>
+      <td mat-cell *matCellDef="let row">
+        <div class="table-actions">
+          <button [disabled]="!authService.tienePermiso('pacientes', 'Ver')" (click)="editar(row)" routerLink="datos"
+            style="border-radius: 10px;" mat-mini-fab extended>
+            <mat-icon>description</mat-icon>
+          </button>
+
+        </div>
       </td>
     </ng-container>
 

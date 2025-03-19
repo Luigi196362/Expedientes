@@ -15,7 +15,7 @@ $light-theme: mat.define-light-theme((color: (primary: $primary,
 
 // Tema oscuro
 $dark-theme: mat.define-dark-theme((color: (primary: $primary,
-        accent: mat.define-palette(mat.$green-palette, 700),
+        accent: mat.define-palette(mat.$green-palette, 600),
         warn: mat.define-palette(mat.$red-palette)),
       typography: mat.define-typography-config(),
       density: 0));

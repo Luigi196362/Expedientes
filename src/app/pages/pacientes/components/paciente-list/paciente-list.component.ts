@@ -6,8 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Paciente } from '../../models/paciente.model';
 import { PacienteService } from '../../services/paciente.service';
-import { MatButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../../../core/services/Auth/auth.service';
@@ -21,7 +21,7 @@ import { AuthService } from '../../../../core/services/Auth/auth.service';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatButton,
+    MatButtonModule,
     RouterLink,
     CommonModule,
     MatIcon
@@ -38,7 +38,7 @@ export class PacienteListComponent implements AfterViewInit, OnInit {
     'sexo',
     'fecha_nacimiento',
     'fecha_creacion',
-    'boton'
+    'actions'
   ];
 
   dataSource: MatTableDataSource<Paciente>;
@@ -46,7 +46,7 @@ export class PacienteListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private pacienteService: PacienteService, public authService: AuthService) {
+  constructor(private pacienteService: PacienteService, public authService: AuthService, private router: Router) {
     // Inicializar la dataSource con los datos vacíos al principio
     this.dataSource = new MatTableDataSource<Paciente>();
   }
@@ -97,4 +97,9 @@ export class PacienteListComponent implements AfterViewInit, OnInit {
     }
     return edad;
   }
+
+  editar(paciente: Paciente) {
+    this.router.navigate(['/layout/pacientes/datos'], { state: { paciente } });
+  }
+
 }
