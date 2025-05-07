@@ -18,7 +18,8 @@
 
           <mat-form-field class="form-field" color="accent" (click)="picker.open()" (keydown.space)="picker.open()">
             <mat-label>Fecha de nacimiento</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" readonly>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" readonly
+              formControlName="fecha_nacimiento">
             <mat-hint>Dia/Mes/Año</mat-hint>
             <!-- <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> -->
             <mat-datepicker #picker></mat-datepicker>
