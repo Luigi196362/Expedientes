@@ -61,20 +61,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Actualizar el título de la página según la ruta activa
     this.isDarkTheme = document.body.classList.contains('dark-theme');
-    this.router.events.subscribe(() => {
-      const childRoute = this.getChild(this.route);
-      if (childRoute && childRoute.snapshot.data['title']) {
-        this.pageTitle = childRoute.snapshot.data['title'];
-        this.titleService.setTitle(this.pageTitle);
-      }
-    });
+    this.actualizarTitulo();
+    this.router.events.subscribe(() => this.actualizarTitulo());
 
-    // Verificar si la ruta inicial ya tiene título.
-    const childRoute = this.getChild(this.route);
-    if (childRoute && childRoute.snapshot.data['title']) {
-      this.pageTitle = childRoute.snapshot.data['title'];
-      this.titleService.setTitle(this.pageTitle);
-    }
 
     // Suscribirse al interval para actualizar la hora cada segundo
     this.timeInterval = setInterval(() => {
@@ -86,6 +75,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.clockSubscription) {
       this.clockSubscription.unsubscribe();
+    }
+  }
+
+  private actualizarTitulo(): void {
+    const childRoute = this.getChild(this.route);
+    if (childRoute && childRoute.snapshot.data['title']) {
+      this.pageTitle = childRoute.snapshot.data['title'];
+      // this.titleService.setTitle(this.pageTitle); // opcional
     }
   }
 

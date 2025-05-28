@@ -31,7 +31,7 @@ function createWindow() {
   // Cargar el contenido según el entorno
   if (process.env.NODE_ENV === 'development') {
     // En desarrollo, se carga la URL del servidor de desarrollo
-    win.loadURL('http://localhost:3000');
+    win.loadURL('http://localhost:4200');
   } else {
     // En producción, se carga el archivo compilado
     win.loadFile(path.join(__dirname, 'dist', 'expedientes', 'browser', 'index.html'));
