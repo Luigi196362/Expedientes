@@ -17,31 +17,31 @@ export class UsuarioService {
 
   // Obtener todos los usuarios
   getUsuarios(): Observable<Usuario[]> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver`;
     return this.http.get<Usuario[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Guardar un usuario
   guardarUsuario(usuario: Usuario): Observable<Usuario> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/crear`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Crear`;
     return this.http.post<Usuario>(url, usuario, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Obtener un usuario por ID
   obtenerUsuarioPorId(id: number): Observable<Usuario> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver/${id}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver/${id}`;
     return this.http.get<Usuario>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Actualizar un usuario por ID
   actualizarUsuario(id: number, usuario: Usuario): Observable<Usuario> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/editar/${id}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Editar/${id}`;
     return this.http.put<Usuario>(url, usuario, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
   // Eliminar un usuario por ID
   eliminarUsuario(id: number): Observable<string> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/eliminar/${id}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Eliminar/${id}`;
     return this.http.delete<string>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 }

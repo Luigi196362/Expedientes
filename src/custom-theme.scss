@@ -2,6 +2,31 @@
 
 @include mat.core();
 
+// Paleta principal
+$primary: mat.define-palette(mat.$blue-palette);
+
+// Tema claro con tipografía incluida
+$theme: mat.define-light-theme((color: (primary: $primary,
+        accent: mat.define-palette(mat.$green-palette),
+        warn: mat.define-palette(mat.$red-palette)),
+      typography: mat.define-typography-config(),
+    ));
+
+@include mat.all-component-themes($theme);
+
+body {
+  background: #fafafa;
+  color: #212121; // texto oscuro fijo
+  font-family: Roboto, sans-serif;
+  margin: 0;
+}
+
+
+/*
+@use '@angular/material' as mat;
+
+@include mat.core();
+
 // Definición de paletas (ejemplo)
 $primary: mat.define-palette(mat.$blue-palette, 700);
 $dark-primary: mat.define-palette(mat.$grey-palette, 900);
@@ -37,4 +62,4 @@ body.dark-theme {
   @include mat.all-component-themes($dark-theme);
   background-color: mat.get-color-from-palette($dark-primary, 900);
   color: mat.get-color-from-palette($dark-primary, 50);
-}
+}*/

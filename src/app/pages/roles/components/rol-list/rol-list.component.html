@@ -29,7 +29,7 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row">
                 <div class="table-actions">
-                    <button [disabled]="!authService.tienePermiso('roles', 'Editar')" (click)="editar(row)"
+                    <button [disabled]="!authService.tienePermiso('roles', 'Editar')" (click)="editar(row.id)"
                         routerLink="editar" style="border-radius: 10px;" mat-mini-fab extended>
                         <mat-icon>edit</mat-icon>
                     </button>

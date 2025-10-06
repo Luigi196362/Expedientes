@@ -4,16 +4,17 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="home" routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: false }">Inicio</a>
+        [routerLinkActiveOptions]="{ exact: false }"><mat-icon>home</mat-icon></a>
       <a *ngIf="authService.tienePermiso('pacientes', 'Ver')" mat-list-item routerLink="pacientes"
-        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">Administrar pacientes</a>
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: false }"><mat-icon>medical_information</mat-icon></a>
       <a *ngIf="authService.tienePermiso('usuarios', 'Ver')" mat-list-item routerLink="usuarios"
-        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">Administrar usuarios</a>
+        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>people</mat-icon></a>
       <a *ngIf="authService.tienePermiso('roles', 'Ver')" mat-list-item routerLink="roles"
-        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">Administrar roles</a>
+        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>description</mat-icon></a>
       <a *ngIf="authService.tienePermiso('registros', 'Ver')" mat-list-item routerLink="registros"
-        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">Administrar registros</a>
-      <a mat-list-item (click)="openDialog('1000ms', '0ms')">Cerrar sesión</a>
+        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>description</mat-icon></a>
+      <a mat-list-item (click)="openDialog('1000ms', '0ms')"><mat-icon>logout</mat-icon></a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

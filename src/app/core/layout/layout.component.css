@@ -3,10 +3,13 @@
 }
 
 .sidenav {
-  width: 200px;
+  width: 100px;
 
 }
 
+a {
+  text-align: center;
+}
 
 .sidenav .mat-toolbar {
   background: inherit;

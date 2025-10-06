@@ -4,7 +4,7 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: "./src/assets/img/icono",
+    icon: "./src/assets/img/UvSaludV3",
     name: 'Expedientes',
   },
   rebuildConfig: {},
@@ -14,8 +14,8 @@ module.exports = {
       config: {
         authors: 'Universidad Veracruzana - Luis Enrique Romero Pérez',
         description: 'Gestión de expedientes médicos',
-        setupIcon: "./src/assets/img/icono.ico",
-        iconUrl: "https://firebasestorage.googleapis.com/v0/b/paradigmas-luigi196362.appspot.com/o/javascript%2Fimages%2Ficono.ico?alt=media&token=30221be1-c819-4bb7-b3ef-c61eb0318003",
+        setupIcon: "./src/assets/img/UvSaludV3.ico",
+        iconUrl: "https://firebasestorage.googleapis.com/v0/b/paradigmas-luigi196362.appspot.com/o/javascript%2Fimages%2FUvSalud.ico?alt=media&token=57ef11ed-ffea-42f4-a9e7-7e059e15c9c9",
         setupShortcut: true,
       },
     },

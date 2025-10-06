@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../../../core/services/Auth/auth.service';
+import { AllPacientes } from '../../models/allPacientes.model';
 
 @Component({
   selector: 'app-paciente-list',
@@ -30,7 +31,7 @@ import { AuthService } from '../../../../core/services/Auth/auth.service';
   styleUrls: ['./paciente-list.component.css'],
 })
 export class PacienteListComponent implements AfterViewInit, OnInit {
-  Pacientes: Paciente[] = [];
+  AllPacientes!: AllPacientes;
 
   displayedColumns: string[] = [
     'matricula',
@@ -54,15 +55,15 @@ export class PacienteListComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     // Llamar al servicio para obtener los pacientes
     this.pacienteService.getPacientes().subscribe(
-      (data: Paciente[]) => {
-        this.Pacientes = data; // Guardar los datos de los pacientes
+      (data: AllPacientes) => {
+        this.AllPacientes = data; // Guardar los datos de los pacientes
 
         // Ordenar los pacientes del último al primero según fecha de creación (o id)
-        this.Pacientes.sort((a, b) => {
-          return new Date(b.fecha_creacion).getTime() - new Date(a.fecha_creacion).getTime();
-        });
+        // this.Pacientes.sort((a, b) => {
+        //   return new Date(b.fecha_creacion).getTime() - new Date(a.fecha_creacion).getTime();
+        // });
 
-        this.dataSource.data = this.Pacientes; // Asignar los datos a la tabla
+        this.dataSource.data = this.AllPacientes.pacientes; // Asignar los datos a la tabla
       },
       (error) => {
         console.error('Error al obtener pacientes:', error);
@@ -98,8 +99,8 @@ export class PacienteListComponent implements AfterViewInit, OnInit {
     return edad;
   }
 
-  editar(paciente: Paciente) {
-    this.router.navigate(['/layout/pacientes/datos'], { state: { paciente } });
+  datos(id: number) {
+    this.router.navigate(['/layout/pacientes/datos'], { state: { id } });
   }
 
 }

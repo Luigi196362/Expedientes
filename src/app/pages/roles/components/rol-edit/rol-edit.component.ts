@@ -70,36 +70,51 @@ export class RolEditComponent implements OnInit {
 
   ngOnInit(): void {
     const state = window.history.state;
-    if (state.rol) {
-      this.rol = state.rol;
 
-      console.log('Rol cargado para edición:', this.rol);
+    if (state.id) {
+      this.rolService.obtenerRolPorId(state.id).subscribe(
+        (data: Rol) => {
+          this.rol = data;
+          console.log('Rol cargado para edición API:', this.rol);
 
-      // Asignamos los valores básicos del rol
-      this.rolForm.patchValue({
-        nombre: this.rol?.nombre,
-        descripcion: this.rol?.descripcion,
-      });
+          // Cargamos los datos básicos
+          this.rolForm.patchValue({
+            nombre: this.rol.nombre,
+            descripcion: this.rol.descripcion
+          });
 
-      // Recorremos cada permiso del rol recibido y lo sincronizamos según el recursoId
-      // Se asume que this.rol.permisos tiene la estructura { recursoId: number, accionesIds: number[] }
-      this.rol?.permisos.forEach((permisoFromRol: any) => {
-        // Buscamos el índice del permiso en nuestro arreglo de permisos mediante el recursoId
-        const index = this.permisos.findIndex(permiso => permiso.id === permisoFromRol.recursoId);
-        if (index !== -1) {
-          const accionesArray = this.getAcciones(index);
-          // Por cada acción definida en el componente, marcamos el checkbox si corresponde
-          this.acciones.forEach((accion, j) => {
-            const checked = permisoFromRol.accionesIds.includes(accion.id);
-            accionesArray.at(j).setValue(checked);
+          // Recorremos los permisos del rol recibido
+          this.rol.permisos.forEach((permisoFromApi: any) => {
+            // Buscamos el permiso local correspondiente por nombre del recurso
+            const index = this.permisos.findIndex(
+              (p) => p.recurso.toLowerCase() === permisoFromApi.recurso.toLowerCase()
+            );
+
+            if (index !== -1) {
+              const accionesArray = this.getAcciones(index);
+
+              // Marcamos los checkboxes si las acciones coinciden por nombre
+              this.acciones.forEach((accion, j) => {
+                const checked = (permisoFromApi.acciones as string[]).some(
+                  (nombreAccion: string) => nombreAccion.toLowerCase() === accion.nombre.toLowerCase()
+                );
+                accionesArray.at(j).setValue(checked);
+              });
+            }
+          });
+        },
+        (error) => {
+          console.error('Error al obtener el rol:', error);
+          this.dialog.open(ErrorDialogComponent, {
+            data: { message: 'Error al cargar los datos del rol' }
           });
         }
-      });
+      );
     } else {
-      // Si no se pasa un rol en el state, redirigimos a la lista de roles
       this.router.navigate(['/layout/roles']);
     }
   }
+
 
   get permisosFormArray(): FormArray {
     return this.rolForm.get('permisos') as FormArray;

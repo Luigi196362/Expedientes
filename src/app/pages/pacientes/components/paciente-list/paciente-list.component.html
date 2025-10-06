@@ -1,3 +1,22 @@
+<div class="header">
+
+  <div class='info'>
+    Cantidad de registros:
+    {{AllPacientes?.cantidad_registros}}
+  </div>
+
+  <div class='info'>
+    Cantidad de hombres:
+    {{AllPacientes?.cantidad_hombres}}
+  </div>
+
+  <div class='info'>
+    Cantidad de mujeres:
+    {{AllPacientes?.cantidad_mujeres}}
+  </div>
+
+</div>
+
 <div class="actions">
   <mat-form-field>
     <mat-label>Filtro</mat-label>
@@ -46,7 +65,7 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
         <div class="table-actions">
-          <button [disabled]="!authService.tienePermiso('pacientes', 'Ver')" (click)="editar(row)" routerLink="datos"
+          <button [disabled]="!authService.tienePermiso('pacientes', 'Ver')" (click)="datos(row.id)" routerLink="datos"
             style="border-radius: 10px;" mat-mini-fab extended>
             <mat-icon>description</mat-icon>
           </button>

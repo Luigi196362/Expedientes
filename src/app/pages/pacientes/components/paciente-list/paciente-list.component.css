@@ -34,3 +34,14 @@ table {
 table tr:hover:not(:has(th)) {
     background-color: rgba(0, 0, 0, 0.085);
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+
+.info {
+    background-color: rgba(131, 131, 131, 0.186);
+    padding: 20px;
+}

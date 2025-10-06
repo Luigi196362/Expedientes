@@ -15,34 +15,29 @@ export class RolService {
     private httpConnection: HttpConnectionService
   ) { }
 
-  // Obtener todos los roles
   getRoles(): Observable<Rol[]> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver`;
     return this.http.get<Rol[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
-  // Obtener todos los roles
   getRolesNombres(): Observable<Rol[]> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver/nombres`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver/Nombres`;
     return this.http.get<Rol[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
-  // Guardar un Rol
   guardarRol(rol: Rol): Observable<Rol> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/crear`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Crear`;
     return this.http.post<Rol>(url, rol, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
-
-  // // Obtener un paciente por ID
-  // obtenerPacientePorId(id: number): Observable<Paciente> {
-  //   const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/${id}`;
-  //   return this.http.get<Paciente>(url, { headers: this.httpConnection.getDefaultHeaders() });
-  // }
+  obtenerRolPorId(id: number): Observable<Rol> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver/${id}`;
+    return this.http.get<Rol>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  }
 
   // Actualizar un rol por ID
   actualizarRol(id: number, rol: Rol): Observable<Rol> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/editar/${id}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Editar/${id}`;
     return this.http.put<Rol>(url, rol, { headers: this.httpConnection.getDefaultHeaders() });
   }
 

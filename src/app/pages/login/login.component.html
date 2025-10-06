@@ -1,30 +1,35 @@
 <div class="container">
-    <img class="logo" src="assets/img/logo.png" />
-    <div class="divider"></div>
+    <section class="left-section">
 
-    <!-- Agregamos (ngSubmit) para manejar el envío del formulario -->
-    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-        <h1>Inicio de sesión</h1>
+        <div class="logo-container">
+            <img class="logo" src="assets/img/logo.png" />
+            <label class="logo-title">Universidad Veracruzana</label>
+        </div>
+    </section>
 
-        <!-- Mensaje de error -->
-        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-        <mat-form-field class="form-field">
-            <mat-label>Nombre de usuario</mat-label>
-            <input matInput [(ngModel)]="loginData.username" name="username" required>
-        </mat-form-field>
+    <section class="right-section">
+        <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
+            <h1 class="login-title">Inicio de sesión</h1>
 
-        <mat-form-field class="form-field">
-            <mat-label>Ingresa la contraseña</mat-label>
-            <input matInput [(ngModel)]="loginData.password" name="password" [type]="hide() ? 'password' : 'text'"
-                required>
-            <button mat-icon-button matSuffix type="button" (click)="clickEvent($event)"
-                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
-                <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-        </mat-form-field>
+            <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-        <!-- Cambiamos el botón a type="submit" para que el formulario lo maneje correctamente -->
-        <button type="submit" mat-flat-button color="accent" [disabled]="loginForm.invalid">Iniciar sesión</button>
-    </form>
+            <mat-form-field class="form-field">
+                <mat-label>Nombre de usuario</mat-label>
+                <input matInput [(ngModel)]="loginData.username" name="username" required>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <mat-label>Ingresa la contraseña</mat-label>
+                <input matInput [(ngModel)]="loginData.password" name="password" [type]="hide() ? 'password' : 'text'"
+                    required>
+                <button mat-icon-button matSuffix type="button" (click)="clickEvent($event)"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+                    <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <button type="submit" mat-flat-button color="accent" [disabled]="loginForm.invalid">Iniciar sesión</button>
+        </form>
+    </section>
 </div>

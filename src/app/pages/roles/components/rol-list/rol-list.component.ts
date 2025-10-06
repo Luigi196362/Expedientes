@@ -80,8 +80,8 @@ export class RolListComponent implements AfterViewInit, OnInit {
     }
   }
 
-  editar(rol: Rol) {
-    this.router.navigate(['/layout/roles/editar'], { state: { rol } });
+  editar(id: number) {
+    this.router.navigate(['/layout/roles/editar'], { state: { id } });
   }
 
 }

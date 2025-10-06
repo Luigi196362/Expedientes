@@ -52,9 +52,13 @@ export class UsuarioCreateComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private rolService: RolService, private usuarioService: UsuarioService, private router: Router) {
     this.usuarioForm = this.fb.group({
-      username: ['', Validators.required],
+      nombre: ['', Validators.required],
+      curp: ['', Validators.required],
+      rfc: ['', Validators.required],
+      cedulaProfesional: ['', Validators.required],
+      especialidad: ['', Validators.required],
       telefono: ['', Validators.required],
-      rol: ['', Validators.required],
+      rolId: ['', Validators.required],
       facultad: ['', Validators.required],
       password: ['', Validators.required]
     });

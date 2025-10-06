@@ -49,25 +49,35 @@ export class UsuarioEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private usuarioService: UsuarioService, private router: Router, private rolService: RolService) {
     this.usuarioForm = this.fb.group({
-      username: ['', Validators.required],
+      nombre: ['', Validators.required],
+      curp: ['', Validators.required],
+      rfc: ['', Validators.required],
+      cedulaProfesional: ['', Validators.required],
+      especialidad: ['', Validators.required],
       telefono: ['', Validators.required],
-      rol: [null, Validators.required],
+      rolId: ['', Validators.required],
       facultad: ['', Validators.required],
-      password: ['']
+      password: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
     const state = window.history.state;
-    if (state.usuario) {
-      this.usuario = state.usuario;
-      if (this.usuario) {
-        this.usuario.rol = state.usuario.rolId;
-      }
-      console.log('Usuario cargado para edición:', this.usuario);
-      this.usuarioForm.patchValue(state.usuario);
+
+    // console.log('Estado recibido:', state);
+
+    if (state.id) {
+      this.usuarioService.obtenerUsuarioPorId(state.id).subscribe(
+        (data: Usuario) => {
+          this.usuario = data;
+          console.log('Usuario cargado para edición api:', this.usuario);
+          this.usuarioForm.patchValue(this.usuario);
+        },
+        (error) => {
+          console.error('Error al obtener usuarios:', error);
+        }
+      );
     } else {
-      // Redirigir si no hay datos (por ejemplo, si se accede directamente a la URL)
       this.router.navigate(['/layout/usuarios']);
     }
 
@@ -89,13 +99,13 @@ export class UsuarioEditComponent implements OnInit {
   }
 
   isFormDirty(): boolean {
-    return this.usuarioForm.dirty;  // Devuelve true si el formulario tiene cambios
+    return this.usuarioForm.dirty;
   }
+
   onSave(): void {
     if (this.usuarioForm.valid) {
       this.isSaving = true;
 
-      // Obtenemos el valor actual del formulario.
       const formData = this.usuarioForm.value;
 
       // Buscamos en el arreglo 'roles' el rol cuyo 'value' (id) coincida con el seleccionado.

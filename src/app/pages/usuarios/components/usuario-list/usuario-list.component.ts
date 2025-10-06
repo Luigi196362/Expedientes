@@ -37,6 +37,7 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
 
   displayedColumns: string[] = [
     'username',
+    'nombre',
     'telefono',
     'facultad',
     'fecha_creacion',
@@ -91,8 +92,8 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
     }
   }
 
-  editar(usuario: Usuario) {
-    this.router.navigate(['/layout/usuarios/editar'], { state: { usuario } });
+  editar(id: number) {
+    this.router.navigate(['/layout/usuarios/editar'], { state: { id } });
   }
 
   crear(modo: String) {
@@ -106,7 +107,7 @@ export class UsuarioListComponent implements AfterViewInit, OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
+        console.log('El usuario confirmó la eliminación del usuario con ID:', usuario.id);
         this.usuarioService.eliminarUsuario(usuario.id).subscribe(
           () => {
             // Actualizar la lista de usuarios después de eliminar

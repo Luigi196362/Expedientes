@@ -14,7 +14,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RegistroDialogComponent } from './registro-dialog/registro-dialog.component';
 import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
-import { InformativeDialogComponent } from '../../../../shared/informative-dialog/informative-dialog.component';
 
 @Component({
   selector: 'app-paciente-data',
@@ -38,7 +37,7 @@ export class PacienteDataComponent implements OnInit {
   paciente: Paciente | null = null;
   res: number = 0;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private usuarioService: PacienteService, private router: Router) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteService: PacienteService, private router: Router) {
     this.pacienteForm = this.fb.group({
       nombre: ['', Validators.required],
       estado_civil: ['', Validators.required],
@@ -63,17 +62,23 @@ export class PacienteDataComponent implements OnInit {
 
   ngOnInit(): void {
     const state = window.history.state;
-    console.log('Estado:', state.paciente);
-    if (state.paciente) {
-      this.paciente = state.paciente;
+    console.log('Estado:', state);
 
-      console.log('Usuario cargado para edición:', this.paciente);
-      this.pacienteForm.patchValue(state.paciente);
+    if (state.id) {
+
+      this.pacienteService.obtenerPacientePorId(state.id).subscribe(
+        (data: Paciente) => {
+          this.paciente = data;
+          console.log('Paciente cargado para edición api:', this.paciente);
+          this.pacienteForm.patchValue(this.paciente);
+        },
+        (error) => {
+          console.error('Error al obtener usuarios:', error);
+        }
+      );
     } else {
-      // Redirigir si no hay datos (por ejemplo, si se accede directamente a la URL)
-
       console.log('Error al cargar los datos:', this.paciente);
-      //this.router.navigate(['/layout/pacientes']);
+      this.router.navigate(['/layout/pacientes']);
     }
   }
 

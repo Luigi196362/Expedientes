@@ -7,7 +7,27 @@
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Nombre completo</mat-label>
-                    <input matInput formControlName="username" autocomplete="username">
+                    <input matInput formControlName="nombre" autocomplete="nombre">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>CURP</mat-label>
+                    <input matInput formControlName="curp" autocomplete="off" maxlength="18">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>RFC</mat-label>
+                    <input matInput formControlName="rfc" autocomplete="off" maxlength="13">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>Cédula profesional</mat-label>
+                    <input matInput formControlName="cedulaProfesional" autocomplete="off" maxlength="20">
+                </mat-form-field>
+
+                <mat-form-field class="form-field" color="accent">
+                    <mat-label>Especialidad</mat-label>
+                    <input matInput formControlName="especialidad" autocomplete="off" maxlength="50">
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
@@ -25,7 +45,7 @@
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Rol</mat-label>
-                    <mat-select formControlName="rol">
+                    <mat-select formControlName="rolId">
                         @for (rol of roles; track rol) {
                         <mat-option [value]="rol.value">{{rol.viewValue}}</mat-option>
                         }

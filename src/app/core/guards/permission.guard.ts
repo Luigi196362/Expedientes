@@ -20,7 +20,6 @@ export class PermissionGuard implements CanActivate {
         if (this.authService.tienePermiso(modulo, accion)) {
             return true;
         } else {
-            // Puedes redirigir a una página de "no autorizado"
             this.router.navigate(['/404']);
             return false;
         }
