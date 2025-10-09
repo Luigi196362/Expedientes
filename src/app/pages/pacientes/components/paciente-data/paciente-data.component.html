@@ -3,148 +3,134 @@
 
         <!-- Información Personal -->
         <mat-tab label="Información Personal">
-            <form [formGroup]="pacienteForm" class="seccion">
+            <div class="seccion">
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Nombre completo</mat-label>
-                    <input matInput formControlName="nombre">
+                    <input matInput [value]="paciente?.nombre" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Fecha de nacimiento</mat-label>
-                    <input type="date" matInput formControlName="fecha_nacimiento" min="1900-01-01">
+                    <input matInput [value]="paciente?.fecha_nacimiento | date:'yyyy-MM-dd'" readonly>
                 </mat-form-field>
-
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Estado civil</mat-label>
-                    <mat-select formControlName="estado_civil">
-                        <mat-option value="Soltero(a)">Soltero(a)</mat-option>
-                        <mat-option value="Casado(a)">Casado(a)</mat-option>
-                        <mat-option value="Divorciado(a)">Divorciado(a)</mat-option>
-                        <mat-option value="Viudo(a)">Viudo(a)</mat-option>
-                        <mat-option value="Unión Libre">Unión Libre</mat-option>
-                        <mat-option value="Separado(a)">Separado(a)</mat-option>
-                        <mat-option value="Otros">Otro</mat-option>
-                    </mat-select>
+                    <input matInput [value]="paciente?.estado_civil" readonly>
                 </mat-form-field>
-
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Origen</mat-label>
-                    <input matInput formControlName="origen">
+                    <input matInput [value]="paciente?.origen" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
-                    <mat-label>Ocupacion</mat-label>
-                    <input matInput formControlName="ocupacion">
+                    <mat-label>Ocupación</mat-label>
+                    <input matInput [value]="paciente?.ocupacion" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Residencia</mat-label>
-                    <input matInput formControlName="residencia">
+                    <input matInput [value]="paciente?.residencia" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Sexo</mat-label>
-                    <mat-select formControlName="sexo">
-                        <mat-option value="1">Masculino</mat-option>
-                        <mat-option value="2">Femenino</mat-option>
-                    </mat-select>
+                    <input matInput [value]="paciente?.sexo == 1 ? 'Masculino' : 'Femenino'" readonly>
                 </mat-form-field>
 
-
-
-            </form>
+            </div>
         </mat-tab>
 
         <!-- Información Académica -->
         <mat-tab label="Información Académica">
-            <form class="seccion" [formGroup]="pacienteForm">
+            <div class="seccion">
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Matrícula</mat-label>
-                    <input matInput formControlName="matricula">
+                    <input matInput [value]="paciente?.matricula" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Semestre</mat-label>
-                    <input type="number" matInput formControlName="semestre">
+                    <input matInput [value]="paciente?.semestre" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Facultad</mat-label>
-                    <input matInput formControlName="facultad">
+                    <input matInput [value]="paciente?.facultad" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Grupo</mat-label>
-                    <input type="number" matInput formControlName="grupo">
+                    <input matInput [value]="paciente?.grupo" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Programa Educativo</mat-label>
-                    <input matInput formControlName="programa_educativo">
+                    <input matInput [value]="paciente?.programa_educativo" readonly>
                 </mat-form-field>
 
-            </form>
+            </div>
         </mat-tab>
 
         <!-- Contacto y Seguridad Social -->
         <mat-tab label="Contacto y Seguridad Social">
-            <form class="seccion" [formGroup]="pacienteForm">
+            <div class="seccion">
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Número de teléfono</mat-label>
-                    <span matTextPrefix style="color: gray;">+52 &nbsp;</span>
-                    <input matInput formControlName="telefono">
+                    <input matInput [value]="paciente?.telefono" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>NSS</mat-label>
-                    <input type="number" matInput formControlName="nss">
+                    <input matInput [value]="paciente?.nss" readonly>
                 </mat-form-field>
 
-            </form>
+            </div>
         </mat-tab>
 
         <!-- Información Adicional -->
         <mat-tab label="Información Adicional">
-            <form class="seccion" [formGroup]="pacienteForm">
+            <div class="seccion">
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Religión</mat-label>
-                    <input matInput formControlName="religion">
+                    <input matInput [value]="paciente?.religion" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Escolaridad</mat-label>
-                    <input matInput formControlName="escolaridad">
+                    <input matInput [value]="paciente?.escolaridad" readonly>
                 </mat-form-field>
 
-            </form>
+            </div>
         </mat-tab>
-        <!-- Información Adicional -->
+
+        <!-- Registros -->
         <mat-tab label="Registros">
-            <form class="seccion" [formGroup]="pacienteForm">
+            <div class="seccion" *ngIf="(paciente?.registros?.length ?? 0) > 0; else sinRegistros">
+                <mat-card *ngFor="let registro of paciente?.registros" class="registro-card">
+                    <mat-card-content>
+                        <p><strong>ID:</strong> {{ registro.registro_id }}</p>
+                        <p><strong>Tipo de Registro:</strong> {{ registro.tipo_registro }}</p>
+                        <p><strong>Fecha de Creación:</strong> {{ registro.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}
+                        </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
 
-                <!-- <mat-form-field class="form-field" color="accent">
-                    <mat-label>Religión</mat-label>
-                    <input matInput formControlName="religion">
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Escolaridad</mat-label>
-                    <input matInput formControlName="escolaridad">
-                </mat-form-field> -->
-
-            </form>
+            <ng-template #sinRegistros>
+                <p style="text-align: center; color: gray;">No hay registros disponibles.</p>
+            </ng-template>
         </mat-tab>
+
 
     </mat-tab-group>
 </div>
 
 <div class="form-actions">
-    <!-- <button mat-raised-button routerLink="/layout/pacientes" color="warn">Cancelar</button> -->
     <button mat-raised-button color="accent" (click)="crearRegistro()">Crear Registro</button>
 </div>

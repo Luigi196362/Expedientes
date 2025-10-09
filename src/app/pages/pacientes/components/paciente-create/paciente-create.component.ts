@@ -198,4 +198,45 @@ export class PacienteCreateComponent {
     }
   }
 
+  generarPacienteAleatorio(): void {
+    const nombres = ['Juan Pérez', 'María López', 'Carlos Hernández', 'Ana Torres', 'Luis Gómez', 'Laura Martínez', 'José Ramírez', 'Carmen Díaz'];
+    const estadosCiviles = ['Soltero(a)', 'Casado(a)', 'Divorciado(a)', 'Viudo(a)', 'Unión Libre', 'Separado(a)'];
+    const ocupaciones = ['Estudiante', 'Empleado', 'Desempleado', 'Freelancer', 'Docente'];
+    const residencias = ['Xalapa', 'Veracruz', 'Córdoba', 'Orizaba', 'Poza Rica', 'Coatzacoalcos'];
+    const facultades = ['Ingeniería', 'Derecho', 'Medicina', 'Artes', 'Biología', 'Contaduría'];
+    const programas = ['Sistemas Computacionales', 'Derecho', 'Psicología', 'Arquitectura', 'Contaduría', 'Biología Marina'];
+    const religiones = ['Católica', 'Cristiana', 'Atea', 'Budista', 'Judía'];
+    const escolaridades = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad', 'Posgrado'];
+
+    const random = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+    const randomDate = new Date(
+      1980 + Math.floor(Math.random() * 25),
+      Math.floor(Math.random() * 12),
+      Math.floor(Math.random() * 28) + 1
+    );
+    const randomMatricula = 'A' + Math.floor(100000 + Math.random() * 900000);
+    const randomGrupo = Math.floor(100 + Math.random() * 900).toString();
+    const randomTelefono = '55' + Math.floor(10000000 + Math.random() * 90000000).toString();
+    const randomNss = Math.floor(10000000000 + Math.random() * 90000000000).toString();
+
+    this.pacienteForm.patchValue({
+      nombre: random(nombres),
+      fecha_nacimiento: randomDate,
+      estado_civil: random(estadosCiviles),
+      origen: 'México',
+      ocupacion: random(ocupaciones),
+      residencia: random(residencias),
+      sexo: Math.random() > 0.5 ? '1' : '2',
+      matricula: randomMatricula,
+      semestre: (Math.floor(Math.random() * 10) + 1).toString(),
+      facultad: random(facultades),
+      grupo: randomGrupo,
+      programa_educativo: random(programas),
+      telefono: randomTelefono,
+      nss: randomNss,
+      religion: random(religiones),
+      escolaridad: random(escolaridades)
+    });
+  }
+
 }

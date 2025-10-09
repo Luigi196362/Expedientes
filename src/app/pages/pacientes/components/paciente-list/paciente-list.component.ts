@@ -58,10 +58,10 @@ export class PacienteListComponent implements AfterViewInit, OnInit {
       (data: AllPacientes) => {
         this.AllPacientes = data; // Guardar los datos de los pacientes
 
-        // Ordenar los pacientes del último al primero según fecha de creación (o id)
-        // this.Pacientes.sort((a, b) => {
-        //   return new Date(b.fecha_creacion).getTime() - new Date(a.fecha_creacion).getTime();
-        // });
+        //Ordenar los pacientes del último al primero según fecha de creación (o id)
+        this.AllPacientes.pacientes.sort((a, b) => {
+          return new Date(b.fecha_creacion).getTime() - new Date(a.fecha_creacion).getTime();
+        });
 
         this.dataSource.data = this.AllPacientes.pacientes; // Asignar los datos a la tabla
       },

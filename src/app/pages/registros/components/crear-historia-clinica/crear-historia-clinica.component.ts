@@ -92,7 +92,7 @@ export class CrearHistoriaClinicaComponent implements OnInit {
         if (result) {  // Si el usuario confirma
           const nuevaHistoria: Historia_clinica = { ...this.historiaForm.value };
 
-          this.registrosService.guardarHistoria(this.nameUser, this.idPaciente, nuevaHistoria).subscribe({
+          this.registrosService.guardarHistoria(this.idPaciente, nuevaHistoria).subscribe({
             next: () => {
               this.historiaForm.markAsPristine();  // Restablecer el formulario
               this.router.navigate(['/layout/pacientes']);

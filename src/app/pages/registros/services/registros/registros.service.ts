@@ -17,24 +17,24 @@ export class RegistroService {
     private httpConnection: HttpConnectionService
   ) { }
 
-  getNotas(): Observable<Registro[]> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver`;
-    return this.http.get<Registro[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
-  }
+  // getNotas(): Observable<Registro[]> {
+  //   const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver`;
+  //   return this.http.get<Registro[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  // }
 
-  guardarNota(nombreUsuario: String, idPaciente: number, notas_evolucion: Nota_Evolucion): Observable<Nota_Evolucion> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/crear/nota/${nombreUsuario}/${idPaciente}`;
+  guardarNota(idPaciente: number, notas_evolucion: Nota_Evolucion): Observable<Nota_Evolucion> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Crear/Nota/${idPaciente}`;
     return this.http.post<Nota_Evolucion>(url, notas_evolucion, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
-  guardarHistoria(nombreUsuario: String, idPaciente: number, historia_clinica: Historia_clinica): Observable<Historia_clinica> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/crear/historia/${nombreUsuario}/${idPaciente}`;
+  guardarHistoria(idPaciente: number, historia_clinica: Historia_clinica): Observable<Historia_clinica> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Crear/Historia/${idPaciente}`;
     return this.http.post<Historia_clinica>(url, historia_clinica, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
-  // Exportar registros a PDF
-  exportar(): Observable<Blob> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/exportar`;
-    return this.http.get(url, { headers: this.httpConnection.getDefaultHeaders(), responseType: 'blob' });
-  }
+  // // Exportar registros a PDF
+  // exportar(): Observable<Blob> {
+  //   const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Exportar`;
+  //   return this.http.get(url, { headers: this.httpConnection.getDefaultHeaders(), responseType: 'blob' });
+  // }
 }

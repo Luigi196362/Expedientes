@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, NgModule, signal, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgModule, signal, ChangeDetectorRef, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,25 +8,37 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/Auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, FormsModule, CommonModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    CommonModule,
+    MatSlideToggleModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginData = { username: '', password: '' };
   errorMessage: string = '';
+  isDarkTheme?: boolean;
 
   constructor(
     private router: Router,
-    private http: HttpClient,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef // Añadir ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) { }
+
+  ngOnInit(): void {
+    this.isDarkTheme = document.body.classList.contains('dark-theme');
+  }
 
   hide = signal(true);
 
@@ -36,13 +48,12 @@ export class LoginComponent {
   }
 
   onLogin() {
-    // Reiniciar el mensaje de error
+
     this.errorMessage = '';
 
-    // Verificar que los campos no estén vacíos
     if (!this.loginData.username || !this.loginData.password) {
       this.errorMessage = 'Por favor, ingresa tu usuario y contraseña.';
-      this.cdr.detectChanges(); // Forzar la detección de cambios
+      this.cdr.detectChanges();
       return;
     }
 
@@ -61,6 +72,22 @@ export class LoginComponent {
         this.cdr.detectChanges(); // Forzar la detección de cambios
       }
     );
+  }
+
+  toggleDarkTheme(isDark: boolean): void {
+    this.isDarkTheme = isDark;
+
+    const body = document.body;
+    if (isDark) {
+      body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      body.classList.remove('dark-theme');
+      localStorage.setItem('theme', 'light');
+    }
+
+    // Forzamos la detección de cambios sin recargar
+    this.cdr.detectChanges();
   }
 
 }

@@ -1,5 +1,5 @@
 <div class="container">
-    <section class="left-section">
+    <section class="left-section" [ngClass]="isDarkTheme ? 'dark' : 'light'">
 
         <div class="logo-container">
             <img class="logo" src="assets/img/logo.png" />
@@ -8,9 +8,20 @@
     </section>
 
 
-    <section class="right-section">
+    <section class="right-section" [ngClass]="isDarkTheme ? 'dark' : 'light'">
+        <!-- Botón de alternar tema -->
+
+        <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme"
+            class="theme-toggle-container">
+            <mat-icon class="theme-toggle" [ngClass]="isDarkTheme ? 'dark' : 'light'">
+                <!-- {{ isDarkTheme ? 'light_mode' : 'dark_mode' }} -->
+                dark_mode
+            </mat-icon>
+        </mat-slide-toggle>
+
+
         <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
-            <h1 class="login-title">Inicio de sesión</h1>
+            <h1 [ngClass]="isDarkTheme ? 'login-title-dark':'login-title-white'">Inicio de sesión</h1>
 
             <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 

@@ -38,7 +38,7 @@ import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-to
 export class LayoutComponent implements OnInit, OnDestroy {
   pageTitle = '';
   currentDate: Date = new Date();
-  isDarkTheme: boolean = false;
+  isDarkTheme?: boolean;
   timeInterval: any;
   private clockSubscription!: Subscription;
 

@@ -12,8 +12,8 @@
         routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>people</mat-icon></a>
       <a *ngIf="authService.tienePermiso('roles', 'Ver')" mat-list-item routerLink="roles"
         routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>description</mat-icon></a>
-      <a *ngIf="authService.tienePermiso('registros', 'Ver')" mat-list-item routerLink="registros"
-        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>description</mat-icon></a>
+      <!-- <a *ngIf="authService.tienePermiso('registros', 'Ver')" mat-list-item routerLink="registros"
+        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>description</mat-icon></a> -->
       <a mat-list-item (click)="openDialog('1000ms', '0ms')"><mat-icon>logout</mat-icon></a>
     </mat-nav-list>
   </mat-sidenav>

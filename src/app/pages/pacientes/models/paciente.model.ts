@@ -1,3 +1,5 @@
+import { registros } from "./registros.model";
+
 export class Paciente {
     id: number = 0;
     matricula: String = "";
@@ -18,4 +20,6 @@ export class Paciente {
     facultad: String = "";
     activo: boolean = true;
     fecha_creacion: Date = new Date();
+    registros: registros[] = [];
+
 }

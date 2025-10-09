@@ -14,11 +14,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RegistroDialogComponent } from './registro-dialog/registro-dialog.component';
 import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
+import { CommonModule } from '@angular/common';
+import { MatCard, MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-paciente-data',
   standalone: true,
   imports: [
+    MatCardModule,
+    CommonModule,
     MatFormFieldModule,
     MatTabsModule,
     MatInputModule,
@@ -99,6 +103,7 @@ export class PacienteDataComponent implements OnInit {
       if (this.res == 1) {
         console.log('Redirigiendo a crear registro');
         console.log(window.history.state, "Enviar")
+        console.log(this.paciente)
         this.router.navigate(['/layout/registros/crearHistoriaClinica'], { state: { paciente: this.paciente } });
       }
 

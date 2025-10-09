@@ -104,7 +104,7 @@ export class CrearNotasEvolucionComponent implements OnInit {
         if (result) {  // Si el usuario confirma
           const nuevaNota: Nota_Evolucion = { ...this.notaForm.value };
 
-          this.registrosService.guardarNota(this.nameUser, this.idPaciente, nuevaNota).subscribe({
+          this.registrosService.guardarNota(this.idPaciente, nuevaNota).subscribe({
             next: () => {
               this.notaForm.markAsPristine();  // Restablecer el formulario
               this.router.navigate(['/layout/pacientes']);
