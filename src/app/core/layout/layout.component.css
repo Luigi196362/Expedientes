@@ -8,6 +8,7 @@
 }
 
 .navbar {
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,6 +45,7 @@
 
 .sidenav {
   display: grid;
+  z-index: 2;
   grid-template-rows: 1fr 1fr;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
   text-align: center;
@@ -123,7 +125,7 @@
 }
 
 .content {
-  z-index: -1;
+  z-index: 1;
   padding: 1%;
 }
 
