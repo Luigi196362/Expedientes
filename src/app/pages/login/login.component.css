@@ -6,10 +6,16 @@
 }
 
 .logo-container {
+    position: relative;
     height: 5%;
-    width: fit-content;
+    width: 38%;
     display: flex;
     align-items: center;
+    background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%);
+    /* background: linear-gradient(to right, #3682d8 0%, #1d75d900 100%); */
+    /* background-color: #1d75d9; */
+    border-bottom-right-radius: 10px;
+    padding: 1%;
 }
 
 .logo {
@@ -25,15 +31,18 @@
 
 .left-section {
     height: 100vh;
+    background-image: url('/assets/img/Medicina.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .left-section.light {
-    background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%);
-
+    /* background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%); */
 }
 
 .left-section.dark {
-    background: linear-gradient(135deg, #17b368 0%, #185eaf 100%);
+    /* background: linear-gradient(135deg, #17b368 0%, #185eaf 100%); */
 }
 
 .right-section {
@@ -51,7 +60,7 @@
     background: linear-gradient(135deg, #232526 0%, #414345 100%);
 }
 
-.right-section .theme-toggle-container {
+.theme-toggle-container {
     justify-self: end;
     margin-right: 2rem;
 
@@ -81,13 +90,15 @@
     flex-direction: column;
 }
 
-.login-title-white {
+.login-title {
     text-align: start;
+}
+
+.login-title.white {
     color: black;
 }
 
-.login-title-dark {
-    text-align: start;
+.login-title.dark {
     color: #ffffff;
 }
 
@@ -95,19 +106,19 @@
 @media (max-width: 568px) {
     .logo {
         display: none;
-        /* Oculta el logo en pantallas pequeñas */
+
     }
 
     .left-section {
         display: none;
-        /* Oculta la sección izquierda en pantallas pequeñas */
+
     }
 
     .container {
         grid-template-columns: 1fr;
-        /* Una sola columna en móviles */
+
         justify-content: center;
-        /* Centra el formulario horizontalmente */
+
     }
 
 
@@ -119,3 +130,57 @@
     text-align: center;
     margin-bottom: 10px;
 }
+
+/* 
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 5% 95%;
+}
+
+.container.white {
+    background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%);
+}
+
+.container.dark {
+    background: linear-gradient(135deg, #505050 0%, #2e2e2e 100%);
+}
+
+.login-form {
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    height: 50%;
+    width: 50%;
+    padding: 2%;
+    border-radius: 10px;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.800);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle.light {
+    color: darkslategrey;
+}
+
+.theme-toggle.dark {
+    color: burlywood;
+}
+
+.theme-toggle-container {
+    justify-self: end;
+    padding: 1%;
+}
+
+.login-title {
+    text-align: center;
+}
+
+.login-title.white {
+    color: black;
+}
+
+.login-title.dark {
+    color: #ffffff;
+} */

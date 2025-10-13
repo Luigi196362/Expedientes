@@ -1,47 +1,54 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="home" routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: false }"><mat-icon>home</mat-icon></a>
-      <a *ngIf="authService.tienePermiso('pacientes', 'Ver')" mat-list-item routerLink="pacientes"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: false }"><mat-icon>medical_information</mat-icon></a>
-      <a *ngIf="authService.tienePermiso('usuarios', 'Ver')" mat-list-item routerLink="usuarios"
-        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>people</mat-icon></a>
-      <a *ngIf="authService.tienePermiso('roles', 'Ver')" mat-list-item routerLink="roles"
-        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>description</mat-icon></a>
-      <!-- <a *ngIf="authService.tienePermiso('registros', 'Ver')" mat-list-item routerLink="registros"
-        routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }"><mat-icon>description</mat-icon></a> -->
-      <a mat-list-item (click)="openDialog('1000ms', '0ms')"><mat-icon>logout</mat-icon></a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <!-- Botón para mobile -->
-      <button *ngIf="(isHandset$ | async)" type="button" aria-label="Toggle sidenav" mat-icon-button
-        (click)="drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+<div class="container">
 
-      <div class="barra">
-        <span>{{ pageTitle }}</span>
-        <!-- Mostrar fecha y hora actual -->
-        <span class="date-time">
-          {{ currentDate | date:'mediumDate' }} - {{ currentDate | date:'mediumTime' }}
-        </span>
+  <header class="navbar" [ngClass]="isDarkTheme ? 'dark' : 'light'">
 
-        <!-- Botón de alternar tema -->
-        <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme" class="dark-theme-toggle">
-          <mat-icon>dark_mode</mat-icon>
-        </mat-slide-toggle>
+    <img src="assets/img/UvSaludV3.png" alt="Logo" class="logo">
+
+    <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme" class="theme-toggle-container">
+      <mat-icon class="theme-toggle" [ngClass]="isDarkTheme ? 'dark' : 'light'">
+        dark_mode
+      </mat-icon>
+    </mat-slide-toggle>
+
+  </header>
+
+  <section class="main-content" [ngClass]="isDarkTheme ? 'dark' : 'light'">
+
+    <aside class="sidenav" [ngClass]="isDarkTheme ? 'dark' : 'light'">
+
+      <div class="nav-list-top">
+
+        <a routerLink="home" class="links" routerLinkActive="active-link" [ngClass]="isDarkTheme ? 'dark' : 'light'"
+          [routerLinkActiveOptions]="{ exact: false }"><mat-icon class="icons"
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">home</mat-icon></a>
+
+        <a *ngIf="authService.tienePermiso('pacientes', 'Ver')" routerLink="pacientes" class="links"
+          routerLinkActive="active-link" [ngClass]="isDarkTheme ? 'dark' : 'light'"
+          [routerLinkActiveOptions]="{ exact: false }"><mat-icon class="icons"
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">medical_information</mat-icon></a>
+
+        <a *ngIf="authService.tienePermiso('usuarios', 'Ver')" routerLink="usuarios" class="links"
+          routerLinkActive="active-link" [ngClass]="isDarkTheme ? 'dark' : 'light'"
+          [routerLinkActiveOptions]="{ exact: false }"><mat-icon class="icons"
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">people</mat-icon></a>
+
+        <a *ngIf="authService.tienePermiso('roles', 'Ver')" routerLink="roles" class="links"
+          routerLinkActive="active-link" [ngClass]="isDarkTheme ? 'dark' : 'light'"
+          [routerLinkActiveOptions]="{ exact: false }"><mat-icon class="icons"
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">description</mat-icon></a>
+
       </div>
 
-    </mat-toolbar>
+      <div class="nav-list-bottom">
+        <a (click)="openDialog('1000ms', '0ms')" class="links logout"
+          [ngClass]="isDarkTheme ? 'dark' : 'light'"><mat-icon class="icons"
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">logout</mat-icon></a>
+      </div>
 
-    <div class="contenido">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </aside>
+
+    <div class="content" [ngClass]="isDarkTheme ? 'dark' : 'light'"><router-outlet></router-outlet></div>
+
+  </section>
+
+</div>
