@@ -11,7 +11,9 @@
     width: 38%;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%);
+    justify-content: center;
+    background-color: #185eaf;
+    /* background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%); */
     /* background: linear-gradient(to right, #3682d8 0%, #1d75d900 100%); */
     /* background-color: #1d75d9; */
     border-bottom-right-radius: 10px;
@@ -20,10 +22,11 @@
 
 .logo {
     height: 95%;
+    filter: drop-shadow(0 0 0.1rem rgb(24, 167, 255));
 }
 
 .logo-title {
-    margin-top: 1.5vh;
+    /* margin-top: 1.5vh; */
     font-size: 1.3rem;
     font-weight: bold;
     color: #ffffff;
@@ -31,7 +34,7 @@
 
 .left-section {
     height: 100vh;
-    background-image: url('/assets/img/Medicina.png');
+    background-image: url('../../../assets/img/Medicina.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -92,6 +95,7 @@
 
 .login-title {
     text-align: start;
+    color: red;
 }
 
 .login-title.white {

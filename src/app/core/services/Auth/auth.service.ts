@@ -32,23 +32,30 @@ export class AuthService {
     return this.http.post<any>(url, credentials).pipe(
       tap(response => {
         if (response.token) {
+          // Guardar token
           sessionStorage.setItem(this.tokenKey, response.token);
+
+          // Guardar usuario decodificado
           const decoded = this.decodeToken(response.token);
           sessionStorage.setItem(this.userKey, JSON.stringify(decoded));
+
+          // 👇 Guardar nombre si viene en la respuesta
+          if (response.nombre) {
+            sessionStorage.setItem('nombre', response.nombre);
+          }
         }
       }),
       catchError(error => {
         console.error('Error en login:', error);
-        // Si el error no tiene status o es 0, es un error de conexión
         if (error.status === 0) {
           return throwError(() => new Error('Servicio no disponible por el momento'));
         } else {
-          // Otros errores se consideran de autenticación
           return throwError(() => new Error('Contraseña o usuario incorrecto'));
         }
       })
     );
   }
+
 
   /**
    * Cierra sesión y limpia los datos almacenados.
@@ -57,8 +64,10 @@ export class AuthService {
     this.dialog.closeAll();
     sessionStorage.removeItem(this.tokenKey);
     sessionStorage.removeItem(this.userKey);
+    sessionStorage.removeItem('nombre');
     this.router.navigate(['/']);
   }
+
 
   /**
    * Verifica si hay un token válido.
@@ -82,6 +91,9 @@ export class AuthService {
     return userData ? JSON.parse(userData) : null;
   }
 
+  getNombre(): string | null {
+    return sessionStorage.getItem('nombre');
+  }
 
   /**
    * Verifica la expiración del token y programa alertas y logout automático.

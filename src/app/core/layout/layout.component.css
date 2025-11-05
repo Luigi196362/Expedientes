@@ -9,24 +9,54 @@
 
 .navbar {
   z-index: 2;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  height: 6%;
+  height: 6vh;
   padding: .5%;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .navbar.light {
-  background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%);
+  background-color: #185eaf;
+  /* background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%); */
 }
 
 .navbar.dark {
-  background: linear-gradient(135deg, #17b368 0%, #185eaf 100%);
+  background-color: #185eaf;
+  /* background: linear-gradient(135deg, #17b368 0%, #185eaf 100%); */
+}
+
+.navbar-left {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 1vw;
+}
+
+.navbar-middle {
+  text-align: center;
+  color: white;
+  font-weight: bolder;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: .5vw;
+  justify-content: end;
+  padding-right: 1vw;
+  color: white;
+}
+
+.profile-image {
+  height: 5vh;
+  border-radius: 20%;
 }
 
 .logo {
-  height: 100%;
+  height: 5vh;
 }
 
 .theme-toggle.light {

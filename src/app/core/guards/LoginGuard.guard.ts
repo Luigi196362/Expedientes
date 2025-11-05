@@ -11,7 +11,6 @@ export class LoginGuard implements CanActivate {
 
     canActivate(): boolean {
         if (this.authService.isAuthenticated()) {
-            // Si el usuario ya está autenticado, redirige a la página principal (o a la que consideres)
             this.router.navigate(['/layout/home']);
             return false;
         }

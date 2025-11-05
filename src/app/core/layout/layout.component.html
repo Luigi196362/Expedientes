@@ -2,13 +2,26 @@
 
   <header class="navbar" [ngClass]="isDarkTheme ? 'dark' : 'light'">
 
-    <img src="assets/img/UvSaludV3.png" alt="Logo" class="logo">
+    <section class="navbar-left">
+      <mat-icon class="menu-icon" [ngClass]="isDarkTheme ? 'dark' : 'light'">menu</mat-icon>
+      <!-- <img src="assets/img/UvSaludV3.png" alt="Logo" class="logo"> -->
+    </section>
 
+    <section class="navbar-middle">
+      {{ currentDate | date:'mediumDate' }} - {{ currentDate | date:'mediumTime' }}
+    </section>
+
+    <section class="navbar-right">
+      <label>{{nombre}}</label>
+      <img src="assets/img/Perfil.jpg" alt="Logo" class="profile-image">
+    </section>
+
+    <!-- 
     <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme" class="theme-toggle-container">
       <mat-icon class="theme-toggle" [ngClass]="isDarkTheme ? 'dark' : 'light'">
         dark_mode
       </mat-icon>
-    </mat-slide-toggle>
+    </mat-slide-toggle> -->
 
   </header>
 
