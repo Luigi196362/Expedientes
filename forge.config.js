@@ -1,11 +1,17 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+const path = require('path');
 
 module.exports = {
   packagerConfig: {
     asar: true,
     icon: "./src/assets/img/UvSaludV3",
     name: 'Expedientes',
+
+    //Incluir la carpeta api en el paquete final
+    extraResource: [
+      path.resolve(__dirname, 'api')
+    ]
   },
   rebuildConfig: {},
   makers: [
@@ -37,8 +43,6 @@ module.exports = {
       name: '@electron-forge/plugin-auto-unpack-natives',
       config: {},
     },
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
     new FusesPlugin({
       version: FuseVersion.V1,
       [FuseV1Options.RunAsNode]: false,

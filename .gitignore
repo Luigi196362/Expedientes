@@ -42,3 +42,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+#Api
+/api/* 
+!api/.gitkeep
+!api/jre
+/api/jre/*
+!api/jre/.gitkeep
