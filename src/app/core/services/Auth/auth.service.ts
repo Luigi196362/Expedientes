@@ -12,9 +12,9 @@ import { InformativeDialogComponent } from '../../../shared/informative-dialog/i
 })
 export class AuthService {
   private endpoint = '/auth/login';
-  private warningTime = 10 * 60 * 1000; // 10 minutos antes de la expiración
-  private tokenKey = 'token';
-  private userKey = 'usuario';
+  private warningTimeoutId: any;
+  private logoutTimeoutId: any;
+
 
   readonly dialog = inject(MatDialog);
 
@@ -24,25 +24,24 @@ export class AuthService {
     private httpConnection: HttpConnectionService
   ) { }
 
-  /**
-   * Inicia sesión y guarda los datos en sessionStorage.
-   */
+
   login(credentials: { username: string; password: string }): Observable<any> {
     const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}`;
     return this.http.post<any>(url, credentials).pipe(
       tap(response => {
         if (response.token) {
           // Guardar token
-          sessionStorage.setItem(this.tokenKey, response.token);
-
+          sessionStorage.setItem('token', response.token);
           // Guardar usuario decodificado
           const decoded = this.decodeToken(response.token);
-          sessionStorage.setItem(this.userKey, JSON.stringify(decoded));
+          sessionStorage.setItem('usuario', JSON.stringify(decoded));
 
-          // 👇 Guardar nombre si viene en la respuesta
+          // Guardar nombre si viene en la respuesta
           if (response.nombre) {
             sessionStorage.setItem('nombre', response.nombre);
           }
+          // Guardar refreshToken
+          sessionStorage.setItem('refreshToken', response.refreshToken)
         }
       }),
       catchError(error => {
@@ -56,38 +55,35 @@ export class AuthService {
     );
   }
 
-
-  /**
-   * Cierra sesión y limpia los datos almacenados.
-   */
   logout(): void {
     this.dialog.closeAll();
-    sessionStorage.removeItem(this.tokenKey);
-    sessionStorage.removeItem(this.userKey);
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('usuario');
+    sessionStorage.removeItem('refreshToken');
     sessionStorage.removeItem('nombre');
+
+    if (this.warningTimeoutId) {
+      clearTimeout(this.warningTimeoutId);
+      this.warningTimeoutId = null;
+    }
+    if (this.logoutTimeoutId) {
+      clearTimeout(this.logoutTimeoutId);
+      this.logoutTimeoutId = null;
+    }
     this.router.navigate(['/']);
   }
 
 
-  /**
-   * Verifica si hay un token válido.
-   */
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
 
-  /**
-   * Obtiene el token almacenado.
-   */
   getToken(): string | null {
-    return sessionStorage.getItem(this.tokenKey);
+    return sessionStorage.getItem('token');
   }
 
-  /**
-   * Obtiene el usuario decodificado desde sessionStorage.
-   */
   getUsuario(): any {
-    const userData = sessionStorage.getItem(this.userKey);
+    const userData = sessionStorage.getItem('usuario');
     return userData ? JSON.parse(userData) : null;
   }
 
@@ -95,14 +91,23 @@ export class AuthService {
     return sessionStorage.getItem('nombre');
   }
 
-  /**
-   * Verifica la expiración del token y programa alertas y logout automático.
-   */
   checkTokenExpiration(): void {
+    console.log('Verificando expiración del token...');
+
     const token = this.getToken();
     if (!token) {
       this.router.navigate(['/404']);
       return;
+    }
+
+    // Cancelar timers anteriores antes de crear nuevos
+    if (this.warningTimeoutId) {
+      clearTimeout(this.warningTimeoutId);
+      this.warningTimeoutId = null;
+    }
+    if (this.logoutTimeoutId) {
+      clearTimeout(this.logoutTimeoutId);
+      this.logoutTimeoutId = null;
     }
 
     const decoded = this.decodeToken(token);
@@ -113,16 +118,23 @@ export class AuthService {
       this.logout();
     } else {
       const timeLeft = expiration - now;
-      if (timeLeft > this.warningTime) {
-        setTimeout(() => this.showExpirationWarning(), timeLeft - this.warningTime);
+      // Mostrar advertencia al 10% del tiempo de expiración
+      const warningTime = timeLeft * 0.1;
+      const minutesLeft = (timeLeft / 60000).toFixed(2);
+      console.log(`Tiempo restante para expiración del token: ${minutesLeft} min (${timeLeft} ms) la sesion caduca a las ${new Date(expiration).toLocaleTimeString()}`);
+
+      //Programar aviso antes de expirar
+      if (timeLeft > warningTime) {
+        this.warningTimeoutId = setTimeout(
+          () => this.showExpirationWarning(),
+          timeLeft - warningTime
+        );
       }
-      setTimeout(() => this.logout(), timeLeft);
+      // this.warningTimeoutId = setTimeout(() => this.showExpirationWarning(), timeLeft - this.warningTime);
+      this.logoutTimeoutId = setTimeout(() => this.logout(), timeLeft);
     }
   }
 
-  /**
-   * Muestra una advertencia cuando la sesión está por expirar.
-   */
   showExpirationWarning(): void {
     this.dialog.open(InformativeDialogComponent, {
       disableClose: true,
@@ -130,9 +142,6 @@ export class AuthService {
     });
   }
 
-  /**
-   * Decodifica un token JWT.
-   */
   decodeToken(token: string): any {
     try {
       const payload = token.split('.')[1];
@@ -143,11 +152,15 @@ export class AuthService {
     }
   }
 
-  /**
-   * Verifica si el usuario tiene permiso para una acción específica.
-   */
+
   tienePermiso(modulo: string, accion: string): boolean {
     const usuario = this.getUsuario();
     return usuario?.permisos?.[modulo]?.includes(accion) || false;
   }
+
+  refreshToken(refreshToken: string) {
+    console.log('Refrescando token con refreshToken:', refreshToken);
+    return this.http.post('http://localhost:8080/auth/refresh', { headers: this.httpConnection.getDefaultHeaders(), refreshToken: refreshToken });
+  }
+
 }

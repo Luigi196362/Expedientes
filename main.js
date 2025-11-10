@@ -35,7 +35,7 @@ function handleSquirrelEvent() {
       console.log('[SQUIRREL] Instalación/Actualización detectada. Creando acceso directo...');
       spawnUpdate(['--createShortcut', exeName]);
       // No iniciar UI ni backend durante instalación
-      setTimeout(() => app.quit(), 1000); // damos un pequeño margen
+      setTimeout(() => app.quit(), 1000); // Se da un pequeño retraso para asegurar que se complete la creación del acceso directo
       return true;
 
     case '--squirrel-uninstall':

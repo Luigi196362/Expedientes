@@ -4,13 +4,13 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { TokenInterceptorService } from './core/services/Http/token-interceptor.service';
+import { TokenInterceptorService } from './core/interceptors/accessToken/token.interceptor.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptorsFromDi()), // Agrega esto
+    provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
   ]
 };
