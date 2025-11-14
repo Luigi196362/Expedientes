@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { HttpConnectionService } from '../Http/http-connection.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InformativeDialogComponent } from '../../../shared/informative-dialog/informative-dialog.component';
@@ -11,7 +11,7 @@ import { InformativeDialogComponent } from '../../../shared/informative-dialog/i
   providedIn: 'root'
 })
 export class AuthService {
-  private endpoint = '/auth/login';
+  private endpoint = '/auth';
   private warningTimeoutId: any;
   private logoutTimeoutId: any;
 
@@ -26,7 +26,7 @@ export class AuthService {
 
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}`;
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/login`;
     return this.http.post<any>(url, credentials).pipe(
       tap(response => {
         if (response.token) {
@@ -118,8 +118,8 @@ export class AuthService {
       this.logout();
     } else {
       const timeLeft = expiration - now;
-      // Mostrar advertencia al 10% del tiempo de expiración
-      const warningTime = timeLeft * 0.1;
+      const warningTime = 2 * 60 * 1000; // 2 minutos antes de expirar mostrar advertencia
+      console.log(`Duración del mensaje: ${warningTime / 60000} min`);
       const minutesLeft = (timeLeft / 60000).toFixed(2);
       console.log(`Tiempo restante para expiración del token: ${minutesLeft} min (${timeLeft} ms) la sesion caduca a las ${new Date(expiration).toLocaleTimeString()}`);
 
@@ -130,7 +130,6 @@ export class AuthService {
           timeLeft - warningTime
         );
       }
-      // this.warningTimeoutId = setTimeout(() => this.showExpirationWarning(), timeLeft - this.warningTime);
       this.logoutTimeoutId = setTimeout(() => this.logout(), timeLeft);
     }
   }
@@ -138,7 +137,7 @@ export class AuthService {
   showExpirationWarning(): void {
     this.dialog.open(InformativeDialogComponent, {
       disableClose: true,
-      data: { message: 'Tu sesión está por expirar. Guarda tu trabajo o inicia sesión de nuevo.' }
+      data: { message: 'Tu sesión está por expirar' }
     });
   }
 
@@ -158,9 +157,28 @@ export class AuthService {
     return usuario?.permisos?.[modulo]?.includes(accion) || false;
   }
 
-  refreshToken(refreshToken: string) {
+  refreshToken(): Observable<boolean> {
+    const refreshToken = sessionStorage.getItem('refreshToken');
     console.log('Refrescando token con refreshToken:', refreshToken);
-    return this.http.post('http://localhost:8080/auth/refresh', { headers: this.httpConnection.getDefaultHeaders(), refreshToken: refreshToken });
+
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/refresh`;
+
+    return this.http.post<any>(
+      url,
+      { refreshToken }, { headers: this.httpConnection.getDefaultHeaders() }).pipe(
+        tap((res) => {
+          if (res && res.token && res.refreshToken) {
+            sessionStorage.setItem('token', res.token);
+            sessionStorage.setItem('refreshToken', res.refreshToken);
+            this.checkTokenExpiration();
+          }
+        }),
+        map((res) => !!(res && res.token && res.refreshToken)),
+        catchError((err) => {
+          console.error('Error al refrescar token:', err);
+          return of(false);
+        })
+      );
   }
 
 }
