@@ -1,29 +1,161 @@
 .Formulario {
-    height: 77vh;
-    width: 97%;
-    justify-self: center;
+
     box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-    margin-bottom: 3vh;
 }
 
-
+/* Card-like Section Styling */
 .seccion {
-    width: 95%;
-    justify-self: center;
-    border-top: gray 1px solid;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 5px;
+    gap: 20px;
+    padding: 30px;
 
+
+    /* animation: fadeIn 0.4s ease-out; */
+
+    /* Fixed height logic */
+    height: 60vh;
+    overflow-y: auto;
 }
 
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Fields */
+.form-field {
+    width: 100%;
+}
+
+/* Grid Layouts */
+.grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.grid-2-col-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Checkbox */
+.checkbox-container {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Action Buttons */
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    align-items: flex-end;
-    gap: 10px;
+    gap: 16px;
+    margin-top: 30px;
+    padding: 0 10px;
+}
+
+.form-actions button {
+    padding: 8px 24px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.form-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Section Headers */
+h3 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #185eaf;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+h3::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 24px;
+    background-color: #185eaf;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .Formulario {
+        margin: 10px auto;
+
+    }
+
+    .seccion {
+        padding: 20px;
+        height: auto;
+        /* Allow auto height on mobile if needed, or keep fixed */
+        max-height: 80vh;
+    }
+
+    .grid-2-col,
+    .grid-2-col-inner {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}
+
+/* Customizing Material Tabs */
+::ng-deep .mat-mdc-tab-group {
+    font-family: 'Roboto', sans-serif;
+}
+
+::ng-deep .mat-mdc-tab-labels {
+    background-color: #f5f7fa;
+    border-radius: 12px 12px 0 0;
+    padding: 0 10px;
+}
+
+::ng-deep .mat-mdc-tab-link .mdc-tab__text-label {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #546e7a;
+}
+
+::ng-deep .mat-mdc-tab-link--active .mdc-tab__text-label {
+    color: #185eaf !important;
+    font-weight: 700;
+}
+
+::ng-deep .mat-mdc-tab-header {
+    border-bottom: none !important;
 }

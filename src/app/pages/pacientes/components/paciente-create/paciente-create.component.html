@@ -2,27 +2,45 @@
   <div>
     <mat-tab-group animationDuration="0s" class="Formulario" color="accent">
 
-      <!-- Información Personal -->
-      <mat-tab label="Información Personal">
+      <!-- Pestaña 1: Identificación -->
+      <mat-tab label="Identificación">
         <form [formGroup]="pacienteForm" class="seccion">
+
+          <mat-form-field class="form-field" color="accent">
+            <mat-label>Tipo de Paciente</mat-label>
+            <mat-select formControlName="tipo_paciente">
+              <mat-option value="Estudiante">Estudiante</mat-option>
+              <mat-option value="Docente">Docente</mat-option>
+              <mat-option value="Administrativo">Administrativo</mat-option>
+              <mat-option value="Externo">Externo</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="form-field" color="accent">
+            <mat-label>CURP</mat-label>
+            <input matInput formControlName="curp" maxlength="18" oninput="this.value = this.value.toUpperCase()">
+            <mat-hint align="end">{{ pacienteForm.get('curp')?.value?.length || 0 }} / 18</mat-hint>
+          </mat-form-field>
 
           <mat-form-field class="form-field" color="accent">
             <mat-label>Nombre completo</mat-label>
             <input matInput formControlName="nombre">
           </mat-form-field>
 
-          <!--           
-            <input type="date" matInput formControlName="fecha_nacimiento" min="1900-01-01"
-              (input)="validarFecha($event)">
-           -->
-
-          <mat-form-field class="form-field" color="accent" (click)="picker.open()" (keydown.space)="picker.open()">
+          <mat-form-field class="form-field" color="accent" (click)="picker.open()">
             <mat-label>Fecha de nacimiento</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" readonly
               formControlName="fecha_nacimiento">
-            <mat-hint>Dia/Mes/Año</mat-hint>
-            <!-- <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> -->
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="form-field" color="accent">
+            <mat-label>Sexo</mat-label>
+            <mat-select formControlName="sexo">
+              <mat-option value="1">Masculino</mat-option>
+              <mat-option value="2">Femenino</mat-option>
+            </mat-select>
           </mat-form-field>
 
           <mat-form-field class="form-field" color="accent">
@@ -38,99 +56,172 @@
             </mat-select>
           </mat-form-field>
 
-
           <mat-form-field class="form-field" color="accent">
-            <mat-label>Origen</mat-label>
+            <mat-label>Lugar de Origen</mat-label>
             <input matInput formControlName="origen">
           </mat-form-field>
+
+        </form>
+      </mat-tab>
+
+      <!-- Pestaña 2: Contacto y Ubicación -->
+      <mat-tab label="Contacto y Ubicación">
+        <form [formGroup]="pacienteForm" class="seccion">
+
+          <h3>Contacto Personal</h3>
+          <mat-form-field class="form-field" color="accent">
+            <mat-label>Teléfono</mat-label>
+            <span matTextPrefix>+52 &nbsp;</span>
+            <input matInput formControlName="telefono" maxlength="14" (input)="formatPhoneNumber($event, 10)">
+          </mat-form-field>
+
+          <mat-form-field class="form-field" color="accent">
+            <mat-label>Correo Electrónico</mat-label>
+            <input matInput formControlName="email" type="email">
+          </mat-form-field>
+
+          <h3>Domicilio</h3>
+          <div class="grid-2-col">
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Calle</mat-label>
+              <input matInput formControlName="calle">
+            </mat-form-field>
+            <div class="grid-2-col-inner">
+              <mat-form-field class="form-field" color="accent">
+                <mat-label>No. Ext</mat-label>
+                <input matInput formControlName="numero_exterior">
+              </mat-form-field>
+              <mat-form-field class="form-field" color="accent">
+                <mat-label>No. Int</mat-label>
+                <input matInput formControlName="numero_interior">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="grid-2-col">
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Colonia / Asentamiento</mat-label>
+              <input matInput formControlName="colonia">
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Código Postal</mat-label>
+              <input matInput formControlName="cp" maxlength="5">
+            </mat-form-field>
+          </div>
+
+          <div class="grid-2-col">
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Municipio / Alcaldía</mat-label>
+              <input matInput formControlName="municipio">
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Entidad Federativa</mat-label>
+              <input matInput formControlName="entidad_federativa">
+            </mat-form-field>
+          </div>
+
+          <h3>Responsable Legal / Contacto Emergencia</h3>
+          <mat-form-field class="form-field" color="accent">
+            <mat-label>Nombre Completo</mat-label>
+            <input matInput formControlName="nombre_responsable">
+          </mat-form-field>
+
+          <div class="grid-2-col">
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Parentesco</mat-label>
+              <mat-select formControlName="parentesco_responsable">
+                <mat-option value="Padre">Padre</mat-option>
+                <mat-option value="Madre">Madre</mat-option>
+                <mat-option value="Tutor">Tutor</mat-option>
+                <mat-option value="Cónyuge">Cónyuge</mat-option>
+                <mat-option value="Otro">Otro</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Teléfono Responsable</mat-label>
+              <input matInput formControlName="telefono_responsable">
+            </mat-form-field>
+          </div>
+          <mat-form-field class="form-field" color="accent">
+            <mat-label>Dirección Responsable</mat-label>
+            <input matInput formControlName="direccion_responsable" placeholder="Dejar en blanco si es la misma">
+          </mat-form-field>
+
+        </form>
+      </mat-tab>
+
+      <!-- Pestaña 3: Afiliación Institucional -->
+      <mat-tab label="Afiliación Institucional">
+        <form [formGroup]="pacienteForm" class="seccion">
+
+          <mat-form-field class="form-field" color="accent">
+            <mat-label>NSS (Seguridad Social)</mat-label>
+            <input matInput formControlName="nss" maxlength="11">
+          </mat-form-field>
+
+          <!-- Campos Estudiante -->
+          <div *ngIf="isStudent">
+            <h3>Datos Escolares</h3>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Matrícula</mat-label>
+              <input matInput formControlName="matricula">
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Facultad</mat-label>
+              <input matInput formControlName="facultad">
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Programa Educativo</mat-label>
+              <input matInput formControlName="programa_educativo">
+            </mat-form-field>
+            <div class="grid-2-col">
+              <mat-form-field class="form-field" color="accent">
+                <mat-label>Semestre</mat-label>
+                <input matInput formControlName="semestre">
+              </mat-form-field>
+              <mat-form-field class="form-field" color="accent">
+                <mat-label>Grupo</mat-label>
+                <input matInput formControlName="grupo">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Campos Trabajador -->
+          <div *ngIf="isWorker">
+            <h3>Datos Laborales</h3>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Número de Personal</mat-label>
+              <input matInput formControlName="numero_personal">
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Puesto</mat-label>
+              <input matInput formControlName="puesto">
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Área de Adscripción</mat-label>
+              <input matInput formControlName="area_adscripcion">
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Tipo de Contratación</mat-label>
+              <mat-select formControlName="tipo_contratacion">
+                <mat-option value="Base">Base</mat-option>
+                <mat-option value="Eventual">Eventual</mat-option>
+                <mat-option value="Confianza">Confianza</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+        </form>
+      </mat-tab>
+
+      <!-- Pestaña 4: Sociodemográfico y Legal -->
+      <mat-tab label="Sociodemográfico y Legal">
+        <form [formGroup]="pacienteForm" class="seccion">
 
           <mat-form-field class="form-field" color="accent">
             <mat-label>Ocupación</mat-label>
             <input matInput formControlName="ocupacion">
           </mat-form-field>
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Residencia</mat-label>
-            <input matInput formControlName="residencia">
-          </mat-form-field>
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Sexo</mat-label>
-            <mat-select formControlName="sexo">
-              <mat-option value="1">Masculino</mat-option>
-              <mat-option value="2">Femenino</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-
-
-        </form>
-      </mat-tab>
-
-      <!-- Información Académica -->
-      <mat-tab label="Información Académica">
-        <form class="seccion" [formGroup]="pacienteForm">
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Matrícula</mat-label>
-            <input matInput formControlName="matricula">
-          </mat-form-field>
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Semestre</mat-label>
-            <input matInput formControlName="semestre" maxlength="2" (paste)="onPaste($event, 2)"
-              (keypress)="blockInvalidChars($event, 2)" (input)="onInput($event, 2)">
-            <mat-hint align="end">{{ pacienteForm.get('semestre')?.value.length}} / 2</mat-hint>
-          </mat-form-field>
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Facultad</mat-label>
-            <input matInput formControlName="facultad">
-          </mat-form-field>
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Grupo</mat-label>
-            <input matInput formControlName="grupo" maxlength="3" (paste)="onPaste($event, 3)"
-              (keypress)="blockInvalidChars($event, 3)" (input)="onInput($event, 3)">
-            <mat-hint align="end">{{ pacienteForm.get('grupo')?.value.length}} / 3</mat-hint>
-          </mat-form-field>
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Programa Educativo</mat-label>
-            <input matInput formControlName="programa_educativo">
-          </mat-form-field>
-
-        </form>
-      </mat-tab>
-
-      <!-- Contacto y Seguridad Social -->
-      <mat-tab label="Contacto y Seguridad Social">
-        <form class="seccion" [formGroup]="pacienteForm">
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Número de teléfono</mat-label>
-            <span matTextPrefix style="color: gray;">+52 &nbsp;</span>
-            <input matInput formControlName="telefono" maxlength="14" (paste)="onPaste($event, 10)"
-              (keypress)="blockInvalidChars($event, 10)" (input)="formatPhoneNumber($event,10)">
-            <mat-hint align="end">
-              {{ numerosIngresadosTelefono }}
-            </mat-hint>
-
-          </mat-form-field>
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>NSS</mat-label>
-            <input matInput formControlName="nss" maxlength="11" (paste)="onPaste($event, 11)"
-              (keypress)="blockInvalidChars($event,11)" (input)="onInput($event, 11)">
-            <mat-hint align="end">{{ pacienteForm.get('nss')?.value.length}} / 11</mat-hint>
-          </mat-form-field>
-
-        </form>
-      </mat-tab>
-
-      <!-- Información Adicional -->
-      <mat-tab label="Información Adicional">
-        <form class="seccion" [formGroup]="pacienteForm">
 
           <mat-form-field class="form-field" color="accent">
             <mat-label>Religión</mat-label>
@@ -142,6 +233,15 @@
             <input matInput formControlName="escolaridad">
           </mat-form-field>
 
+          <div class="checkbox-container">
+            <mat-checkbox formControlName="habla_lengua_indigena" color="primary">Habla Lengua Indígena</mat-checkbox>
+          </div>
+
+          <mat-form-field class="form-field" color="accent" *ngIf="hablaLenguaIndigena">
+            <mat-label>¿Cuál lengua?</mat-label>
+            <input matInput formControlName="lengua_indigena">
+          </mat-form-field>
+
         </form>
       </mat-tab>
 
@@ -149,13 +249,11 @@
   </div>
 
   <div class="form-actions">
-    <button mat-raised-button color="primary" (click)="generarPacienteAleatorio()">
+    <!-- <button mat-raised-button color="primary" (click)="generarPacienteAleatorio()">
       Generar Paciente Aleatorio
-    </button>
+    </button> -->
     <button mat-raised-button routerLink="/layout/pacientes" color="warn">Cancelar</button>
-    <button mat-raised-button color="accent" (click)="onSave()">Guardar
-      Paciente</button>
+    <button mat-raised-button color="accent" (click)="onSave()">Guardar Paciente</button>
   </div>
-
 
 </div>

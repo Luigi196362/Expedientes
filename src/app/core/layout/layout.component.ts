@@ -38,6 +38,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   isDarkTheme?: boolean;
   timeInterval: any;
   nombre?: String | null;
+  isSidebarExpanded = false;
 
   private clockSubscription!: Subscription;
 
@@ -83,6 +84,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
       body.classList.remove('dark-theme');
       localStorage.setItem('theme', 'light');
     }
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarExpanded = !this.isSidebarExpanded;
   }
 
 

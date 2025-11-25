@@ -10,12 +10,14 @@
 
     <section class="right-section" [ngClass]="isDarkTheme ? 'dark' : 'light'">
 
-        <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme"
+        <!-- <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme"
             class="theme-toggle-container">
             <mat-icon class="theme-toggle" [ngClass]="isDarkTheme ? 'dark' : 'light'">
                 dark_mode
             </mat-icon>
-        </mat-slide-toggle>
+        </mat-slide-toggle> -->
+
+        <section></section>
 
 
         <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
@@ -42,35 +44,3 @@
         </form>
     </section>
 </div>
-
-<!-- 
-<div class="container" [ngClass]="isDarkTheme ? 'dark' : 'white'">
-
-    <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme" class="theme-toggle-container">
-        <mat-icon class="theme-toggle" [ngClass]="isDarkTheme ? 'dark' : 'light'">
-
-            dark_mode
-        </mat-icon>
-    </mat-slide-toggle>
-
-    <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
-        <h1 class="login-title" [ngClass]="isDarkTheme ? 'dark':'white'">Inicio de sesión</h1>
-
-        <mat-form-field class="form-field">
-            <mat-label>Nombre de usuario</mat-label>
-            <input matInput [(ngModel)]="loginData.username" name="username" required>
-        </mat-form-field>
-
-        <mat-form-field class="form-field">
-            <mat-label>Ingresa la contraseña</mat-label>
-            <input matInput [(ngModel)]="loginData.password" name="password" [type]="hide() ? 'password' : 'text'"
-                required>
-            <button mat-icon-button matSuffix type="button" (click)="clickEvent($event)"
-                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
-                <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-        </mat-form-field>
-
-        <button type="submit" mat-flat-button color="accent" [disabled]="loginForm.invalid">Iniciar sesión</button>
-    </form>
-</div> -->

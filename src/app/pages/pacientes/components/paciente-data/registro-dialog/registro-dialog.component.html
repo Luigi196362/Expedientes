@@ -4,11 +4,11 @@
         <mat-label>Tipo de registro</mat-label>
         <mat-select [(value)]="selectedValue">
             <mat-option value="1">Historial clínico</mat-option>
-            <mat-option value="2">Nota de evolución</mat-option>
-            <!-- <mat-option value="3">Receta médica</mat-option>
-            <mat-option value="4">Examen de laboratorio</mat-option>
-            <mat-option value="5">Imagenología</mat-option>
-            <mat-option value="6">Referencia</mat-option> -->
+            <mat-option value="2" [disabled]="data.numRegistros === 0">Nota de evolución</mat-option>
+            <!-- <mat-option value="3" [disabled]="data.numRegistros === 0">Receta médica</mat-option>
+            <mat-option value="4" [disabled]="data.numRegistros === 0">Examen de laboratorio</mat-option>
+            <mat-option value="5" [disabled]="data.numRegistros === 0">Imagenología</mat-option>
+            <mat-option value="6" [disabled]="data.numRegistros === 0">Referencia</mat-option> -->
         </mat-select>
     </mat-form-field>
 </mat-dialog-content>

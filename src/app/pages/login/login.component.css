@@ -34,7 +34,8 @@
 
 .left-section {
     height: 100vh;
-    background-image: url('../../../assets/img/Medicina.png');
+    /* background-image: url('../../../assets/img/Medicina.png'); */
+    background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -56,7 +57,7 @@
 }
 
 .right-section.light {
-    background: linear-gradient(135deg, #dddddd 0%, #ffffff 100%);
+    background: white;
 }
 
 .right-section.dark {

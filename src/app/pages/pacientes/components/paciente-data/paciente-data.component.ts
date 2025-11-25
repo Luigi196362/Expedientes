@@ -43,23 +43,55 @@ export class PacienteDataComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteService: PacienteService, private router: Router) {
     this.pacienteForm = this.fb.group({
+      // Identificación
+      tipo_paciente: [''],
+      curp: [''],
       nombre: ['', Validators.required],
-      estado_civil: ['', Validators.required],
-      origen: ['', Validators.required],
-      ocupacion: ['', Validators.required],
       fecha_nacimiento: [null, Validators.required],
       sexo: [null, Validators.required],
-      matricula: ['', Validators.required],
-      semestre: ['', Validators.required],
-      facultad: ['', Validators.required],
-      grupo: ['', Validators.required],
-      programa_educativo: ['', Validators.required],
+      estado_civil: ['', Validators.required],
+      origen: ['', Validators.required],
+
+      // Contacto y Ubicación
+      telefono: ['', Validators.required],
+      email: [''],
+      calle: [''],
+      numero_exterior: [''],
+      numero_interior: [''],
+      colonia: [''],
+      cp: [''],
+      municipio: [''],
+      entidad_federativa: [''],
+      residencia: [''], // Keep for backward compatibility
+
+      // Responsable
+      nombre_responsable: [''],
+      parentesco_responsable: [''],
+      telefono_responsable: [''],
+      direccion_responsable: [''],
+
+      // Estudiante
+      matricula: [''],
+      facultad: [''],
+      programa_educativo: [''],
+      semestre: [''],
+      grupo: [''],
+
+      // Trabajador
+      numero_personal: [''],
+      puesto: [''],
+      area_adscripcion: [''],
+      tipo_contratacion: [''],
+
+      // Seguridad Social
       nss: ['', Validators.required],
+
+      // Sociodemográfico
+      ocupacion: ['', Validators.required],
       religion: ['', Validators.required],
       escolaridad: ['', Validators.required],
-      telefono: ['', Validators.required],
-      residencia: ['', Validators.required]
-
+      habla_lengua_indigena: [false],
+      lengua_indigena: ['']
     });
     this.pacienteForm.disable();
   }
@@ -87,7 +119,10 @@ export class PacienteDataComponent implements OnInit {
   }
 
   crearRegistro() {
-    const dialogRef = this.dialog.open(RegistroDialogComponent);
+    const numRegistros = this.paciente?.registros?.length || 0;
+    const dialogRef = this.dialog.open(RegistroDialogComponent, {
+      data: { numRegistros: numRegistros }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

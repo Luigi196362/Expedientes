@@ -3,12 +3,15 @@
   <header class="navbar" [ngClass]="isDarkTheme ? 'dark' : 'light'">
 
     <section class="navbar-left">
-      <mat-icon class="menu-icon" [ngClass]="isDarkTheme ? 'dark' : 'light'">menu</mat-icon>
+      <mat-icon class="menu-icon" [ngClass]="isDarkTheme ? 'dark' : 'light'" (click)="toggleSidebar()">menu</mat-icon>
       <!-- <img src="assets/img/UvSaludV3.png" alt="Logo" class="logo"> -->
     </section>
 
     <section class="navbar-middle">
-      {{ currentDate | date:'mediumDate' }} - {{ currentDate | date:'mediumTime' }}
+      <div class="clock-container">
+        <span class="clock-time">{{ currentDate | date:'shortTime' }}</span>
+        <span class="clock-date">{{ currentDate | date:'mediumDate' }}</span>
+      </div>
     </section>
 
     <section class="navbar-right">
@@ -25,7 +28,7 @@
 
   </header>
 
-  <section class="main-content" [ngClass]="isDarkTheme ? 'dark' : 'light'">
+  <section class="main-content" [ngClass]="isDarkTheme ? 'dark' : 'light'" [class.expanded]="isSidebarExpanded">
 
     <aside class="sidenav" [ngClass]="isDarkTheme ? 'dark' : 'light'">
 
@@ -33,32 +36,44 @@
 
         <a routerLink="home" class="links" routerLinkActive="active-link" [ngClass]="isDarkTheme ? 'dark' : 'light'"
           [routerLinkActiveOptions]="{ exact: false }"><mat-icon class="icons"
-            [ngClass]="isDarkTheme ? 'dark' : 'light'">home</mat-icon></a>
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">home</mat-icon>
+          <span *ngIf="isSidebarExpanded" class="link-text">Inicio</span>
+        </a>
 
         <a *ngIf="authService.tienePermiso('pacientes', 'Ver')" routerLink="pacientes" class="links"
           routerLinkActive="active-link" [ngClass]="isDarkTheme ? 'dark' : 'light'"
           [routerLinkActiveOptions]="{ exact: false }"><mat-icon class="icons"
-            [ngClass]="isDarkTheme ? 'dark' : 'light'">medical_information</mat-icon></a>
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">medical_information</mat-icon>
+          <span *ngIf="isSidebarExpanded" class="link-text">Pacientes</span>
+        </a>
 
         <a *ngIf="authService.tienePermiso('usuarios', 'Ver')" routerLink="usuarios" class="links"
           routerLinkActive="active-link" [ngClass]="isDarkTheme ? 'dark' : 'light'"
           [routerLinkActiveOptions]="{ exact: false }"><mat-icon class="icons"
-            [ngClass]="isDarkTheme ? 'dark' : 'light'">people</mat-icon></a>
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">people</mat-icon>
+          <span *ngIf="isSidebarExpanded" class="link-text">Usuarios</span>
+        </a>
 
         <a *ngIf="authService.tienePermiso('roles', 'Ver')" routerLink="roles" class="links"
           routerLinkActive="active-link" [ngClass]="isDarkTheme ? 'dark' : 'light'"
           [routerLinkActiveOptions]="{ exact: false }"><mat-icon class="icons"
-            [ngClass]="isDarkTheme ? 'dark' : 'light'">description</mat-icon></a>
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">description</mat-icon>
+          <span *ngIf="isSidebarExpanded" class="link-text">Roles</span>
+        </a>
 
       </div>
 
       <div class="nav-list-bottom">
         <a (click)="openDialog('1000ms', '0ms')" class="links logout"
           [ngClass]="isDarkTheme ? 'dark' : 'light'"><mat-icon class="icons"
-            [ngClass]="isDarkTheme ? 'dark' : 'light'">logout</mat-icon></a>
+            [ngClass]="isDarkTheme ? 'dark' : 'light'">logout</mat-icon>
+          <span *ngIf="isSidebarExpanded" class="link-text">Cerrar Sesión</span>
+        </a>
       </div>
 
     </aside>
+
+    <div class="backdrop" *ngIf="isSidebarExpanded" (click)="toggleSidebar()"></div>
 
     <div class="content" [ngClass]="isDarkTheme ? 'dark' : 'light'"><router-outlet></router-outlet></div>
 

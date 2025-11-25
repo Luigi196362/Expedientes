@@ -19,12 +19,10 @@
 
 .navbar.light {
   background-color: #185eaf;
-  /* background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%); */
 }
 
 .navbar.dark {
   background-color: #185eaf;
-  /* background: linear-gradient(135deg, #17b368 0%, #185eaf 100%); */
 }
 
 .navbar-left {
@@ -39,6 +37,27 @@
   text-align: center;
   color: white;
   font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.clock-time {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.clock-date {
+  font-size: 0.8rem;
+  font-weight: normal;
+  opacity: 0.9;
 }
 
 .navbar-right {
@@ -67,20 +86,32 @@
   color: burlywood;
 }
 
+.menu-icon {
+  cursor: pointer;
+}
+
 .main-content {
   flex: 1;
-  display: grid;
-  grid-template-columns: 5% 95%;
+  display: block;
+  position: relative;
 }
 
 .sidenav {
   display: grid;
-  z-index: 2;
+  z-index: 100;
   grid-template-rows: 1fr 1fr;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
   text-align: center;
-  padding-top: 20%;
-  padding-bottom: 20%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5%;
+  transition: width 0.3s ease;
+}
+
+.main-content.expanded .sidenav {
+  width: 160px;
 }
 
 .sidenav.dark {
@@ -91,16 +122,13 @@
   background: rgb(220, 224, 223);
 }
 
-
 .nav-list-top {
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   justify-content: start;
 }
 
 .nav-list-bottom {
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -108,14 +136,30 @@
 
 .links {
   user-drag: none;
-  /* Evita que el elemento se pueda arrastrar (para Safari) */
   -webkit-user-drag: none;
-  /* Para navegadores basados en WebKit (Chrome, Edge, etc.) */
   width: 100%;
   height: 6vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.main-content.expanded .links {
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+
+.link-text {
+  margin-left: 10px;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .links.light:hover {
@@ -133,10 +177,6 @@
 .links.logout.dark:hover {
   background-color: rgb(228, 43, 43);
 }
-
-/* .links:hover .icons.light {
-  color: #185eaf;
-} */
 
 .active-link.light {
   background-color: lightblue;
@@ -157,6 +197,8 @@
 .content {
   z-index: 1;
   padding: 1%;
+  margin-left: 5%;
+
 }
 
 .content.dark {
@@ -167,11 +209,22 @@
   background: white;
 }
 
-
 .icons.light {
   color: rgb(89, 89, 89);
 }
 
 .icons.dark {
   color: rgb(232, 232, 232);
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(3px);
+  z-index: 90;
+  cursor: pointer;
 }

@@ -4,7 +4,35 @@ table {
     overflow-y: auto;
 }
 
+.mat-elevation-z8 {
+    border-radius: 8px;
+    overflow: auto;
+    max-height: 65vh;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
 
+.mat-mdc-header-row {
+    background-color: #185eaf;
+    /* Match navbar color */
+}
+
+.mat-mdc-header-cell {
+    color: white !important;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 16px;
+}
+
+.mat-mdc-row:hover {
+    background-color: rgba(24, 94, 175, 0.05) !important;
+    /* Light blue hover */
+}
+
+.mat-mdc-cell {
+    padding: 16px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
 
 .mat-mdc-form-field {
     font-size: 14px;
@@ -16,6 +44,7 @@ table {
     grid-template-columns: 9fr 1fr;
     gap: 10px;
     justify-items: center;
+    margin-bottom: 20px;
 }
 
 .bar {
@@ -27,21 +56,40 @@ table {
 .table-actions {
     display: flex;
     justify-content: end;
-    gap: 30px;
-    padding-right: 20px;
-}
-
-table tr:hover:not(:has(th)) {
-    background-color: rgba(0, 0, 0, 0.085);
+    gap: 10px;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     margin: 5px;
+    margin-bottom: 20px;
 }
 
 .info {
-    background-color: rgba(131, 131, 131, 0.186);
-    padding: 20px;
+    background-color: rgba(131, 131, 131, 0.1);
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation to main blocks */
+.header,
+.actions,
+.mat-elevation-z8 {
+    /* animation: fadeIn 0.5s ease-out; */
 }
