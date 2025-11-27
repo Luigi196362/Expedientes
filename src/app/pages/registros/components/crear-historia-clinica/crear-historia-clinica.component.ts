@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +14,7 @@ import { RegistroService } from '../../services/registros/registros.service';
 import { AuthService } from '../../../../core/services/Auth/auth.service';
 import { PacienteDialogComponent } from '../../../pacientes/components/paciente-create/paciente-dialog/paciente-dialog.component';
 import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
+import { PacienteDataComponent } from '../../../pacientes/components/paciente-data/paciente-data.component';
 
 @Component({
   selector: 'app-crear-historia-clinica',
@@ -27,7 +28,8 @@ import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dial
     ReactiveFormsModule,
     RouterLink,
     MatAutocompleteModule,
-    MatSidenavModule,],
+    MatSidenavModule,
+    PacienteDataComponent],
   templateUrl: './crear-historia-clinica.component.html',
   styleUrl: './crear-historia-clinica.component.css'
 })
@@ -74,9 +76,43 @@ export class CrearHistoriaClinicaComponent implements OnInit {
     return this.historiaForm.dirty;
   }
 
+  sidenavWidth = 400; // Ancho inicial
+  isResizing = false;
+  startX = 0;
+  startWidth = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (this.isResizing) {
+      this.resize(event);
+    }
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp() {
+    this.stopResize();
+  }
+
+  startResize(event: MouseEvent): void {
+    this.isResizing = true;
+    this.startX = event.clientX;
+    this.startWidth = this.sidenavWidth;
+    event.preventDefault(); // Evitar selección de texto
+  }
+
+  resize(event: MouseEvent): void {
+    const dx = this.startX - event.clientX; // Mover hacia la izquierda aumenta el ancho
+    this.sidenavWidth = Math.max(300, this.startWidth + dx); // Mínimo 300px
+  }
+
+  stopResize(): void {
+    this.isResizing = false;
+  }
+
   toggleSidenav(sidenav: any): void {
     sidenav.toggle();  // Alterna la visibilidad del sidenav
   }
+
 
 
   onSave(): void {

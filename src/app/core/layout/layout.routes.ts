@@ -29,13 +29,13 @@ export const layoutRoutes: Routes = [
         canActivate: [PermissionGuard],
         data: { modulo: 'roles', accion: 'Ver' }
       },
-      {
-        path: 'registros',
-        loadChildren: () =>
-          import('../../pages/registros/registros.routes').then((m) => m.registrosRoutes),
-        canActivate: [PermissionGuard],
-        data: { modulo: 'registros', accion: 'Ver' }
-      },
+      // {
+      //   path: 'registros',
+      //   loadChildren: () =>
+      //     import('../../pages/registros/registros.routes').then((m) => m.registrosRoutes),
+      //   canActivate: [PermissionGuard],
+      //   data: { modulo: 'registros', accion: 'Ver' }
+      // },
       {
 
         path: 'home',

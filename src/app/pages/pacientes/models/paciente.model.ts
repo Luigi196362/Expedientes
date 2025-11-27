@@ -50,7 +50,7 @@ export class Paciente {
     ocupacion: String = "";
     religion: String = "";
     escolaridad: String = "";
-    habla_lengua_indigena: boolean = false;
+    // habla_lengua_indigena: boolean = false;
     lengua_indigena: String = "";
 
     activo: boolean = true;

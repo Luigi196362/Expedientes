@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Added CommonModule
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
@@ -36,6 +36,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatAutocompleteModule,
     MatCheckboxModule,
     CommonModule, // Added CommonModule
+    FormsModule,
     MatFormFieldModule, MatInputModule, MatDatepickerModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './paciente-create.component.html',
@@ -101,7 +102,7 @@ export class PacienteCreateComponent {
       ocupacion: ['', Validators.required],
       religion: ['', Validators.required],
       escolaridad: ['', Validators.required],
-      habla_lengua_indigena: [false],
+      // habla_lengua_indigena: [false],
       lengua_indigena: ['']
     });
 
@@ -110,17 +111,6 @@ export class PacienteCreateComponent {
       this.isStudent = value === 'Estudiante';
       this.isWorker = value === 'Docente' || value === 'Administrativo';
       this.updateValidators();
-    });
-
-    this.pacienteForm.get('habla_lengua_indigena')?.valueChanges.subscribe(value => {
-      this.hablaLenguaIndigena = value;
-      const lenguaControl = this.pacienteForm.get('lengua_indigena');
-      if (value) {
-        lenguaControl?.setValidators([Validators.required]);
-      } else {
-        lenguaControl?.clearValidators();
-      }
-      lenguaControl?.updateValueAndValidity();
     });
   }
 
@@ -150,6 +140,18 @@ export class PacienteCreateComponent {
 
     // Update validity for all affected fields
     [...studentFields, ...workerFields].forEach(field => this.pacienteForm.get(field)?.updateValueAndValidity());
+  }
+
+  onHablaLenguaIndigenaChange(value: boolean) {
+    this.hablaLenguaIndigena = value;
+    const lenguaControl = this.pacienteForm.get('lengua_indigena');
+    if (value) {
+      lenguaControl?.setValidators([Validators.required]);
+    } else {
+      lenguaControl?.clearValidators();
+      lenguaControl?.setValue('');
+    }
+    lenguaControl?.updateValueAndValidity();
   }
 
 
@@ -275,59 +277,5 @@ export class PacienteCreateComponent {
       event.target.value = '1900-01-01';
     }
   }
-
-  // generarPacienteAleatorio(): void {
-  //   const nombres = ['Juan Pérez', 'María López', 'Carlos Hernández', 'Ana Torres', 'Luis Gómez', 'Laura Martínez', 'José Ramírez', 'Carmen Díaz'];
-  //   const estadosCiviles = ['Soltero(a)', 'Casado(a)', 'Divorciado(a)', 'Viudo(a)', 'Unión Libre', 'Separado(a)'];
-  //   const ocupaciones = ['Estudiante', 'Empleado', 'Desempleado', 'Freelancer', 'Docente'];
-  //   const residencias = ['Xalapa', 'Veracruz', 'Córdoba', 'Orizaba', 'Poza Rica', 'Coatzacoalcos'];
-  //   const facultades = ['Ingeniería', 'Derecho', 'Medicina', 'Artes', 'Biología', 'Contaduría'];
-  //   const programas = ['Sistemas Computacionales', 'Derecho', 'Psicología', 'Arquitectura', 'Contaduría', 'Biología Marina'];
-  //   const religiones = ['Católica', 'Cristiana', 'Atea', 'Budista', 'Judía'];
-  //   const escolaridades = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad', 'Posgrado'];
-
-  //   const random = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
-  //   const randomDate = new Date(
-  //     1980 + Math.floor(Math.random() * 25),
-  //     Math.floor(Math.random() * 12),
-  //     Math.floor(Math.random() * 28) + 1
-  //   );
-  //   const randomMatricula = 'A' + Math.floor(100000 + Math.random() * 900000);
-  //   const randomGrupo = Math.floor(100 + Math.random() * 900).toString();
-  //   const randomTelefono = '55' + Math.floor(10000000 + Math.random() * 90000000).toString();
-  //   const randomNss = Math.floor(10000000000 + Math.random() * 90000000000).toString();
-
-  //   this.pacienteForm.patchValue({
-  //     tipo_paciente: 'Estudiante', // Default for random
-  //     curp: 'ABCD123456HDFR01',
-  //     nombre: random(nombres),
-  //     fecha_nacimiento: randomDate,
-  //     estado_civil: random(estadosCiviles),
-  //     origen: 'México',
-  //     ocupacion: random(ocupaciones),
-  //     sexo: Math.random() > 0.5 ? '1' : '2',
-
-  //     // Address
-  //     calle: 'Av. Principal',
-  //     numero_exterior: Math.floor(Math.random() * 100).toString(),
-  //     colonia: 'Centro',
-  //     cp: '91000',
-  //     municipio: random(residencias),
-  //     entidad_federativa: 'Veracruz',
-
-  //     // Student
-  //     matricula: randomMatricula,
-  //     semestre: (Math.floor(Math.random() * 10) + 1).toString(),
-  //     facultad: random(facultades),
-  //     grupo: randomGrupo,
-  //     programa_educativo: random(programas),
-
-  //     telefono: randomTelefono,
-  //     nss: randomNss,
-  //     religion: random(religiones),
-  //     escolaridad: random(escolaridades),
-  //     habla_lengua_indigena: false
-  //   });
-  // }
 
 }

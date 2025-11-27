@@ -144,7 +144,7 @@
           </div>
           <mat-form-field class="form-field" color="accent">
             <mat-label>Dirección Responsable</mat-label>
-            <input matInput formControlName="direccion_responsable" placeholder="Dejar en blanco si es la misma">
+            <input matInput formControlName="direccion_responsable">
           </mat-form-field>
 
         </form>
@@ -234,7 +234,7 @@
           </mat-form-field>
 
           <div class="checkbox-container">
-            <mat-checkbox formControlName="habla_lengua_indigena" color="primary">Habla Lengua Indígena</mat-checkbox>
+            <mat-checkbox [ngModel]="hablaLenguaIndigena" (ngModelChange)="onHablaLenguaIndigenaChange($event)" [ngModelOptions]="{standalone: true}" color="primary">Habla Lengua Indígena</mat-checkbox>
           </div>
 
           <mat-form-field class="form-field" color="accent" *ngIf="hablaLenguaIndigena">

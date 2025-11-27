@@ -32,6 +32,7 @@ import { Paciente } from '../../../pacientes/models/paciente.model';
     RouterLink,
     MatAutocompleteModule,
     MatSidenavModule,
+    PacienteDataComponent
   ],
   templateUrl: './crear-notas-evolucion.component.html',
   styleUrl: './crear-notas-evolucion.component.css'
@@ -86,9 +87,43 @@ export class CrearNotasEvolucionComponent implements OnInit {
     return this.notaForm.dirty;
   }
 
+  sidenavWidth = 400; // Ancho inicial
+  isResizing = false;
+  startX = 0;
+  startWidth = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (this.isResizing) {
+      this.resize(event);
+    }
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp() {
+    this.stopResize();
+  }
+
+  startResize(event: MouseEvent): void {
+    this.isResizing = true;
+    this.startX = event.clientX;
+    this.startWidth = this.sidenavWidth;
+    event.preventDefault(); // Evitar selección de texto
+  }
+
+  resize(event: MouseEvent): void {
+    const dx = this.startX - event.clientX; // Mover hacia la izquierda aumenta el ancho
+    this.sidenavWidth = Math.max(300, this.startWidth + dx); // Mínimo 300px
+  }
+
+  stopResize(): void {
+    this.isResizing = false;
+  }
+
   toggleSidenav(sidenav: any): void {
     sidenav.toggle();  // Alterna la visibilidad del sidenav
   }
+
 
 
   onSave(): void {

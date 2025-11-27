@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpConnectionService } from '../../../../core/services/Http/http-connection.service';
 import { Nota_Evolucion } from '../../models/nota-evolucion';
-import { Registro } from '../../models/Registro';
+import { Registro } from '../../models/registro';
 import { Historia_clinica } from '../../models/historia-clinica';
 
 @Injectable({
@@ -17,10 +17,17 @@ export class RegistroService {
     private httpConnection: HttpConnectionService
   ) { }
 
-  // getNotas(): Observable<Registro[]> {
-  //   const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/ver`;
-  //   return this.http.get<Registro[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
-  // }
+  getNota(idNota: number): Observable<Registro[]> {
+    console.log(idNota);
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver/Nota/${idNota}`;
+    return this.http.get<Registro[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  }
+
+  getHistoria(idHistoria: number): Observable<Registro[]> {
+    console.log(idHistoria);
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver/Historia/${idHistoria}`;
+    return this.http.get<Registro[]>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  }
 
   guardarNota(idPaciente: number, notas_evolucion: Nota_Evolucion): Observable<Nota_Evolucion> {
     const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Crear/Nota/${idPaciente}`;

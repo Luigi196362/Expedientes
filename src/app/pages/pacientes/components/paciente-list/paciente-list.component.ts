@@ -34,7 +34,7 @@ export class PacienteListComponent implements AfterViewInit, OnInit {
   AllPacientes!: AllPacientes;
 
   displayedColumns: string[] = [
-    'matricula',
+    //'matricula',
     'nombre',
     'sexo',
     'fecha_nacimiento',

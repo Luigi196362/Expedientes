@@ -1,0 +1,82 @@
+<div class="Formulario">
+    <!-- <div class="header-section">
+        <h2>Historia Clínica</h2>
+    </div> -->
+
+    <div *ngIf="historia; else loadingOrError">
+        <mat-tab-group animationDuration="0s" color="accent">
+            
+            <!-- Antecedentes Medicos -->
+            <mat-tab label="Antecedentes Medicos">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Antecedentes Heredo-Familiares</span>
+                        <span class="data-value">{{ historia.antecedentes_heredo_familiares || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Antecedentes Personales No Patológicos</span>
+                        <span class="data-value">{{ historia.antecedentes_personales_no_patologicos || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Antecedentes Personales Patológicos</span>
+                        <span class="data-value">{{ historia.antecedentes_personales_patologicos || 'Sin datos' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Tratamientos y medicación -->
+            <mat-tab label="Tratamientos y medicación">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Medicamentos Actuales</span>
+                        <span class="data-value">{{ historia.medicamentos_actuales || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Tratamiento</span>
+                        <span class="data-value">{{ historia.tratamiento || 'Sin datos' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Diagnostico y medicaciones -->
+            <mat-tab label="Diagnostico y medicaciones">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Diagnóstico Inicial</span>
+                        <span class="data-value">{{ historia.diagnostico_inicial || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Observaciones</span>
+                        <span class="data-value">{{ historia.observaciones || 'Sin datos' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Alergias -->
+            <mat-tab label="Alergias">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Alergias</span>
+                        <span class="data-value">{{ historia.alergias || 'Sin datos' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+    </div>
+
+    <ng-template #loadingOrError>
+        <div class="seccion" style="text-align: center; padding: 40px;">
+            <p *ngIf="loading">Cargando información...</p>
+            <p *ngIf="!loading && !historia">No se encontró la información de la historia clínica.</p>
+        </div>
+    </ng-template>
+
+    <div class="form-actions">
+        <button mat-raised-button color="warn" routerLink="/layout/pacientes">Regresar</button>
+    </div>
+</div>

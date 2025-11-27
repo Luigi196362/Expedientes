@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PacienteService } from '../../services/paciente.service';
 import { Router, RouterLink } from '@angular/router';
@@ -16,6 +16,9 @@ import { RegistroDialogComponent } from './registro-dialog/registro-dialog.compo
 import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
 import { CommonModule } from '@angular/common';
 import { MatCard, MatCardModule } from '@angular/material/card';
+import { AuthService } from '../../../../core/services/Auth/auth.service';
+import { HistoriaDataComponent } from '../../../registros/components/historia-data/historia-data.component';
+import { NotaDataComponent } from '../../../registros/components/nota-data/nota-data.component';
 
 @Component({
   selector: 'app-paciente-data',
@@ -31,17 +34,25 @@ import { MatCard, MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatIconModule,
-    MatSelectModule
+    MatIconModule,
+    MatSelectModule,
+    HistoriaDataComponent,
+    NotaDataComponent
   ],
   templateUrl: './paciente-data.component.html',
   styleUrl: './paciente-data.component.css'
 })
 export class PacienteDataComponent implements OnInit {
+  @Input() isSidenav: boolean = false;
   pacienteForm: FormGroup;
   paciente: Paciente | null = null;
   res: number = 0;
+  habla_lengua_indigena: boolean = false;
+  
+  selectedRegistroId: number | null = null;
+  selectedRegistroType: string | null = null;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteService: PacienteService, private router: Router) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteService: PacienteService, private router: Router, public authService: AuthService) {
     this.pacienteForm = this.fb.group({
       // Identificación
       tipo_paciente: [''],
@@ -90,8 +101,8 @@ export class PacienteDataComponent implements OnInit {
       ocupacion: ['', Validators.required],
       religion: ['', Validators.required],
       escolaridad: ['', Validators.required],
-      habla_lengua_indigena: [false],
-      lengua_indigena: ['']
+     // habla_lengua_indigena: [false],
+      lengua_indigena: [''] 
     });
     this.pacienteForm.disable();
   }
@@ -112,8 +123,17 @@ export class PacienteDataComponent implements OnInit {
           console.error('Error al obtener usuarios:', error);
         }
       );
+    } else if (state.paciente) {
+        this.paciente = state.paciente;
+        console.log('Paciente cargado desde estado:', this.paciente);
+        if (this.paciente) {
+            this.pacienteForm.patchValue(this.paciente);
+        }
     } else {
       console.log('Error al cargar los datos:', this.paciente);
+      // Only redirect if not in a context where it might be used as a child without state?
+      // But if it's a child, it should probably get data via Input.
+      // For now, assuming it relies on router state even as child.
       this.router.navigate(['/layout/pacientes']);
     }
   }
@@ -139,14 +159,33 @@ export class PacienteDataComponent implements OnInit {
         console.log('Redirigiendo a crear registro');
         console.log(window.history.state, "Enviar")
         console.log(this.paciente)
-        this.router.navigate(['/layout/registros/crearHistoriaClinica'], { state: { paciente: this.paciente } });
+        this.router.navigate(['/layout/pacientes/crearHistoriaClinica'], { state: { paciente: this.paciente } });
       }
 
       if (this.res == 2) {
         console.log('Redirigiendo a crear registro');
         console.log(window.history.state, "Enviar")
-        this.router.navigate(['/layout/registros/crearNota'], { state: { paciente: this.paciente } });
+        this.router.navigate(['/layout/pacientes/crearNota'], { state: { paciente: this.paciente } });
       }
     });
   }
+  datos(id : number, tipo_registro : String){
+    if (this.isSidenav) {
+        this.selectedRegistroId = id;
+        this.selectedRegistroType = tipo_registro.toString();
+    } else {
+        if(tipo_registro === 'Historia Clínica'){
+          this.router.navigate(['/layout/pacientes/infoHistoriaClinica'], { state: { registro_id: id } });
+        }
+        if(tipo_registro === 'Nota de Evolución'){
+          this.router.navigate(['/layout/pacientes/infoNota'], { state: { registro_id: id } });
+        }
+    }
+  }
+
+  clearSelection() {
+      this.selectedRegistroId = null;
+      this.selectedRegistroType = null;
+  }
+
 }

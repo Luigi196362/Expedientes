@@ -1,5 +1,3 @@
-import { Registro } from "./Registro";
-
 export class Historia_clinica {
     id: number = 0;
     //registro: Registro = new Registro;

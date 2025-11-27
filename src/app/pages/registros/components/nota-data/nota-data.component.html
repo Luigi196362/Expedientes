@@ -1,0 +1,131 @@
+<div class="Formulario">
+    <div class="header-section">
+        <h2>Nota de Evolución</h2>
+    </div>
+
+    <div *ngIf="nota; else loadingOrError">
+        <mat-tab-group animationDuration="0s" color="accent">
+            
+            <!-- Signos Vitales -->
+            <mat-tab label="Signos Vitales">
+                <div class="seccion">
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Peso (kg)</span>
+                            <span class="data-value">{{ nota.peso || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Talla (cm)</span>
+                            <span class="data-value">{{ nota.talla || 'N/A' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-col">
+                         <div class="data-item">
+                            <span class="data-label">IMC</span>
+                            <span class="data-value">{{ nota.imc || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Tensión Arterial</span>
+                            <span class="data-value">{{ nota.ta || 'N/A' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Frecuencia Cardíaca</span>
+                            <span class="data-value">{{ nota.fc || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Frecuencia Respiratoria</span>
+                            <span class="data-value">{{ nota.fr || 'N/A' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Temperatura (°C)</span>
+                            <span class="data-value">{{ nota.temperatura || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Saturación (%)</span>
+                            <span class="data-value">{{ nota.saturacion || 'N/A' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Glicemia</span>
+                            <span class="data-value">{{ nota.glicemia || 'N/A' }}</span>
+                        </div>
+                         <div class="data-item">
+                            <span class="data-label">Hemoglobina</span>
+                            <span class="data-value">{{ nota.hemoglobina || 'N/A' }}</span>
+                        </div>
+                    </div>
+                     <div class="data-item">
+                        <span class="data-label">Hemotipo</span>
+                        <span class="data-value">{{ nota.hemotipo || 'N/A' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Interrogatorio y Exploración -->
+            <mat-tab label="Interrogatorio y Exploración">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Interrogatorio</span>
+                        <span class="data-value">{{ nota.interrogatorio || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Padecimiento Actual</span>
+                        <span class="data-value">{{ nota.padecimiento || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Exploración Física</span>
+                        <span class="data-value">{{ nota.exploracion || 'Sin datos' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Diagnóstico y Tratamiento -->
+            <mat-tab label="Diagnóstico y Tratamiento">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Análisis</span>
+                        <span class="data-value">{{ nota.analisis || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Diagnóstico</span>
+                        <span class="data-value">{{ nota.diagnostico || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Plan de Tratamiento</span>
+                        <span class="data-value">{{ nota.plan || 'Sin datos' }}</span>
+                    </div>
+
+                     <div class="data-item">
+                        <span class="data-label">Tratamiento</span>
+                        <span class="data-value">{{ nota.tratamiento || 'Sin datos' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+    </div>
+
+    <ng-template #loadingOrError>
+        <div class="seccion" style="text-align: center; padding: 40px;">
+            <p *ngIf="loading">Cargando información...</p>
+            <p *ngIf="!loading && !nota">No se encontró la información de la nota de evolución.</p>
+        </div>
+    </ng-template>
+
+    <div class="form-actions">
+        <button mat-raised-button color="warn" routerLink="/layout/pacientes">Regresar</button>
+    </div>
+</div>

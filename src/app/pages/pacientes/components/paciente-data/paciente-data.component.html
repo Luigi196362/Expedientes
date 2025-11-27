@@ -1,242 +1,285 @@
-<div>
+<div *ngIf="!selectedRegistroId; else embeddedView">
     <mat-tab-group animationDuration="0s" class="Formulario" color="accent">
 
         <!-- Pestaña 1: Identificación -->
         <mat-tab label="Identificación">
-            <form [formGroup]="pacienteForm" class="seccion">
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Tipo de Paciente</mat-label>
-                    <input matInput formControlName="tipo_paciente" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>CURP</mat-label>
-                    <input matInput formControlName="curp" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Nombre completo</mat-label>
-                    <input matInput formControlName="nombre" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Fecha de nacimiento</mat-label>
-                    <input matInput [value]="paciente?.fecha_nacimiento | date:'dd/MM/yyyy'" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Sexo</mat-label>
-                    <input matInput [value]="paciente?.sexo == 1 ? 'Masculino' : 'Femenino'" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Estado civil</mat-label>
-                    <input matInput formControlName="estado_civil" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Lugar de Origen</mat-label>
-                    <input matInput formControlName="origen" readonly>
-                </mat-form-field>
-
-            </form>
-        </mat-tab>
-
-        <!-- Pestaña 2: Contacto y Ubicación -->
-        <mat-tab label="Contacto y Ubicación">
-            <form [formGroup]="pacienteForm" class="seccion">
-
-                <h3>Contacto Personal</h3>
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Teléfono</mat-label>
-                    <span matTextPrefix>+52 &nbsp;</span>
-                    <input matInput formControlName="telefono" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Correo Electrónico</mat-label>
-                    <input matInput formControlName="email" readonly>
-                </mat-form-field>
-
-                <h3>Domicilio</h3>
+            <div class="seccion">
                 <div class="grid-2-col">
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Calle</mat-label>
-                        <input matInput formControlName="calle" readonly>
-                    </mat-form-field>
-                    <div class="grid-2-col-inner">
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>No. Ext</mat-label>
-                            <input matInput formControlName="numero_exterior" readonly>
-                        </mat-form-field>
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>No. Int</mat-label>
-                            <input matInput formControlName="numero_interior" readonly>
-                        </mat-form-field>
+                    <div class="data-item">
+                        <span class="data-label">Tipo de Paciente</span>
+                        <span class="data-value">{{ paciente?.tipo_paciente || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">CURP</span>
+                        <span class="data-value">{{ paciente?.curp || 'N/A' }}</span>
+                    </div>
+                </div>
+
+                <div class="data-item">
+                    <span class="data-label">Nombre completo</span>
+                    <span class="data-value">{{ paciente?.nombre || 'N/A' }}</span>
+                </div>
+
+                <div class="grid-2-col">
+                    <div class="data-item">
+                        <span class="data-label">Fecha de nacimiento</span>
+                        <span class="data-value">{{ (paciente?.fecha_nacimiento | date:'dd/MM/yyyy') || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Sexo</span>
+                        <span class="data-value">{{ paciente?.sexo == 1 ? 'Masculino' : 'Femenino' }}</span>
                     </div>
                 </div>
 
                 <div class="grid-2-col">
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Colonia / Asentamiento</mat-label>
-                        <input matInput formControlName="colonia" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Código Postal</mat-label>
-                        <input matInput formControlName="cp" readonly>
-                    </mat-form-field>
+                    <div class="data-item">
+                        <span class="data-label">Estado civil</span>
+                        <span class="data-value">{{ paciente?.estado_civil || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Lugar de Origen</span>
+                        <span class="data-value">{{ paciente?.origen || 'N/A' }}</span>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+
+        <!-- Pestaña 2: Contacto y Ubicación -->
+        <mat-tab label="Contacto y Ubicación">
+            <div class="seccion">
+
+                <h3>Contacto Personal</h3>
+                <div class="grid-2-col">
+                    <div class="data-item">
+                        <span class="data-label">Teléfono</span>
+                        <span class="data-value">{{ paciente?.telefono ? '+52 ' + paciente?.telefono : 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Correo Electrónico</span>
+                        <span class="data-value">{{ paciente?.email || 'N/A' }}</span>
+                    </div>
+                </div>
+
+                <h3>Domicilio</h3>
+                <div class="grid-2-col">
+                    <div class="data-item">
+                        <span class="data-label">Calle</span>
+                        <span class="data-value">{{ paciente?.calle || 'N/A' }}</span>
+                    </div>
+                    <div class="grid-2-col-inner">
+                        <div class="data-item">
+                            <span class="data-label">No. Ext</span>
+                            <span class="data-value">{{ paciente?.numero_exterior || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">No. Int</span>
+                            <span class="data-value">{{ paciente?.numero_interior || 'N/A' }}</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid-2-col">
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Municipio / Alcaldía</mat-label>
-                        <input matInput formControlName="municipio" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Entidad Federativa</mat-label>
-                        <input matInput formControlName="entidad_federativa" readonly>
-                    </mat-form-field>
+                    <div class="data-item">
+                        <span class="data-label">Colonia / Asentamiento</span>
+                        <span class="data-value">{{ paciente?.colonia || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Código Postal</span>
+                        <span class="data-value">{{ paciente?.cp || 'N/A' }}</span>
+                    </div>
+                </div>
+
+                <div class="grid-2-col">
+                    <div class="data-item">
+                        <span class="data-label">Municipio / Alcaldía</span>
+                        <span class="data-value">{{ paciente?.municipio || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Entidad Federativa</span>
+                        <span class="data-value">{{ paciente?.entidad_federativa || 'N/A' }}</span>
+                    </div>
                 </div>
 
                 <h3>Responsable Legal / Contacto Emergencia</h3>
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Nombre Completo</mat-label>
-                    <input matInput formControlName="nombre_responsable" readonly>
-                </mat-form-field>
+                <div class="data-item">
+                    <span class="data-label">Nombre Completo</span>
+                    <span class="data-value">{{ paciente?.nombre_responsable || 'N/A' }}</span>
+                </div>
 
                 <div class="grid-2-col">
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Parentesco</mat-label>
-                        <input matInput formControlName="parentesco_responsable" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Teléfono Responsable</mat-label>
-                        <input matInput formControlName="telefono_responsable" readonly>
-                    </mat-form-field>
+                    <div class="data-item">
+                        <span class="data-label">Parentesco</span>
+                        <span class="data-value">{{ paciente?.parentesco_responsable || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Teléfono Responsable</span>
+                        <span class="data-value">{{ paciente?.telefono_responsable || 'N/A' }}</span>
+                    </div>
                 </div>
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Dirección Responsable</mat-label>
-                    <input matInput formControlName="direccion_responsable" readonly>
-                </mat-form-field>
+                <div class="data-item">
+                    <span class="data-label">Dirección Responsable</span>
+                    <span class="data-value">{{ paciente?.direccion_responsable || 'N/A' }}</span>
+                </div>
 
-            </form>
+            </div>
         </mat-tab>
 
         <!-- Pestaña 3: Afiliación Institucional -->
         <mat-tab label="Afiliación Institucional">
-            <form [formGroup]="pacienteForm" class="seccion">
+            <div class="seccion">
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>NSS (Seguridad Social)</mat-label>
-                    <input matInput formControlName="nss" readonly>
-                </mat-form-field>
+                <div class="data-item">
+                    <span class="data-label">NSS (Seguridad Social)</span>
+                    <span class="data-value">{{ paciente?.nss || 'N/A' }}</span>
+                </div>
 
                 <!-- Campos Estudiante -->
                 <div *ngIf="paciente?.tipo_paciente === 'Estudiante'">
                     <h3>Datos Escolares</h3>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Matrícula</mat-label>
-                        <input matInput formControlName="matricula" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Facultad</mat-label>
-                        <input matInput formControlName="facultad" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Programa Educativo</mat-label>
-                        <input matInput formControlName="programa_educativo" readonly>
-                    </mat-form-field>
                     <div class="grid-2-col">
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Semestre</mat-label>
-                            <input matInput formControlName="semestre" readonly>
-                        </mat-form-field>
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Grupo</mat-label>
-                            <input matInput formControlName="grupo" readonly>
-                        </mat-form-field>
+                        <div class="data-item">
+                            <span class="data-label">Matrícula</span>
+                            <span class="data-value">{{ paciente?.matricula || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Facultad</span>
+                            <span class="data-value">{{ paciente?.facultad || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Programa Educativo</span>
+                        <span class="data-value">{{ paciente?.programa_educativo || 'N/A' }}</span>
+                    </div>
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Semestre</span>
+                            <span class="data-value">{{ paciente?.semestre || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Grupo</span>
+                            <span class="data-value">{{ paciente?.grupo || 'N/A' }}</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Campos Trabajador (Docente o Administrativo) -->
                 <div *ngIf="paciente?.tipo_paciente === 'Docente' || paciente?.tipo_paciente === 'Administrativo'">
                     <h3>Datos Laborales</h3>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Número de Personal</mat-label>
-                        <input matInput formControlName="numero_personal" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Puesto</mat-label>
-                        <input matInput formControlName="puesto" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Área de Adscripción</mat-label>
-                        <input matInput formControlName="area_adscripcion" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" color="accent">
-                        <mat-label>Tipo de Contratación</mat-label>
-                        <input matInput formControlName="tipo_contratacion" readonly>
-                    </mat-form-field>
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Número de Personal</span>
+                            <span class="data-value">{{ paciente?.numero_personal || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Puesto</span>
+                            <span class="data-value">{{ paciente?.puesto || 'N/A' }}</span>
+                        </div>
+                    </div>
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Área de Adscripción</span>
+                            <span class="data-value">{{ paciente?.area_adscripcion || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Tipo de Contratación</span>
+                            <span class="data-value">{{ paciente?.tipo_contratacion || 'N/A' }}</span>
+                        </div>
+                    </div>
                 </div>
 
-            </form>
+            </div>
         </mat-tab>
 
         <!-- Pestaña 4: Sociodemográfico y Legal -->
         <mat-tab label="Sociodemográfico y Legal">
-            <form [formGroup]="pacienteForm" class="seccion">
+            <div class="seccion">
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Ocupación</mat-label>
-                    <input matInput formControlName="ocupacion" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Religión</mat-label>
-                    <input matInput formControlName="religion" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Escolaridad</mat-label>
-                    <input matInput formControlName="escolaridad" readonly>
-                </mat-form-field>
-
-                <div class="checkbox-container">
-                    <mat-checkbox formControlName="habla_lengua_indigena" color="primary" [disabled]="true">Habla Lengua
-                        Indígena</mat-checkbox>
+                <div class="data-item">
+                    <span class="data-label">Ocupación</span>
+                    <span class="data-value">{{ paciente?.ocupacion || 'N/A' }}</span>
                 </div>
 
-                <mat-form-field class="form-field" color="accent" *ngIf="paciente?.habla_lengua_indigena">
-                    <mat-label>¿Cuál lengua?</mat-label>
-                    <input matInput formControlName="lengua_indigena" readonly>
-                </mat-form-field>
+                <div class="grid-2-col">
+                    <div class="data-item">
+                        <span class="data-label">Religión</span>
+                        <span class="data-value">{{ paciente?.religion || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Escolaridad</span>
+                        <span class="data-value">{{ paciente?.escolaridad || 'N/A' }}</span>
+                    </div>
+                </div>
 
-            </form>
+                <div class="data-item">
+                    <span class="data-label">Lengua Indígena</span>
+                    <span class="data-value">
+                        {{ paciente?.lengua_indigena ? 'Sí, habla ' + paciente?.lengua_indigena : 'No habla lengua indígena' }}
+                    </span>
+                </div>
+
+            </div>
         </mat-tab>
 
         <!-- Registros -->
         <mat-tab label="Registros">
-            <div class="seccion" *ngIf="(paciente?.registros?.length ?? 0) > 0; else sinRegistros">
-                <mat-card *ngFor="let registro of paciente?.registros" class="registro-card">
-                    <mat-card-content>
-                        <p><strong>ID:</strong> {{ registro.registro_id }}</p>
-                        <p><strong>Tipo de Registro:</strong> {{ registro.tipo_registro }}</p>
-                        <p><strong>Fecha de Creación:</strong> {{ registro.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}
-                        </p>
-                    </mat-card-content>
-                </mat-card>
+            <div class="seccion registros-container" *ngIf="(paciente?.registros?.length ?? 0) > 0; else sinRegistros">
+                <div class="registros-grid">
+                    <mat-card *ngFor="let registro of paciente?.registros" class="registro-card">
+                        <mat-card-header>
+                            <div mat-card-avatar class="registro-avatar">
+                                <mat-icon>description</mat-icon>
+                            </div>
+                            <mat-card-title>{{ registro.tipo_registro }}</mat-card-title>
+                            <mat-card-subtitle>{{ registro.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}</mat-card-subtitle>
+                        </mat-card-header>
+                        <!-- <mat-card-content>
+                            <p class="registro-id">ID: {{ registro.registro_id }}</p>
+                        </mat-card-content> -->
+                        <mat-card-actions align="end">
+                            <button mat-button color="primary" [disabled]="!authService.tienePermiso('pacientes', 'Ver')"
+                                (click)="datos(registro.registro_id, registro.tipo_registro)">
+                                <mat-icon>visibility</mat-icon> VER DETALLES
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
             </div>
 
             <ng-template #sinRegistros>
-                <p style="text-align: center; color: gray;">No hay registros disponibles.</p>
+                <div class="no-registros">
+                    <mat-icon>folder_off</mat-icon>
+                    <p>No hay registros disponibles.</p>
+                </div>
             </ng-template>
         </mat-tab>
 
     </mat-tab-group>
 </div>
 
-<div class="form-actions">
+<div class="form-actions" *ngIf="!isSidenav">
     <button mat-raised-button routerLink="/layout/pacientes" color="warn">Regresar</button>
     <button mat-raised-button color="accent" (click)="crearRegistro()">Crear Registro</button>
 </div>
+
+<ng-template #embeddedView>
+    <div class="embedded-view-container">
+        <div class="embedded-header">
+            <button mat-icon-button (click)="clearSelection()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <h3>Detalles del Registro</h3>
+        </div>
+        
+        <app-historia-data 
+            *ngIf="selectedRegistroType === 'Historia Clínica'" 
+            [registroIdInput]="selectedRegistroId"
+            [isEmbedded]="true">
+        </app-historia-data>
+        
+        <app-nota-data 
+            *ngIf="selectedRegistroType === 'Nota de Evolución'" 
+            [registroIdInput]="selectedRegistroId"
+            [isEmbedded]="true">
+        </app-nota-data>
+    </div>
+</ng-template>

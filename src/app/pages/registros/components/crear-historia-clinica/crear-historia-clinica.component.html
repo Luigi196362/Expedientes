@@ -1,82 +1,107 @@
-<!-- <h1> {{"Creando registro del paciente: "+nombrePaciente}}</h1> -->
-<div>
-    <mat-tab-group animationDuration="0s" class="Formulario" color="accent">
+<mat-sidenav-container class="sidenav-container" [hasBackdrop]="false" autosize>
+    <mat-sidenav class="sidenav-data" #sidenav mode="side" position="end" opened="false" [style.width.px]="sidenavWidth">
+        <div class="resize-handle" (mousedown)="startResize($event)"></div>
+        <div class="sidenav-content-wrapper">
+            <h1>Información del paciente</h1>
+            <app-paciente-data [isSidenav]="true"></app-paciente-data>
+        </div>
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+        <div class="Formulario">
+            <div class="header-section">
+                <h2>Historia Clínica</h2>
+            </div>
+            
+            <mat-tab-group animationDuration="0s" color="accent">
 
-        <!-- Antecedentes Medicos -->
-        <mat-tab label="Antecedentes Medicos">
-            <form [formGroup]="historiaForm" class="seccion">
+                <!-- Antecedentes Medicos -->
+                <mat-tab label="Antecedentes Medicos">
+                    <form [formGroup]="historiaForm" class="seccion">
+                        
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Antecedentes Heredofamiliares</mat-label>
+                            <textarea matInput formControlName="antecedentes_heredofamiliares"></textarea>
+                        </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Antecedentes heredo familiares</mat-label>
-                    <textarea matInput formControlName="antecedentes_heredo_familiares"></textarea>
-                </mat-form-field>
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Antecedentes Patológicos</mat-label>
+                            <textarea matInput formControlName="antecedentes_patologicos"></textarea>
+                        </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Antecedentes personales no patológicos</mat-label>
-                    <textarea matInput formControlName="antecedentes_personales_no_patologicos"></textarea>
-                </mat-form-field>
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Antecedentes No Patológicos</mat-label>
+                            <textarea matInput formControlName="antecedentes_no_patologicos"></textarea>
+                        </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Antecedentes personales patológicos</mat-label>
-                    <textarea matInput formControlName="antecedentes_personales_patologicos"></textarea>
-                </mat-form-field>
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Antecedentes Gineco-Obstétricos</mat-label>
+                            <textarea matInput formControlName="antecedentes_gineco_obstetricos"></textarea>
+                        </mat-form-field>
 
-            </form>
+                    </form>
+                </mat-tab>
 
-        </mat-tab>
+                <!-- Tratamientos y medicación -->
+                <mat-tab label="Tratamientos y medicación">
+                    <form [formGroup]="historiaForm" class="seccion">
 
-        <!-- Signos Vitales -->
-        <mat-tab label="Tratamientos y medicación">
-            <form class="seccion" [formGroup]="historiaForm">
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Medicamentos Actuales</mat-label>
+                            <textarea matInput formControlName="medicamentos_actuales"></textarea>
+                        </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Medicamentos Actuales</mat-label>
-                    <textarea matInput formControlName="medicamentos_actuales"></textarea>
-                </mat-form-field>
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Interrogatorio por Aparatos y Sistemas</mat-label>
+                            <textarea matInput formControlName="interrogatorio_aparatos_sistemas"></textarea>
+                        </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Tratamiento</mat-label>
-                    <textarea matInput formControlName="tratamiento"></textarea>
-                </mat-form-field>
+                    </form>
+                </mat-tab>
 
-            </form>
-        </mat-tab>
+                <!-- Diagnostico y medicaciones -->
+                <mat-tab label="Diagnostico y medicaciones">
+                    <form [formGroup]="historiaForm" class="seccion">
 
-        <!-- Diagnostico y medicaciones -->
-        <mat-tab label="Diagnostico y medicaciones">
-            <form class="seccion" [formGroup]="historiaForm">
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Exploración Física</mat-label>
+                            <textarea matInput formControlName="exploracion_fisica"></textarea>
+                        </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>diagnostico_inicial</mat-label>
-                    <textarea matInput formControlName="diagnostico_inicial"> </textarea>
-                </mat-form-field>
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Diagnóstico</mat-label>
+                            <textarea matInput formControlName="diagnostico"></textarea>
+                        </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Observaciones</mat-label>
-                    <textarea matInput formControlName="observaciones"></textarea>
-                </mat-form-field>
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Plan de Tratamiento</mat-label>
+                            <textarea matInput formControlName="plan_tratamiento"></textarea>
+                        </mat-form-field>
 
-            </form>
-        </mat-tab>
+                    </form>
+                </mat-tab>
 
-        <!-- Alergias -->
-        <mat-tab label="Alergias">
-            <form class="seccion" [formGroup]="historiaForm">
+                <!-- Alergias -->
+                <mat-tab label="Alergias">
+                    <form [formGroup]="historiaForm" class="seccion">
 
-                <mat-form-field class="form-field" color="accent">
-                    <mat-label>Alergias</mat-label>
-                    <textarea matInput formControlName="alergias"></textarea>
-                </mat-form-field>
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Alergias</mat-label>
+                            <textarea matInput formControlName="alergias"></textarea>
+                        </mat-form-field>
 
-            </form>
-        </mat-tab>
+                    </form>
+                </mat-tab>
 
+            </mat-tab-group>
+        </div>
 
-    </mat-tab-group>
-</div>
-
-<div class="form-actions">
-    <button mat-raised-button routerLink="/layout/pacientes" color="warn">Cancelar</button>
-    <button mat-raised-button color="accent" (click)="onSave()">Guardar
-        historia clínica</button>
-</div>
+        <div class="form-actions">
+            <button mat-raised-button routerLink="/layout/pacientes" color="warn">Cancelar</button>
+            <button mat-raised-button color="accent" (click)="onSave()">Guardar historia clínica</button>
+            <button mat-raised-button color="primary" (click)="toggleSidenav(sidenav)">
+                {{ sidenav.opened ? 'Ocultar' : 'Mostrar' }} Información del Paciente
+            </button>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
