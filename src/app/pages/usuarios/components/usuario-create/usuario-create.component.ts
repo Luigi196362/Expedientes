@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Rol } from '../../../roles/models/rol.model';
 import { RolService } from '../../../roles/services/rol.service';
 import { CommonModule } from '@angular/common';
+import { FACULTADES } from '../../../../core/constants/faculties.const';
 
 interface Roles {
   value: number;
@@ -48,6 +49,7 @@ export class UsuarioCreateComponent implements OnInit {
   usuarioForm: FormGroup;
   isSaving: boolean = false;
   roles: Roles[] = [];
+  facultades = FACULTADES;
 
   hide = signal(true);
 

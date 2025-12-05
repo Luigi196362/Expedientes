@@ -39,8 +39,11 @@
 
                 <mat-form-field class="form-field" color="accent">
                     <mat-label>Facultad</mat-label>
-                    <input matInput formControlName="facultad" inputmode="text" aria-label="Nombre de la facultad"
-                        autocomplete="off">
+                    <mat-select formControlName="facultad">
+                        <mat-option *ngFor="let facultad of facultades" [value]="facultad">
+                            {{facultad}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
 
                 <mat-form-field class="form-field" color="accent">

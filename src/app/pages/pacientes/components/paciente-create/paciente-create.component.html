@@ -177,7 +177,11 @@
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
               <mat-label>Facultad</mat-label>
-              <input matInput formControlName="facultad">
+              <mat-select formControlName="facultad">
+                <mat-option *ngFor="let facultad of facultades" [value]="facultad">
+                  {{facultad}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
               <mat-label>Programa Educativo</mat-label>
@@ -208,7 +212,11 @@
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
               <mat-label>Facultad de Adscripción</mat-label>
-              <input matInput formControlName="facultad_adscripcion">
+              <mat-select formControlName="facultad_adscripcion">
+                <mat-option *ngFor="let facultad of facultades" [value]="facultad">
+                  {{facultad}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
               <mat-label>Tipo de Contratación</mat-label>

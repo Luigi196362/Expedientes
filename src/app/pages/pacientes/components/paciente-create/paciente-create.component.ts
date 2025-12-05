@@ -18,6 +18,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FACULTADES } from '../../../../core/constants/faculties.const';
 
 @Component({
   selector: 'app-paciente-create',
@@ -56,6 +57,7 @@ export class PacienteCreateComponent {
   hablaLenguaIndigena: boolean = false;
   colonias: string[] = [];
   postalCodeError: string | null = null;
+  facultades = FACULTADES;
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteSevice: PacienteService, private router: Router, private postalCodeService: PostalCodeService) {
     this.pacienteForm = this.fb.group({

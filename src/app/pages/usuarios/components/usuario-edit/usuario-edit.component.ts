@@ -18,6 +18,7 @@ import { Rol } from '../../../roles/models/rol.model';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { UsuarioDialogEditComponent } from './usuario-dialog-edit/usuario-dialog-edit.component';
 import { CommonModule } from '@angular/common';
+import { FACULTADES } from '../../../../core/constants/faculties.const';
 
 interface Roles {
   value: number;
@@ -48,6 +49,7 @@ export class UsuarioEditComponent implements OnInit {
   isSaving: boolean = false;
   usuario: Usuario | null = null;
   roles: Roles[] = [];
+  facultades = FACULTADES;
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private usuarioService: UsuarioService, private router: Router, private rolService: RolService) {
     this.usuarioForm = this.fb.group({
