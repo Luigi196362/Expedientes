@@ -13,6 +13,7 @@ import { Paciente } from '../../models/paciente.model';
 import { PacienteService } from '../../services/paciente.service';
 import { ErrorDialogComponent } from '../../../../shared/error-dialog/error-dialog.component';
 import { PacienteDialogComponent } from './paciente-dialog/paciente-dialog.component';
+import { PostalCodeService, PostalCodeData } from '../../../../core/services/postal-code.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -53,8 +54,10 @@ export class PacienteCreateComponent {
   isStudent: boolean = false;
   isWorker: boolean = false;
   hablaLenguaIndigena: boolean = false;
+  colonias: string[] = [];
+  postalCodeError: string | null = null;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteSevice: PacienteService, private router: Router) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteSevice: PacienteService, private router: Router, private postalCodeService: PostalCodeService) {
     this.pacienteForm = this.fb.group({
       // Identificación
       tipo_paciente: ['', Validators.required],
@@ -71,10 +74,10 @@ export class PacienteCreateComponent {
       calle: ['', Validators.required],
       numero_exterior: ['', Validators.required],
       numero_interior: [''],
-      colonia: ['', Validators.required],
+      colonia: [{ value: '', disabled: true }, Validators.required],
       cp: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
-      municipio: ['', Validators.required],
-      entidad_federativa: ['', Validators.required],
+      municipio: [{ value: '', disabled: true }, Validators.required],
+      entidad_federativa: [{ value: '', disabled: true }, Validators.required],
 
       // Responsable Legal
       nombre_responsable: [''], // Required logic handled dynamically or in HTML if simple
@@ -92,7 +95,7 @@ export class PacienteCreateComponent {
       // Afiliación Institucional (Trabajador)
       numero_personal: [''],
       puesto: [''],
-      area_adscripcion: [''],
+      facultad_adscripcion: [''],
       tipo_contratacion: [''],
 
       // Seguridad Social
@@ -112,11 +115,46 @@ export class PacienteCreateComponent {
       this.isWorker = value === 'Docente' || value === 'Administrativo';
       this.updateValidators();
     });
+
+    this.pacienteForm.get('cp')?.valueChanges.subscribe(value => {
+      if (value && value.length === 5) {
+        this.postalCodeService.getSettlements(value).subscribe(data => {
+          if (data.length > 0) {
+            this.postalCodeError = null;
+            this.colonias = data.map(d => d.asentamiento);
+            this.pacienteForm.patchValue({
+              municipio: data[0].municipio,
+              entidad_federativa: data[0].estado,
+              colonia: this.colonias.length === 1 ? this.colonias[0] : ''
+            });
+            this.pacienteForm.get('colonia')?.enable();
+          } else {
+            this.colonias = [];
+            this.postalCodeError = 'Código postal no encontrado';
+            this.pacienteForm.patchValue({
+              municipio: '',
+              entidad_federativa: '',
+              colonia: ''
+            });
+            this.pacienteForm.get('colonia')?.disable();
+          }
+        });
+      } else {
+        this.colonias = [];
+        this.postalCodeError = null;
+        this.pacienteForm.patchValue({
+          municipio: '',
+          entidad_federativa: '',
+          colonia: ''
+        });
+        this.pacienteForm.get('colonia')?.disable();
+      }
+    });
   }
 
   updateValidators() {
     const studentFields = ['matricula', 'facultad', 'programa_educativo', 'semestre', 'grupo'];
-    const workerFields = ['numero_personal', 'puesto', 'area_adscripcion', 'tipo_contratacion'];
+    const workerFields = ['numero_personal', 'puesto', 'facultad_adscripcion', 'tipo_contratacion'];
 
     if (this.isStudent) {
       studentFields.forEach(field => this.pacienteForm.get(field)?.setValidators([Validators.required]));

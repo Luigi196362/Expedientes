@@ -54,8 +54,6 @@ export class HistoriaDataComponent implements OnInit {
     this.registroService.getHistoria(idRegistro).subscribe({
       next: (registros: any[]) => {
         console.log('Historia recibida:', registros);
-        // Assuming the service returns an array with the history object
-        // Check if response is an array
         if (Array.isArray(registros)) {
             if (registros.length > 0) {
                 this.historia = registros[0];
@@ -63,7 +61,6 @@ export class HistoriaDataComponent implements OnInit {
                 console.warn('El arreglo de historia está vacío.');
             }
         } else if (registros) {
-            // Assume it's a single object
             this.historia = registros;
         } else {
             console.warn('No se encontró la historia con el ID especificado.');

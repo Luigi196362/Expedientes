@@ -27,7 +27,7 @@
                     </div>
                     <div class="data-item">
                         <span class="data-label">Sexo</span>
-                        <span class="data-value">{{ paciente?.sexo == 1 ? 'Masculino' : 'Femenino' }}</span>
+                        <span class="data-value">{{ paciente?.sexo == 1 ? 'Masculino' : paciente?.sexo == 2 ? 'Femenino' : 'Otro' }}</span>
                     </div>
                 </div>
 
@@ -177,8 +177,8 @@
                     </div>
                     <div class="grid-2-col">
                         <div class="data-item">
-                            <span class="data-label">Área de Adscripción</span>
-                            <span class="data-value">{{ paciente?.area_adscripcion || 'N/A' }}</span>
+                            <span class="data-label">Facultad Adscripción</span>
+                            <span class="data-value">{{ paciente?.facultad_adscripcion || 'N/A' }}</span>
                         </div>
                         <div class="data-item">
                             <span class="data-label">Tipo de Contratación</span>

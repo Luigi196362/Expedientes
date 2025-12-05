@@ -61,6 +61,15 @@
                         [attr.aria-pressed]="hide()">
                         <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
+                    <mat-error *ngIf="usuarioForm.get('password')?.hasError('required')">
+                        La contraseña es requerida
+                    </mat-error>
+                    <mat-error *ngIf="usuarioForm.get('password')?.hasError('minlength')">
+                        La contraseña debe tener al menos 8 caracteres
+                    </mat-error>
+                    <mat-error *ngIf="usuarioForm.get('password')?.hasError('pattern')">
+                        La contraseña debe incluir mayúsculas y caracteres especiales
+                    </mat-error>
                 </mat-form-field>
 
             </form>

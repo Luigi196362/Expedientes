@@ -46,7 +46,7 @@
     <!-- sexo Column -->
     <ng-container matColumnDef="sexo">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Sexo</th>
-      <td mat-cell *matCellDef="let row"> {{ row.sexo == 1 ? 'Masculino' : 'Femenino' }} </td>
+      <td mat-cell *matCellDef="let row"> {{ row.sexo == 1 ? 'Masculino' : row.sexo == 2 ? 'Femenino' : 'Otro' }} </td>
     </ng-container>
 
     <!-- fecha_nacimiento Column -->

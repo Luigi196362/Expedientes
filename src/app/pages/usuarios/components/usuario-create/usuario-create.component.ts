@@ -16,6 +16,7 @@ import { UsuarioDialogComponent } from './usuario-dialog/usuario-dialog.componen
 import { MatSelectModule } from '@angular/material/select';
 import { Rol } from '../../../roles/models/rol.model';
 import { RolService } from '../../../roles/services/rol.service';
+import { CommonModule } from '@angular/common';
 
 interface Roles {
   value: number;
@@ -26,6 +27,7 @@ interface Roles {
   selector: 'app-usuario-create',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatTabsModule,
     MatInputModule,
@@ -60,7 +62,7 @@ export class UsuarioCreateComponent implements OnInit {
       telefono: ['', Validators.required],
       rolId: ['', Validators.required],
       facultad: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[\W_]).*$/)]]
     });
   }
 

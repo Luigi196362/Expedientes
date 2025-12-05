@@ -3,189 +3,163 @@
     grid-template-columns: 50% 50%;
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
+}
+
+/* Left Section Styles */
+.left-section {
+    height: 100vh;
+    background-image: url('../../../assets/img/USBI 2.jpg');
+     /* linear-gradient(rgba(24, 94, 175, 0.6), rgba(24, 94, 175, 0.8)), */
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
 }
 
 .logo-container {
-    position: relative;
-    height: 5%;
-    width: 38%;
+    padding: 2rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: #185eaf;
-    /* background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%); */
-    /* background: linear-gradient(to right, #3682d8 0%, #1d75d900 100%); */
-    /* background-color: #1d75d9; */
-    border-bottom-right-radius: 10px;
-    padding: 1%;
+    gap: 1rem;
+    background: linear-gradient(to right, rgba(24, 94, 175, 0.9), transparent);
+    width: 50%;
+    border-bottom-right-radius: 50px;
+    margin-top: 2rem;
 }
 
 .logo {
-    height: 95%;
-    filter: drop-shadow(0 0 0.1rem rgb(24, 167, 255));
+    height: 60px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .logo-title {
-    /* margin-top: 1.5vh; */
-    font-size: 1.3rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
 }
 
-.left-section {
-    height: 100vh;
-    /* background-image: url('../../../assets/img/Medicina.png'); */
-    background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.left-section.light {
-    /* background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%); */
-}
-
-.left-section.dark {
-    /* background: linear-gradient(135deg, #17b368 0%, #185eaf 100%); */
-}
-
+/* Right Section Styles */
 .right-section {
     height: 100vh;
-    display: grid;
-    grid-template-rows: 10% 90%;
+    display: flex;
     align-items: center;
-}
-
-.right-section.light {
-    background: white;
+    justify-content: center;
+    background-color: #f8f9fa;
+    transition: background-color 0.3s ease;
 }
 
 .right-section.dark {
     background: linear-gradient(135deg, #232526 0%, #414345 100%);
 }
 
-.theme-toggle-container {
-    justify-self: end;
-    margin-right: 2rem;
-
-}
-
-.right-section form {
-    justify-self: center;
-    align-self: center;
-    width: 80%;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-
-}
-
-.theme-toggle.light {
-    color: darkslategrey;
-}
-
-.theme-toggle.dark {
-    color: burlywood;
-}
-
 .login-form {
-    width: 90%;
+    width: 100%;
+    max-width: 400px;
+    padding: 3rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
+}
+
+.right-section.dark .login-form {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .login-title {
-    text-align: start;
-    color: red;
-}
-
-.login-title.white {
-    color: black;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 0.5rem;
+    text-align: center;
 }
 
 .login-title.dark {
     color: #ffffff;
 }
 
+/* Form Fields */
+.form-field {
+    width: 100%;
+}
 
-@media (max-width: 568px) {
-    .logo {
-        display: none;
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
 
+/* Error Message Styles */
+.error-container {
+    background-color: #ffebee;
+    border: 1px solid #ffcdd2;
+    color: #c62828;
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.error-container mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+}
+
+.error-message {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* Button Styles */
+button[type="submit"] {
+    height: 48px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
     }
 
     .left-section {
         display: none;
-
     }
 
-    .container {
-        grid-template-columns: 1fr;
-
-        justify-content: center;
-
+    .login-form {
+        box-shadow: none;
+        background: transparent;
+        padding: 2rem;
     }
-
-
+    
+    .right-section.dark .login-form {
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
 }
-
-.error-message {
-    color: red;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-/* 
-.container {
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    grid-template-rows: 5% 95%;
-}
-
-.container.white {
-    background: linear-gradient(135deg, #1bd57b 0%, #1d75d9 100%);
-}
-
-.container.dark {
-    background: linear-gradient(135deg, #505050 0%, #2e2e2e 100%);
-}
-
-.login-form {
-    align-self: center;
-    justify-self: center;
-    display: flex;
-    height: 50%;
-    width: 50%;
-    padding: 2%;
-    border-radius: 10px;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.800);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.theme-toggle.light {
-    color: darkslategrey;
-}
-
-.theme-toggle.dark {
-    color: burlywood;
-}
-
-.theme-toggle-container {
-    justify-self: end;
-    padding: 1%;
-}
-
-.login-title {
-    text-align: center;
-}
-
-.login-title.white {
-    color: black;
-}
-
-.login-title.dark {
-    color: #ffffff;
-} */

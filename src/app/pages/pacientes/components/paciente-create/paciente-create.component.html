@@ -40,6 +40,7 @@
             <mat-select formControlName="sexo">
               <mat-option value="1">Masculino</mat-option>
               <mat-option value="2">Femenino</mat-option>
+              <mat-option value="3">Otro</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -99,13 +100,21 @@
           </div>
 
           <div class="grid-2-col">
+            <div>
+              <mat-form-field class="form-field" color="accent">
+                <mat-label>Código Postal</mat-label>
+                <input matInput formControlName="cp" maxlength="5">
+              </mat-form-field>
+              <mat-error *ngIf="postalCodeError">{{ postalCodeError }}</mat-error>
+            </div>
+
             <mat-form-field class="form-field" color="accent">
               <mat-label>Colonia / Asentamiento</mat-label>
-              <input matInput formControlName="colonia">
-            </mat-form-field>
-            <mat-form-field class="form-field" color="accent">
-              <mat-label>Código Postal</mat-label>
-              <input matInput formControlName="cp" maxlength="5">
+              <mat-select formControlName="colonia">
+                <mat-option *ngFor="let col of colonias" [value]="col">
+                  {{col}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 
@@ -198,8 +207,8 @@
               <input matInput formControlName="puesto">
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
-              <mat-label>Área de Adscripción</mat-label>
-              <input matInput formControlName="area_adscripcion">
+              <mat-label>Facultad de Adscripción</mat-label>
+              <input matInput formControlName="facultad_adscripcion">
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
               <mat-label>Tipo de Contratación</mat-label>

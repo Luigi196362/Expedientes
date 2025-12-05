@@ -23,7 +23,10 @@
         <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
             <h1 class="login-title" [ngClass]="isDarkTheme ? 'dark':'white'">Inicio de sesión</h1>
 
-            <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+            <div *ngIf="errorMessage" class="error-container">
+                <mat-icon>error_outline</mat-icon>
+                <span class="error-message">{{ errorMessage }}</span>
+            </div>
 
             <mat-form-field class="form-field">
                 <mat-label>Nombre de usuario</mat-label>

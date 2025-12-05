@@ -17,6 +17,7 @@ import { RolService } from '../../../roles/services/rol.service';
 import { Rol } from '../../../roles/models/rol.model';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { UsuarioDialogEditComponent } from './usuario-dialog-edit/usuario-dialog-edit.component';
+import { CommonModule } from '@angular/common';
 
 interface Roles {
   value: number;
@@ -27,6 +28,7 @@ interface Roles {
   selector: 'app-usuario-edit',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatTabsModule,
     MatInputModule,
@@ -57,7 +59,7 @@ export class UsuarioEditComponent implements OnInit {
       telefono: ['', Validators.required],
       rolId: ['', Validators.required],
       facultad: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[\W_]).*$/)]]
     });
   }
 

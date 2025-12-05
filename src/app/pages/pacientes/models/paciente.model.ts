@@ -40,7 +40,7 @@ export class Paciente {
     // Trabajador
     numero_personal: String = "";
     puesto: String = "";
-    area_adscripcion: String = "";
+    facultad_adscripcion: String = "";
     tipo_contratacion: String = "";
 
     // Seguridad Social

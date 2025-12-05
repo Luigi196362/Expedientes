@@ -91,7 +91,7 @@ export class PacienteDataComponent implements OnInit {
       // Trabajador
       numero_personal: [''],
       puesto: [''],
-      area_adscripcion: [''],
+      facultad_adscripcion: [''],
       tipo_contratacion: [''],
 
       // Seguridad Social
@@ -131,9 +131,7 @@ export class PacienteDataComponent implements OnInit {
         }
     } else {
       console.log('Error al cargar los datos:', this.paciente);
-      // Only redirect if not in a context where it might be used as a child without state?
-      // But if it's a child, it should probably get data via Input.
-      // For now, assuming it relies on router state even as child.
+
       this.router.navigate(['/layout/pacientes']);
     }
   }
