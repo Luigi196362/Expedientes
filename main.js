@@ -66,6 +66,27 @@ if (handleSquirrelEvent()) {
   return;
 }
 
+// SINGLE INSTANCE LOCK
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  app.quit();
+  return;
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    const wins = BrowserWindow.getAllWindows();
+    if (wins.length > 0) {
+      const win = wins[0];
+      if (win.isMinimized()) win.restore();
+      win.focus();
+    } else {
+      // If no windows are open (e.g. closed but app running), create one
+      createWindow();
+    }
+  });
+}
+
 let javaProcess = null;
 let javaPid = null;
 
@@ -79,6 +100,11 @@ function resolveJarPath() {
 }
 
 function startBackend() {
+  if (javaProcess) {
+    console.log('[APP] Backend ya está corriendo.');
+    return true;
+  }
+
   const jarFile = 'api-expedientes-0.0.1-SNAPSHOT.jar';
   const jarPath = app.isPackaged
     ? path.join(process.resourcesPath, 'api', jarFile)
@@ -197,12 +223,13 @@ function createWindow() {
   if (process.env.NODE_ENV === 'development') {
     win.loadURL('http://localhost:4200');
   } else {
+    // Use hash location strategy in Angular to avoid issues with file:// protocol
     win.loadFile(path.join(__dirname, 'dist', 'expedientes', 'browser', 'index.html'));
   }
 
-  win.on('closed', () => {
-    stopBackend();
-  });
+  // REMOVED: win.on('closed', ...) calling stopBackend(). 
+  // We want the backend to persist if the window is closed but app is running,
+  // OR we rely on window-all-closed to stop it.
 }
 
 // App lifecycle
