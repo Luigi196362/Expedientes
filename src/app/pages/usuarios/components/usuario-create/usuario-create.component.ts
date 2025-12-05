@@ -14,6 +14,7 @@ import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { UsuarioDialogComponent } from './usuario-dialog/usuario-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Rol } from '../../../roles/models/rol.model';
 import { RolService } from '../../../roles/services/rol.service';
 import { CommonModule } from '@angular/common';
@@ -38,7 +39,8 @@ interface Roles {
     RouterLink,
     MatAutocompleteModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   templateUrl: './usuario-create.component.html',
   styleUrl: './usuario-create.component.css'
@@ -64,7 +66,27 @@ export class UsuarioCreateComponent implements OnInit {
       telefono: ['', Validators.required],
       rolId: ['', Validators.required],
       facultad: ['', Validators.required],
+      pasante: [false],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[\W_]).*$/)]]
+    });
+
+    this.usuarioForm.get('pasante')?.valueChanges.subscribe(isPasante => {
+      const cedulaControl = this.usuarioForm.get('cedulaProfesional');
+      const especialidadControl = this.usuarioForm.get('especialidad');
+      if (isPasante) {
+        cedulaControl?.clearValidators();
+        cedulaControl?.setValue('');
+        cedulaControl?.disable();
+        especialidadControl?.clearValidators();
+        especialidadControl?.setValue('');
+        especialidadControl?.disable();
+      } else {
+        cedulaControl?.setValidators([Validators.required]);
+        cedulaControl?.enable();
+        especialidadControl?.setValidators([Validators.required]);
+        especialidadControl?.enable();
+      }
+      cedulaControl?.updateValueAndValidity();
     });
   }
 

@@ -12,4 +12,5 @@ export class Usuario {
     rolId: number = 0;
     rolNombre: String = "";
     fecha_creacion: Date = new Date();
+    pasante: boolean = false;
 }

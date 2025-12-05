@@ -16,12 +16,32 @@
             <td>{{usuario.facultad}}</td>
         </tr>
         <tr>
-            <td><strong>Nombre:</strong></td>
+            <td><strong>Rol:</strong></td>
             <td>{{usuario.rolId}}</td>
         </tr>
         <tr>
-            <td><strong>contraseña</strong></td>
+            <td><strong>CURP:</strong></td>
+            <td>{{usuario.curp}}</td>
+        </tr>
+        <tr>
+            <td><strong>RFC:</strong></td>
+            <td>{{usuario.rfc}}</td>
+        </tr>
+        <tr *ngIf="usuario.cedulaProfesional">
+            <td><strong>Cédula:</strong></td>
+            <td>{{usuario.cedulaProfesional}}</td>
+        </tr>
+        <tr *ngIf="usuario.especialidad">
+            <td><strong>Especialidad:</strong></td>
+            <td>{{usuario.especialidad}}</td>
+        </tr>
+        <tr>
+            <td><strong>Contraseña:</strong></td>
             <td>{{usuario.password}}</td>
+        </tr>
+        <tr>
+            <td><strong>Pasante:</strong></td>
+            <td>{{usuario.pasante ? 'Sí' : 'No'}}</td>
         </tr>
     </table>
 </mat-dialog-content>

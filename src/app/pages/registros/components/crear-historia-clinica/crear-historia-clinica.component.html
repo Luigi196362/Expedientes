@@ -1,24 +1,25 @@
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false" autosize>
-    <mat-sidenav class="sidenav-data" #sidenav mode="side" position="end" opened="false" [style.width.px]="sidenavWidth">
+    <mat-sidenav class="sidenav-data" #sidenav mode="side" position="end" opened="false"
+        [style.width.px]="sidenavWidth">
         <div class="resize-handle" (mousedown)="startResize($event)"></div>
         <div class="sidenav-content-wrapper">
             <h1>Información del paciente</h1>
             <app-paciente-data [isSidenav]="true"></app-paciente-data>
         </div>
     </mat-sidenav>
-    
+
     <mat-sidenav-content>
         <div class="Formulario">
             <div class="header-section">
                 <h2>Historia Clínica</h2>
             </div>
-            
+
             <mat-tab-group animationDuration="0s" color="accent">
 
                 <!-- Antecedentes Medicos -->
-                <mat-tab label="Antecedentes Medicos">
+                <mat-tab label="Antecedentes Médicos">
                     <form [formGroup]="historiaForm" class="seccion">
-                        
+
                         <mat-form-field class="form-field" color="accent">
                             <mat-label>Antecedentes Heredofamiliares</mat-label>
                             <textarea matInput formControlName="antecedentes_heredofamiliares"></textarea>
@@ -56,11 +57,16 @@
                             <textarea matInput formControlName="interrogatorio_aparatos_sistemas"></textarea>
                         </mat-form-field>
 
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Alergias</mat-label>
+                            <textarea matInput formControlName="alergias"></textarea>
+                        </mat-form-field>
+
                     </form>
                 </mat-tab>
 
                 <!-- Diagnostico y medicaciones -->
-                <mat-tab label="Diagnostico y medicaciones">
+                <mat-tab label="Diagnóstico y medicaciones">
                     <form [formGroup]="historiaForm" class="seccion">
 
                         <mat-form-field class="form-field" color="accent">
@@ -82,7 +88,7 @@
                 </mat-tab>
 
                 <!-- Alergias -->
-                <mat-tab label="Alergias">
+                <!-- <mat-tab label="Alergias">
                     <form [formGroup]="historiaForm" class="seccion">
 
                         <mat-form-field class="form-field" color="accent">
@@ -91,7 +97,7 @@
                         </mat-form-field>
 
                     </form>
-                </mat-tab>
+                </mat-tab> -->
 
             </mat-tab-group>
         </div>

@@ -20,12 +20,16 @@
                     <input matInput formControlName="rfc" autocomplete="off" maxlength="13">
                 </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
+                <div class="checkbox-container">
+                    <mat-checkbox formControlName="pasante" color="primary">Pasante</mat-checkbox>
+                </div>
+
+                <mat-form-field class="form-field" color="accent" *ngIf="!usuarioForm.get('pasante')?.value">
                     <mat-label>Cédula profesional</mat-label>
-                    <input matInput formControlName="cedulaProfesional" autocomplete="off" maxlength="20">
+                    <input matInput formControlName="cedulaProfesional" autocomplete="off" maxlength="8">
                 </mat-form-field>
 
-                <mat-form-field class="form-field" color="accent">
+                <mat-form-field class="form-field" color="accent" *ngIf="!usuarioForm.get('pasante')?.value">
                     <mat-label>Especialidad</mat-label>
                     <input matInput formControlName="especialidad" autocomplete="off" maxlength="50">
                 </mat-form-field>
@@ -64,9 +68,6 @@
                         [attr.aria-pressed]="hide()">
                         <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
-                    <mat-error *ngIf="usuarioForm.get('password')?.hasError('required')">
-                        La contraseña es requerida
-                    </mat-error>
                     <mat-error *ngIf="usuarioForm.get('password')?.hasError('minlength')">
                         La contraseña debe tener al menos 8 caracteres
                     </mat-error>
