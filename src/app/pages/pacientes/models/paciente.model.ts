@@ -28,7 +28,13 @@ export class Paciente {
     nombre_responsable: String = "";
     parentesco_responsable: String = "";
     telefono_responsable: String = "";
-    direccion_responsable: String = "";
+    calle_responsable: String = "";
+    numero_exterior_responsable: String = "";
+    numero_interior_responsable: String = "";
+    colonia_responsable: String = "";
+    cp_responsable: String = "";
+    municipio_responsable: String = "";
+    entidad_federativa_responsable: String = "";
 
     // Estudiante
     matricula: String = "";
@@ -47,7 +53,6 @@ export class Paciente {
     nss: String = "";
 
     // Sociodemográfico
-    ocupacion: String = "";
     religion: String = "";
     escolaridad: String = "";
     // habla_lengua_indigena: boolean = false;

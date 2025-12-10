@@ -1,10 +1,9 @@
 .container {
   padding-top: 0.1px;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .navbar {
@@ -198,11 +197,13 @@
   z-index: 1;
   padding: 1%;
   margin-left: 5%;
-
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
 .content.dark {
-  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  background:  #2e3031 ;
 }
 
 .content.light {
@@ -227,4 +228,79 @@
   backdrop-filter: blur(3px);
   z-index: 90;
   cursor: pointer;
+}
+
+/* User Profile Dropdown */
+.user-profile-container {
+  position: relative;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 1vw;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.user-profile-container:hover .dropdown-menu {
+  display: block;
+}
+
+.theme-toggle-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.dropdown-item {
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: inherit;
+  display: block;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Dropdown Theme Styles */
+.dropdown-menu.light {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.dropdown-menu.dark {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -37,7 +37,7 @@ import { FACULTADES } from '../../../../core/constants/faculties.const';
     RouterLink,
     MatAutocompleteModule,
     MatCheckboxModule,
-    CommonModule, // Added CommonModule
+    CommonModule,
     FormsModule,
     MatFormFieldModule, MatInputModule, MatDatepickerModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,24 +57,26 @@ export class PacienteCreateComponent {
   hablaLenguaIndigena: boolean = false;
   colonias: string[] = [];
   postalCodeError: string | null = null;
+  colonias_responsable: string[] = [];
+  postalCodeError_responsable: string | null = null;
   facultades = FACULTADES;
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteSevice: PacienteService, private router: Router, private postalCodeService: PostalCodeService) {
     this.pacienteForm = this.fb.group({
       // Identificación
       tipo_paciente: ['', Validators.required],
-      curp: ['', [Validators.required, Validators.minLength(18), Validators.maxLength(18)]],
+      curp: ['', [Validators.minLength(18), Validators.maxLength(18)]],
       nombre: ['', Validators.required],
       fecha_nacimiento: [null, Validators.required],
       sexo: [null, Validators.required],
-      estado_civil: ['', Validators.required],
-      origen: ['', Validators.required],
+      estado_civil: [''],
+      origen: [''],
 
       // Contacto y Ubicación
       telefono: ['', Validators.required],
-      email: ['', [Validators.email]], // Optional but good validation
-      calle: ['', Validators.required],
-      numero_exterior: ['', Validators.required],
+      email: ['', [Validators.email]], 
+      calle: [''],
+      numero_exterior: [''],
       numero_interior: [''],
       colonia: [{ value: '', disabled: true }, Validators.required],
       cp: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
@@ -82,10 +84,16 @@ export class PacienteCreateComponent {
       entidad_federativa: [{ value: '', disabled: true }, Validators.required],
 
       // Responsable Legal
-      nombre_responsable: [''], // Required logic handled dynamically or in HTML if simple
+      nombre_responsable: [''],
       parentesco_responsable: [''],
       telefono_responsable: [''],
-      direccion_responsable: [''],
+      calle_responsable: [''],
+      numero_exterior_responsable: [''],
+      numero_interior_responsable: [''],
+      colonia_responsable: [{ value: '', disabled: true }],
+      cp_responsable: ['', [Validators.pattern('^[0-9]{5}$')]],
+      municipio_responsable: [{ value: '', disabled: true }],
+      entidad_federativa_responsable: [{ value: '', disabled: true }],
 
       // Afiliación Institucional (Estudiante)
       matricula: [''],
@@ -104,10 +112,8 @@ export class PacienteCreateComponent {
       nss: [''],
 
       // Sociodemográfico
-      ocupacion: ['', Validators.required],
-      religion: ['', Validators.required],
-      escolaridad: ['', Validators.required],
-      // habla_lengua_indigena: [false],
+      religion: [''],
+      escolaridad: [''],
       lengua_indigena: ['']
     });
 
@@ -152,6 +158,41 @@ export class PacienteCreateComponent {
         this.pacienteForm.get('colonia')?.disable();
       }
     });
+
+    this.pacienteForm.get('cp_responsable')?.valueChanges.subscribe(value => {
+      if (value && value.length === 5) {
+        this.postalCodeService.getSettlements(value).subscribe(data => {
+          if (data.length > 0) {
+            this.postalCodeError_responsable = null;
+            this.colonias_responsable = data.map(d => d.asentamiento);
+            this.pacienteForm.patchValue({
+              municipio_responsable: data[0].municipio,
+              entidad_federativa_responsable: data[0].estado,
+              colonia_responsable: this.colonias_responsable.length === 1 ? this.colonias_responsable[0] : ''
+            });
+            this.pacienteForm.get('colonia_responsable')?.enable();
+          } else {
+            this.colonias_responsable = [];
+            this.postalCodeError_responsable = 'Código postal no encontrado';
+            this.pacienteForm.patchValue({
+              municipio_responsable: '',
+              entidad_federativa_responsable: '',
+              colonia_responsable: ''
+            });
+            this.pacienteForm.get('colonia_responsable')?.disable();
+          }
+        });
+      } else {
+        this.colonias_responsable = [];
+        this.postalCodeError_responsable = null;
+        this.pacienteForm.patchValue({
+          municipio_responsable: '',
+          entidad_federativa_responsable: '',
+          colonia_responsable: ''
+        });
+        this.pacienteForm.get('colonia_responsable')?.disable();
+      }
+    });
   }
 
   updateValidators() {
@@ -171,14 +212,11 @@ export class PacienteCreateComponent {
         this.pacienteForm.get(field)?.setValue('');
       });
     } else {
-      // Externo or others
       [...studentFields, ...workerFields].forEach(field => {
         this.pacienteForm.get(field)?.clearValidators();
         this.pacienteForm.get(field)?.setValue('');
       });
     }
-
-    // Update validity for all affected fields
     [...studentFields, ...workerFields].forEach(field => this.pacienteForm.get(field)?.updateValueAndValidity());
   }
 
@@ -204,11 +242,11 @@ export class PacienteCreateComponent {
       this.isSaving = true; // Activar la bandera antes de abrir el diálogo
 
       // Abrir el diálogo de confirmación y esperar la respuesta del usuario
-      const dialogRef = this.dialog.open(PacienteDialogComponent, { data: { paciente: this.pacienteForm.value } });
+      const dialogRef = this.dialog.open(PacienteDialogComponent, { data: { paciente: this.pacienteForm.getRawValue() } });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {  // Si el usuario confirma
-          const nuevoPaciente: Paciente = { ...this.pacienteForm.value };
+          const nuevoPaciente: Paciente = { ...this.pacienteForm.getRawValue() };
 
           this.pacienteSevice.guardarPaciente(nuevoPaciente).subscribe({
             next: () => {

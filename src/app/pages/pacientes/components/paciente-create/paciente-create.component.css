@@ -1,24 +1,17 @@
 .Formulario {
-
     box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
-/* Card-like Section Styling */
 .seccion {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 30px;
-
-
     /* animation: fadeIn 0.4s ease-out; */
-
-    /* Fixed height logic */
     height: 60vh;
     overflow-y: auto;
 }
 
-/* Animation Keyframes */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -31,12 +24,11 @@
     }
 }
 
-/* Form Fields */
+
 .form-field {
     width: 100%;
 }
 
-/* Grid Layouts */
 .grid-2-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -49,7 +41,6 @@
     gap: 16px;
 }
 
-/* Checkbox */
 .checkbox-container {
     margin: 15px 0;
     padding: 10px;
@@ -58,7 +49,7 @@
     border: 1px solid #e0e0e0;
 }
 
-/* Action Buttons */
+
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -81,7 +72,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Section Headers */
 h3 {
     margin-top: 10px;
     margin-bottom: 20px;
@@ -103,8 +93,6 @@ h3::before {
     margin-right: 10px;
     border-radius: 3px;
 }
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .Formulario {
         margin: 10px auto;
@@ -114,7 +102,6 @@ h3::before {
     .seccion {
         padding: 20px;
         height: auto;
-        /* Allow auto height on mobile if needed, or keep fixed */
         max-height: 80vh;
     }
 
@@ -133,8 +120,6 @@ h3::before {
         width: 100%;
     }
 }
-
-/* Customizing Material Tabs */
 ::ng-deep .mat-mdc-tab-group {
     font-family: 'Roboto', sans-serif;
 }

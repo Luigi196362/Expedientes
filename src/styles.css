@@ -8,5 +8,35 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    /* overflow: hidden; */
+    overflow: hidden;
+}
+
+.light-primary {
+    background-color: #f1f8ff;
+    color: black;
+}
+
+.light-secondary {
+    background-color: #ffffff;
+    color: black;
+}
+
+.light-accent {
+    background-color: #1d75d9;
+    color: white;
+}
+
+.dark-primary {
+     background:  #2e3031 ;
+    color: white;
+}
+
+.dark-secondary {
+    background-color : rgb(73, 73, 73);
+    color: white;
+}
+
+.dark-accent {
+    background-color: #1d75d9;
+    color: white;
 }

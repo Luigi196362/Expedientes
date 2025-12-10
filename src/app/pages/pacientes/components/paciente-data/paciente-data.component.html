@@ -116,9 +116,43 @@
                         <span class="data-value">{{ paciente?.telefono_responsable || 'N/A' }}</span>
                     </div>
                 </div>
-                <div class="data-item">
-                    <span class="data-label">Dirección Responsable</span>
-                    <span class="data-value">{{ paciente?.direccion_responsable || 'N/A' }}</span>
+    <div class="grid-2-col">
+                    <div class="data-item">
+                        <span class="data-label">Calle</span>
+                        <span class="data-value">{{ paciente?.calle_responsable || 'N/A' }}</span>
+                    </div>
+                    <div class="grid-2-col-inner">
+                        <div class="data-item">
+                            <span class="data-label">No. Ext</span>
+                            <span class="data-value">{{ paciente?.numero_exterior_responsable || 'N/A' }}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">No. Int</span>
+                            <span class="data-value">{{ paciente?.numero_interior_responsable || 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2-col">
+                    <div class="data-item">
+                        <span class="data-label">Colonia / Asentamiento</span>
+                        <span class="data-value">{{ paciente?.colonia_responsable || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Código Postal</span>
+                        <span class="data-value">{{ paciente?.cp_responsable || 'N/A' }}</span>
+                    </div>
+                </div>
+
+                <div class="grid-2-col">
+                    <div class="data-item">
+                        <span class="data-label">Municipio / Alcaldía</span>
+                        <span class="data-value">{{ paciente?.municipio_responsable || 'N/A' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Entidad Federativa</span>
+                        <span class="data-value">{{ paciente?.entidad_federativa_responsable || 'N/A' }}</span>
+                    </div>
                 </div>
 
             </div>
@@ -193,11 +227,6 @@
         <!-- Pestaña 4: Sociodemográfico y Legal -->
         <mat-tab label="Sociodemográfico y Legal">
             <div class="seccion">
-
-                <div class="data-item">
-                    <span class="data-label">Ocupación</span>
-                    <span class="data-value">{{ paciente?.ocupacion || 'N/A' }}</span>
-                </div>
 
                 <div class="grid-2-col">
                     <div class="data-item">

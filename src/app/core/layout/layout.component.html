@@ -14,17 +14,25 @@
       </div>
     </section>
 
-    <section class="navbar-right">
-      <label>{{nombre}}</label>
-      <img src="assets/img/Perfil.jpg" alt="Logo" class="profile-image">
-    </section>
+    <div class="user-profile-container">
+      <section class="navbar-right">
+        <label>{{nombre}}</label>
+        <img src="assets/img/Perfil.jpg" alt="Logo" class="profile-image">
+      </section>
 
-    <!-- 
-    <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme" class="theme-toggle-container">
-      <mat-icon class="theme-toggle" [ngClass]="isDarkTheme ? 'dark' : 'light'">
-        dark_mode
-      </mat-icon>
-    </mat-slide-toggle> -->
+      <div class="dropdown-menu" [ngClass]="isDarkTheme ? 'dark' : 'light'">
+        <!-- <button mat-button class="dropdown-item">Prueba</button> -->
+        <div class="theme-toggle-wrapper">
+          <span>Modo {{ isDarkTheme ? 'Oscuro' : 'Claro' }}</span>
+          <mat-slide-toggle (change)="toggleDarkTheme($event.checked)" [checked]="isDarkTheme"
+            class="theme-toggle-container">
+            <mat-icon class="theme-toggle" [ngClass]="isDarkTheme ? 'dark' : 'light'">
+              {{ isDarkTheme ? 'dark_mode' : 'light_mode' }}
+            </mat-icon>
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
 
   </header>
 

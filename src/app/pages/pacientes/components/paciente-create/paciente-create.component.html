@@ -148,13 +148,56 @@
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
               <mat-label>Teléfono Responsable</mat-label>
-              <input matInput formControlName="telefono_responsable">
+              <input matInput formControlName="telefono_responsable" maxlength="14" (input)="formatPhoneNumber($event, 10)">
             </mat-form-field>
           </div>
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Dirección Responsable</mat-label>
-            <input matInput formControlName="direccion_responsable">
-          </mat-form-field>
+                  
+          <div class="grid-2-col">
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Calle</mat-label>
+              <input matInput formControlName="calle_responsable">
+            </mat-form-field>
+            <div class="grid-2-col-inner">
+              <mat-form-field class="form-field" color="accent">
+                <mat-label>No. Ext</mat-label>
+                <input matInput formControlName="numero_exterior_responsable">
+              </mat-form-field>
+              <mat-form-field class="form-field" color="accent">
+                <mat-label>No. Int</mat-label>
+                <input matInput formControlName="numero_interior_responsable">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="grid-2-col">
+            <div>
+              <mat-form-field class="form-field" color="accent">
+                <mat-label>Código Postal</mat-label>
+                <input matInput formControlName="cp_responsable" maxlength="5">
+              </mat-form-field>
+              <mat-error *ngIf="postalCodeError">{{ postalCodeError }}</mat-error>
+            </div>
+
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Colonia / Asentamiento</mat-label>
+              <mat-select formControlName="colonia_responsable">
+                <mat-option *ngFor="let col of colonias_responsable" [value]="col">
+                  {{col}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="grid-2-col">
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Municipio / Alcaldía</mat-label>
+              <input matInput formControlName="municipio_responsable">
+            </mat-form-field>
+            <mat-form-field class="form-field" color="accent">
+              <mat-label>Entidad Federativa</mat-label>
+              <input matInput formControlName="entidad_federativa_responsable">
+            </mat-form-field>
+          </div>
 
         </form>
       </mat-tab>
@@ -234,11 +277,6 @@
       <!-- Pestaña 4: Sociodemográfico y Legal -->
       <mat-tab label="Sociodemográfico y Legal">
         <form [formGroup]="pacienteForm" class="seccion">
-
-          <mat-form-field class="form-field" color="accent">
-            <mat-label>Ocupación</mat-label>
-            <input matInput formControlName="ocupacion">
-          </mat-form-field>
 
           <mat-form-field class="form-field" color="accent">
             <mat-label>Religión</mat-label>

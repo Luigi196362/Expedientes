@@ -40,13 +40,6 @@ export class LoginComponent implements OnInit {
     this.isDarkTheme = document.body.classList.contains('dark-theme');
   }
 
-  hide = signal(true);
-
-  clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
-  }
-
   onLogin() {
 
     this.errorMessage = '';
@@ -57,19 +50,16 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    // Realizar la solicitud de login
     this.authService.login(this.loginData).subscribe(
       response => {
-        // Si se recibe el token, redirigir al usuario
         if (response?.token) {
           sessionStorage.setItem('token', response.token);
           this.router.navigate(['/layout/home']);
         }
       },
       error => {
-        // Se asigna el mensaje de error proveniente del servicio
         this.errorMessage = error.message;
-        this.cdr.detectChanges(); // Forzar la detección de cambios
+        this.cdr.detectChanges();
       }
     );
   }
@@ -85,8 +75,6 @@ export class LoginComponent implements OnInit {
       body.classList.remove('dark-theme');
       localStorage.setItem('theme', 'light');
     }
-
-    // Forzamos la detección de cambios sin recargar
     this.cdr.detectChanges();
   }
 

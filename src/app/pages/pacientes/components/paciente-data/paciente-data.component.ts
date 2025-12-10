@@ -79,8 +79,14 @@ export class PacienteDataComponent implements OnInit {
       nombre_responsable: [''],
       parentesco_responsable: [''],
       telefono_responsable: [''],
-      direccion_responsable: [''],
-
+      calle_responsable: [''],
+      numero_exterior_responsable: [''],
+      numero_interior_responsable: [''],
+      colonia_responsable: [''],
+      cp_responsable: [''],
+      municipio_responsable: [''],
+      entidad_federativa_responsable: [''],
+      
       // Estudiante
       matricula: [''],
       facultad: [''],
@@ -98,7 +104,6 @@ export class PacienteDataComponent implements OnInit {
       nss: ['', Validators.required],
 
       // Sociodemográfico
-      ocupacion: ['', Validators.required],
       religion: ['', Validators.required],
       escolaridad: ['', Validators.required],
      // habla_lengua_indigena: [false],
