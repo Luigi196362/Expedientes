@@ -41,7 +41,7 @@ table {
 
 .actions {
     display: grid;
-    grid-template-columns: 9fr 1fr;
+    grid-template-columns: 8fr 1fr 1fr;
     gap: 10px;
     justify-items: center;
     margin-bottom: 20px;

@@ -5,7 +5,94 @@
 
     <div *ngIf="historia; else loadingOrError">
         <mat-tab-group animationDuration="0s" color="accent">
-            
+
+            <!-- Interrogatorio y exploracion -->
+            <mat-tab label="Interrogatorio y exploracion">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Motivos de consulta</span>
+                        <span class="data-value">{{ historia.motivo_consulta || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Interrogatorio</span>
+                        <span class="data-value">{{ historia.interrogatorio || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Padecimiento actual</span>
+                        <span class="data-value">{{ historia.padecimiento_actual || 'Sin datos'
+                            }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Exploracion fisica</span>
+                        <span class="data-value">{{ historia.exploracion_fisica || 'Sin datos'
+                            }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Signos vitales -->
+            <mat-tab label="Signos vitales">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Peso</span>
+                        <span class="data-value">{{ historia.peso || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Talla</span>
+                        <span class="data-value">{{ historia.talla || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">IMC</span>
+                        <span class="data-value">{{ historia.imc || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Tensión arterial</span>
+                        <span class="data-value">{{ historia.tension_arterial || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Frecuencia cardiaca</span>
+                        <span class="data-value">{{ historia.frecuencia_cardiaca || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Frecuencia respiratoria</span>
+                        <span class="data-value">{{ historia.frecuencia_respiratoria || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Temperatura</span>
+                        <span class="data-value">{{ historia.temperatura || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Saturación</span>
+                        <span class="data-value">{{ historia.saturacion || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Glicemia</span>
+                        <span class="data-value">{{ historia.glicemia || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Hemoglobina</span>
+                        <span class="data-value">{{ historia.hemoglobina || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Hemotipo</span>
+                        <span class="data-value">{{ historia.hemotipo || 'Sin datos' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
             <!-- Antecedentes Medicos -->
             <mat-tab label="Antecedentes Medicos">
                 <div class="seccion">
@@ -16,28 +103,58 @@
 
                     <div class="data-item">
                         <span class="data-label">Antecedentes Personales No Patológicos</span>
-                        <span class="data-value">{{ historia.antecedentes_personales_no_patologicos || 'Sin datos' }}</span>
+                        <span class="data-value">{{ historia.antecedentes_no_patologicos || 'Sin datos'
+                            }}</span>
                     </div>
 
                     <div class="data-item">
                         <span class="data-label">Antecedentes Personales Patológicos</span>
-                        <span class="data-value">{{ historia.antecedentes_personales_patologicos || 'Sin datos' }}</span>
+                        <span class="data-value">{{ historia.antecedentes_patologicos || 'Sin datos'
+                            }}</span>
                     </div>
-                </div>
-            </mat-tab>
 
-            <!-- Tratamientos y medicación -->
-            <mat-tab label="Tratamientos y medicación">
-                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Antecedentes Quirurgicos</span>
+                        <span class="data-value">{{ historia.antecedentes_quirurgicos || 'Sin datos'
+                            }}</span>
+                    </div>
+
                     <div class="data-item">
                         <span class="data-label">Medicamentos Actuales</span>
-                        <span class="data-value">{{ historia.medicamentos_actuales || 'Sin datos' }}</span>
+                        <span class="data-value">{{ historia.medicamentos_actuales || 'Sin datos'
+                            }}</span>
                     </div>
 
                     <div class="data-item">
-                        <span class="data-label">Tratamiento</span>
-                        <span class="data-value">{{ historia.tratamiento || 'Sin datos' }}</span>
+                        <span class="data-label">Alergias</span>
+                        <span class="data-value">{{ historia.alergias || 'Sin datos'
+                            }}</span>
                     </div>
+
+                    <div class="data-item" *ngIf="sexoPaciente === 'FEMENINO'">
+                        <span class="data-label">Antecedentes gineco-obstetricos</span>
+                        <span class="data-value">{{ historia.antecedentes_gineco_obstetricos || 'Sin datos'
+                            }}</span>
+                    </div>
+
+                    <div class="data-item" *ngIf="sexoPaciente === 'MASCULINO'">
+                        <span class="data-label">Cancer Prostata</span>
+                        <span class="data-value">{{ historia.cancer_prostata || 'Sin datos'
+                            }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Vacunas</span>
+                        <span class="data-value">{{ historia.vacunas || 'Sin datos'
+                            }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Adicciones</span>
+                        <span class="data-value">{{ historia.adicciones || 'Sin datos'
+                            }}</span>
+                    </div>
+
                 </div>
             </mat-tab>
 
@@ -45,23 +162,29 @@
             <mat-tab label="Diagnostico y medicaciones">
                 <div class="seccion">
                     <div class="data-item">
-                        <span class="data-label">Diagnóstico Inicial</span>
-                        <span class="data-value">{{ historia.diagnostico_inicial || 'Sin datos' }}</span>
+                        <span class="data-label">Diagnostico</span>
+                        <span class="data-value">{{ historia.diagnostico || 'Sin datos' }}</span>
                     </div>
+                </div>
 
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Tratamiento</span>
+                        <span class="data-value">{{ historia.tratamiento || 'Sin datos' }}</span>
+                    </div>
+                </div>
+
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">Plan de Tratamiento</span>
+                        <span class="data-value">{{ historia.plan_tratamiento || 'Sin datos' }}</span>
+                    </div>
+                </div>
+
+                <div class="seccion">
                     <div class="data-item">
                         <span class="data-label">Observaciones</span>
                         <span class="data-value">{{ historia.observaciones || 'Sin datos' }}</span>
-                    </div>
-                </div>
-            </mat-tab>
-
-            <!-- Alergias -->
-            <mat-tab label="Alergias">
-                <div class="seccion">
-                    <div class="data-item">
-                        <span class="data-label">Alergias</span>
-                        <span class="data-value">{{ historia.alergias || 'Sin datos' }}</span>
                     </div>
                 </div>
             </mat-tab>

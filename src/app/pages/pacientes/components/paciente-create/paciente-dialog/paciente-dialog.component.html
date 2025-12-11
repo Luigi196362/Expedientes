@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <td><strong>Sexo:</strong></td>
-            <td>{{ paciente.sexo == 1 ? 'Masculino' : 'Femenino' }}</td>
+            <td>{{ paciente.sexo || 'N/A' }}</td>
         </tr>
     </table>
 

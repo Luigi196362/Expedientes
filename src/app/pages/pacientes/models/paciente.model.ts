@@ -8,7 +8,7 @@ export class Paciente {
     curp: String = "";
     nombre: String = "";
     fecha_nacimiento: Date = new Date();
-    sexo: number = 0;
+    sexo: String = "";
     estado_civil: String = "";
     origen: String = "";
 
@@ -46,7 +46,6 @@ export class Paciente {
     // Trabajador
     numero_personal: String = "";
     puesto: String = "";
-    facultad_adscripcion: String = "";
     tipo_contratacion: String = "";
 
     // Seguridad Social

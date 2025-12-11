@@ -25,13 +25,14 @@ import { Historia_clinica } from '../../models/historia-clinica';
 export class HistoriaDataComponent implements OnInit {
   @Input() registroIdInput: number | null = null;
   @Input() isEmbedded: boolean = false;
+  @Input() sexoPaciente: String = "";
   historia: Historia_clinica | null = null;
   loading: boolean = true;
 
   constructor(
     private router: Router,
     private registroService: RegistroService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.registroIdInput) {
@@ -55,15 +56,15 @@ export class HistoriaDataComponent implements OnInit {
       next: (registros: any[]) => {
         console.log('Historia recibida:', registros);
         if (Array.isArray(registros)) {
-            if (registros.length > 0) {
-                this.historia = registros[0];
-            } else {
-                console.warn('El arreglo de historia está vacío.');
-            }
+          if (registros.length > 0) {
+            this.historia = registros[0];
+          } else {
+            console.warn('El arreglo de historia está vacío.');
+          }
         } else if (registros) {
-            this.historia = registros;
+          this.historia = registros;
         } else {
-            console.warn('No se encontró la historia con el ID especificado.');
+          console.warn('No se encontró la historia con el ID especificado.');
         }
         this.loading = false;
       },

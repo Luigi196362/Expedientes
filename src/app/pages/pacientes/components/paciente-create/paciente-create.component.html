@@ -38,9 +38,9 @@
           <mat-form-field class="form-field" color="accent">
             <mat-label>Sexo</mat-label>
             <mat-select formControlName="sexo">
-              <mat-option value="1">Masculino</mat-option>
-              <mat-option value="2">Femenino</mat-option>
-              <mat-option value="3">Otro</mat-option>
+              <mat-option value="MASCULINO">Masculino</mat-option>
+              <mat-option value="FEMENINO">Femenino</mat-option>
+              <mat-option value="OTRO">Otro</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -148,10 +148,11 @@
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
               <mat-label>Teléfono Responsable</mat-label>
-              <input matInput formControlName="telefono_responsable" maxlength="14" (input)="formatPhoneNumber($event, 10)">
+              <input matInput formControlName="telefono_responsable" maxlength="14"
+                (input)="formatPhoneNumber($event, 10)">
             </mat-form-field>
           </div>
-                  
+
           <div class="grid-2-col">
             <mat-form-field class="form-field" color="accent">
               <mat-label>Calle</mat-label>
@@ -255,7 +256,7 @@
             </mat-form-field>
             <mat-form-field class="form-field" color="accent">
               <mat-label>Facultad de Adscripción</mat-label>
-              <mat-select formControlName="facultad_adscripcion">
+              <mat-select formControlName="facultad">
                 <mat-option *ngFor="let facultad of facultades" [value]="facultad">
                   {{facultad}}
                 </mat-option>
@@ -289,7 +290,8 @@
           </mat-form-field>
 
           <div class="checkbox-container">
-            <mat-checkbox [ngModel]="hablaLenguaIndigena" (ngModelChange)="onHablaLenguaIndigenaChange($event)" [ngModelOptions]="{standalone: true}" color="primary">Habla Lengua Indígena</mat-checkbox>
+            <mat-checkbox [ngModel]="hablaLenguaIndigena" (ngModelChange)="onHablaLenguaIndigenaChange($event)"
+              [ngModelOptions]="{standalone: true}" color="primary">Habla Lengua Indígena</mat-checkbox>
           </div>
 
           <mat-form-field class="form-field" color="accent" *ngIf="hablaLenguaIndigena">

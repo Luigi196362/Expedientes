@@ -49,13 +49,13 @@ export class RolCreateComponent {
     { nombre: "Editar", id: 2 },
     { nombre: "Eliminar", id: 3 },
     { nombre: "Ver", id: 4 },
-    { nombre: "Exportar", id: 5 }
+    { nombre: "Estadisticas", id: 5 }
   ];
   permisos: Permiso[] = [
     { recurso: "Pacientes", id: 1, acciones: this.acciones },
     { recurso: "Usuarios", id: 2, acciones: this.acciones },
     { recurso: "Registros", id: 3, acciones: this.acciones },
-    { recurso: "Roles", id: 4, acciones: this.acciones }
+    { recurso: "Roles", id: 4, acciones: this.acciones },
   ];
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private rolService: RolService, private router: Router) {

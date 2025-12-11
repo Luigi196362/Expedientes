@@ -16,90 +16,181 @@
 
             <mat-tab-group animationDuration="0s" color="accent">
 
-                <!-- Antecedentes Medicos -->
-                <mat-tab label="Antecedentes Médicos">
+                <!-- Interrogatorio y exploracion -->
+                <mat-tab label="Interrogatorio y exploracion">
                     <form [formGroup]="historiaForm" class="seccion">
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Antecedentes Heredofamiliares</mat-label>
-                            <textarea matInput formControlName="antecedentes_heredofamiliares"></textarea>
+                            <mat-label>Motivos de consulta</mat-label>
+                            <textarea matInput formControlName="motivo_consulta"></textarea>
                         </mat-form-field>
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Antecedentes Patológicos</mat-label>
-                            <textarea matInput formControlName="antecedentes_patologicos"></textarea>
+                            <mat-label>Interrogatorio</mat-label>
+                            <textarea matInput formControlName="interrogatorio"></textarea>
                         </mat-form-field>
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Antecedentes No Patológicos</mat-label>
+                            <mat-label>Padecimiento actual</mat-label>
+                            <textarea matInput formControlName="padecimiento_actual"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Exploracion fisica</mat-label>
+                            <textarea matInput formControlName="exploracion_fisica"></textarea>
+                        </mat-form-field>
+
+                    </form>
+                </mat-tab>
+
+                <!-- Signos vitales -->
+                <mat-tab label="Signos vitales">
+                    <form [formGroup]="historiaForm" class="seccion">
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Peso</mat-label>
+                            <input matInput type="number" formControlName="peso">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Talla</mat-label>
+                            <input matInput type="number" formControlName="talla">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>IMC</mat-label>
+                            <input matInput type="number" formControlName="imc">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Tensión arterial</mat-label>
+                            <textarea matInput formControlName="tension_arterial"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Frecuencia cardiaca</mat-label>
+                            <input matInput type="number" formControlName="frecuencia_cardiaca">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Frecuencia respiratoria</mat-label>
+                            <input matInput type="number" formControlName="frecuencia_respiratoria">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Temperatura</mat-label>
+                            <input matInput type="number" formControlName="temperatura">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Saturación</mat-label>
+                            <input matInput type="number" formControlName="saturacion">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Glicemia</mat-label>
+                            <input matInput type="number" formControlName="glicemia">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Hemoglobina</mat-label>
+                            <input matInput type="number" formControlName="hemoglobina">
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Hemotipo</mat-label>
+                            <input matInput type="text" formControlName="hemotipo">
+                        </mat-form-field>
+                    </form>
+                </mat-tab>
+
+                <!-- Antecedentes -->
+                <mat-tab label="Antecedentes">
+                    <form [formGroup]="historiaForm" class="seccion">
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Antecedentes heredofamiliares</mat-label>
+                            <textarea matInput formControlName="antecedentes_heredo_familiares"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Antecedentes personales no patologicos</mat-label>
                             <textarea matInput formControlName="antecedentes_no_patologicos"></textarea>
                         </mat-form-field>
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Antecedentes Gineco-Obstétricos</mat-label>
-                            <textarea matInput formControlName="antecedentes_gineco_obstetricos"></textarea>
+                            <mat-label>Antecedentes personales patologicos</mat-label>
+                            <textarea matInput formControlName="antecedentes_patologicos"></textarea>
                         </mat-form-field>
 
-                    </form>
-                </mat-tab>
-
-                <!-- Tratamientos y medicación -->
-                <mat-tab label="Tratamientos y medicación">
-                    <form [formGroup]="historiaForm" class="seccion">
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Antecedentes quirurgicos</mat-label>
+                            <textarea matInput formControlName="antecedentes_quirurgicos"></textarea>
+                        </mat-form-field>
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Medicamentos Actuales</mat-label>
+                            <mat-label>Medicamentos actuales</mat-label>
                             <textarea matInput formControlName="medicamentos_actuales"></textarea>
                         </mat-form-field>
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Interrogatorio por Aparatos y Sistemas</mat-label>
-                            <textarea matInput formControlName="interrogatorio_aparatos_sistemas"></textarea>
+                            <mat-label>Alergias</mat-label>
+                            <textarea matInput formControlName="alergias"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent" *ngIf="sexoPaciente === 'FEMENINO'">
+                            <mat-label>Antecedentes gineco-obstetricos</mat-label>
+                            <textarea matInput formControlName="antecedentes_gineco_obstetricos"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent" *ngIf="sexoPaciente === 'MASCULINO'">
+                            <mat-label>Cancer de prostata</mat-label>
+                            <textarea matInput formControlName="cancer_prostata"></textarea>
                         </mat-form-field>
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Alergias</mat-label>
-                            <textarea matInput formControlName="alergias"></textarea>
+                            <mat-label>Vacunas</mat-label>
+                            <textarea matInput formControlName="vacunas"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Adicciones</mat-label>
+                            <textarea matInput formControlName="adicciones"></textarea>
                         </mat-form-field>
 
                     </form>
                 </mat-tab>
 
+
                 <!-- Diagnostico y medicaciones -->
-                <mat-tab label="Diagnóstico y medicaciones">
+                <mat-tab label="Diagnostico y medicaciones">
                     <form [formGroup]="historiaForm" class="seccion">
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Exploración Física</mat-label>
-                            <textarea matInput formControlName="exploracion_fisica"></textarea>
-                        </mat-form-field>
-
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Diagnóstico</mat-label>
+                            <mat-label>Diagnostico</mat-label>
                             <textarea matInput formControlName="diagnostico"></textarea>
                         </mat-form-field>
 
                         <mat-form-field class="form-field" color="accent">
-                            <mat-label>Plan de Tratamiento</mat-label>
+                            <mat-label>Tratamiento</mat-label>
+                            <textarea matInput formControlName="tratamiento"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Plan tratamiento</mat-label>
                             <textarea matInput formControlName="plan_tratamiento"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" color="accent">
+                            <mat-label>Observaciones</mat-label>
+                            <textarea matInput formControlName="observaciones"></textarea>
                         </mat-form-field>
 
                     </form>
                 </mat-tab>
 
-                <!-- Alergias -->
-                <!-- <mat-tab label="Alergias">
-                    <form [formGroup]="historiaForm" class="seccion">
-
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Alergias</mat-label>
-                            <textarea matInput formControlName="alergias"></textarea>
-                        </mat-form-field>
-
-                    </form>
-                </mat-tab> -->
-
             </mat-tab-group>
+
         </div>
 
         <div class="form-actions">

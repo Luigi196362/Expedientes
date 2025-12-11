@@ -37,7 +37,8 @@ import { NotaDataComponent } from '../../../registros/components/nota-data/nota-
     MatIconModule,
     MatSelectModule,
     HistoriaDataComponent,
-    NotaDataComponent
+    NotaDataComponent,
+    RouterLink
   ],
   templateUrl: './paciente-data.component.html',
   styleUrl: './paciente-data.component.css'
@@ -48,7 +49,7 @@ export class PacienteDataComponent implements OnInit {
   paciente: Paciente | null = null;
   res: number = 0;
   habla_lengua_indigena: boolean = false;
-  
+
   selectedRegistroId: number | null = null;
   selectedRegistroType: string | null = null;
 
@@ -86,7 +87,7 @@ export class PacienteDataComponent implements OnInit {
       cp_responsable: [''],
       municipio_responsable: [''],
       entidad_federativa_responsable: [''],
-      
+
       // Estudiante
       matricula: [''],
       facultad: [''],
@@ -97,7 +98,6 @@ export class PacienteDataComponent implements OnInit {
       // Trabajador
       numero_personal: [''],
       puesto: [''],
-      facultad_adscripcion: [''],
       tipo_contratacion: [''],
 
       // Seguridad Social
@@ -106,8 +106,8 @@ export class PacienteDataComponent implements OnInit {
       // Sociodemográfico
       religion: ['', Validators.required],
       escolaridad: ['', Validators.required],
-     // habla_lengua_indigena: [false],
-      lengua_indigena: [''] 
+      // habla_lengua_indigena: [false],
+      lengua_indigena: ['']
     });
     this.pacienteForm.disable();
   }
@@ -129,11 +129,11 @@ export class PacienteDataComponent implements OnInit {
         }
       );
     } else if (state.paciente) {
-        this.paciente = state.paciente;
-        console.log('Paciente cargado desde estado:', this.paciente);
-        if (this.paciente) {
-            this.pacienteForm.patchValue(this.paciente);
-        }
+      this.paciente = state.paciente;
+      console.log('Paciente cargado desde estado:', this.paciente);
+      if (this.paciente) {
+        this.pacienteForm.patchValue(this.paciente);
+      }
     } else {
       console.log('Error al cargar los datos:', this.paciente);
 
@@ -172,23 +172,23 @@ export class PacienteDataComponent implements OnInit {
       }
     });
   }
-  datos(id : number, tipo_registro : String){
+  datos(id: number, tipo_registro: String) {
     if (this.isSidenav) {
-        this.selectedRegistroId = id;
-        this.selectedRegistroType = tipo_registro.toString();
+      this.selectedRegistroId = id;
+      this.selectedRegistroType = tipo_registro.toString();
     } else {
-        if(tipo_registro === 'Historia Clínica'){
-          this.router.navigate(['/layout/pacientes/infoHistoriaClinica'], { state: { registro_id: id } });
-        }
-        if(tipo_registro === 'Nota de Evolución'){
-          this.router.navigate(['/layout/pacientes/infoNota'], { state: { registro_id: id } });
-        }
+      if (tipo_registro === 'Historia Clínica') {
+        this.router.navigate(['/layout/pacientes/infoHistoriaClinica'], { state: { registro_id: id } });
+      }
+      if (tipo_registro === 'Nota de Evolución') {
+        this.router.navigate(['/layout/pacientes/infoNota'], { state: { registro_id: id } });
+      }
     }
   }
 
   clearSelection() {
-      this.selectedRegistroId = null;
-      this.selectedRegistroType = null;
+    this.selectedRegistroId = null;
+    this.selectedRegistroType = null;
   }
 
 }

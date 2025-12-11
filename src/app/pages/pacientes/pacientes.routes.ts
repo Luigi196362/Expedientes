@@ -7,6 +7,7 @@ import { CrearNotasEvolucionComponent } from '../registros/components/crear-nota
 import { CrearHistoriaClinicaComponent } from '../registros/components/crear-historia-clinica/crear-historia-clinica.component';
 import { NotaDataComponent } from '../registros/components/nota-data/nota-data.component';
 import { HistoriaDataComponent } from '../registros/components/historia-data/historia-data.component';
+import { PacienteEstadisticasComponent } from './components/paciente-estadisticas/paciente-estadisticas.component';
 
 export const pacientesRoutes: Routes = [
     {
@@ -48,5 +49,10 @@ export const pacientesRoutes: Routes = [
         component: HistoriaDataComponent,
         data: { title: 'Informacion de la historia clinica' },
         canDeactivate: [UnsavedChangesGuard]
+    },
+    {
+        path: 'estadisticas',
+        component: PacienteEstadisticasComponent,
+        data: { title: 'Estadisticas de los pacientes' },
     },
 ];

@@ -8,7 +8,7 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .light-primary {
@@ -27,12 +27,12 @@ body {
 }
 
 .dark-primary {
-     background:  #2e3031 ;
+    background: #2e3031;
     color: white;
 }
 
 .dark-secondary {
-    background-color : rgb(73, 73, 73);
+    background-color: rgb(73, 73, 73);
     color: white;
 }
 

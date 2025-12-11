@@ -27,7 +27,7 @@
                     </div>
                     <div class="data-item">
                         <span class="data-label">Sexo</span>
-                        <span class="data-value">{{ paciente?.sexo == 1 ? 'Masculino' : paciente?.sexo == 2 ? 'Femenino' : 'Otro' }}</span>
+                        <span class="data-value">{{ paciente?.sexo || 'N/A' }}</span>
                     </div>
                 </div>
 
@@ -116,7 +116,7 @@
                         <span class="data-value">{{ paciente?.telefono_responsable || 'N/A' }}</span>
                     </div>
                 </div>
-    <div class="grid-2-col">
+                <div class="grid-2-col">
                     <div class="data-item">
                         <span class="data-label">Calle</span>
                         <span class="data-value">{{ paciente?.calle_responsable || 'N/A' }}</span>
@@ -212,7 +212,7 @@
                     <div class="grid-2-col">
                         <div class="data-item">
                             <span class="data-label">Facultad Adscripción</span>
-                            <span class="data-value">{{ paciente?.facultad_adscripcion || 'N/A' }}</span>
+                            <span class="data-value">{{ paciente?.facultad || 'N/A' }}</span>
                         </div>
                         <div class="data-item">
                             <span class="data-label">Tipo de Contratación</span>
@@ -242,7 +242,8 @@
                 <div class="data-item">
                     <span class="data-label">Lengua Indígena</span>
                     <span class="data-value">
-                        {{ paciente?.lengua_indigena ? 'Sí, habla ' + paciente?.lengua_indigena : 'No habla lengua indígena' }}
+                        {{ paciente?.lengua_indigena ? 'Sí, habla ' + paciente?.lengua_indigena : 'No habla lengua
+                        indígena' }}
                     </span>
                 </div>
 
@@ -259,13 +260,15 @@
                                 <mat-icon>description</mat-icon>
                             </div>
                             <mat-card-title>{{ registro.tipo_registro }}</mat-card-title>
-                            <mat-card-subtitle>{{ registro.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}</mat-card-subtitle>
+                            <mat-card-subtitle>{{ registro.fecha_creacion | date:'dd/MM/yyyy HH:mm'
+                                }}</mat-card-subtitle>
                         </mat-card-header>
                         <!-- <mat-card-content>
                             <p class="registro-id">ID: {{ registro.registro_id }}</p>
                         </mat-card-content> -->
                         <mat-card-actions align="end">
-                            <button mat-button color="primary" [disabled]="!authService.tienePermiso('pacientes', 'Ver')"
+                            <button mat-button color="primary"
+                                [disabled]="!authService.tienePermiso('pacientes', 'Ver')"
                                 (click)="datos(registro.registro_id, registro.tipo_registro)">
                                 <mat-icon>visibility</mat-icon> VER DETALLES
                             </button>
@@ -298,16 +301,12 @@
             </button>
             <h3>Detalles del Registro</h3>
         </div>
-        
-        <app-historia-data 
-            *ngIf="selectedRegistroType === 'Historia Clínica'" 
-            [registroIdInput]="selectedRegistroId"
-            [isEmbedded]="true">
+
+        <app-historia-data *ngIf="selectedRegistroType === 'Historia Clínica'" [registroIdInput]="selectedRegistroId"
+            [isEmbedded]="true" [sexoPaciente]="paciente?.sexo || ''">
         </app-historia-data>
-        
-        <app-nota-data 
-            *ngIf="selectedRegistroType === 'Nota de Evolución'" 
-            [registroIdInput]="selectedRegistroId"
+
+        <app-nota-data *ngIf="selectedRegistroType === 'Nota de Evolución'" [registroIdInput]="selectedRegistroId"
             [isEmbedded]="true">
         </app-nota-data>
     </div>

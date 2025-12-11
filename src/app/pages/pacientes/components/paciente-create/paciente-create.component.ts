@@ -74,7 +74,7 @@ export class PacienteCreateComponent {
 
       // Contacto y Ubicación
       telefono: ['', Validators.required],
-      email: ['', [Validators.email]], 
+      email: ['', [Validators.email]],
       calle: [''],
       numero_exterior: [''],
       numero_interior: [''],
@@ -105,7 +105,6 @@ export class PacienteCreateComponent {
       // Afiliación Institucional (Trabajador)
       numero_personal: [''],
       puesto: [''],
-      facultad_adscripcion: [''],
       tipo_contratacion: [''],
 
       // Seguridad Social
@@ -196,28 +195,41 @@ export class PacienteCreateComponent {
   }
 
   updateValidators() {
-    const studentFields = ['matricula', 'facultad', 'programa_educativo', 'semestre', 'grupo'];
-    const workerFields = ['numero_personal', 'puesto', 'facultad_adscripcion', 'tipo_contratacion'];
+    const studentFields = ['matricula', 'programa_educativo', 'semestre', 'grupo'];
+    const workerFields = ['numero_personal', 'puesto', 'tipo_contratacion'];
+    const sharedFields = ['facultad'];
 
     if (this.isStudent) {
+      // Validate Student fields
       studentFields.forEach(field => this.pacienteForm.get(field)?.setValidators([Validators.required]));
+      // Validate Shared fields
+      sharedFields.forEach(field => this.pacienteForm.get(field)?.setValidators([Validators.required]));
+
+      // Clear Worker fields
       workerFields.forEach(field => {
         this.pacienteForm.get(field)?.clearValidators();
         this.pacienteForm.get(field)?.setValue('');
       });
     } else if (this.isWorker) {
+      // Validate Worker fields
       workerFields.forEach(field => this.pacienteForm.get(field)?.setValidators([Validators.required]));
+      // Validate Shared fields
+      sharedFields.forEach(field => this.pacienteForm.get(field)?.setValidators([Validators.required]));
+
+      // Clear Student fields
       studentFields.forEach(field => {
         this.pacienteForm.get(field)?.clearValidators();
         this.pacienteForm.get(field)?.setValue('');
       });
     } else {
-      [...studentFields, ...workerFields].forEach(field => {
+      // Clear all fields if neither
+      [...studentFields, ...workerFields, ...sharedFields].forEach(field => {
         this.pacienteForm.get(field)?.clearValidators();
         this.pacienteForm.get(field)?.setValue('');
       });
     }
-    [...studentFields, ...workerFields].forEach(field => this.pacienteForm.get(field)?.updateValueAndValidity());
+    // Update validity for all potentially affected fields
+    [...studentFields, ...workerFields, ...sharedFields].forEach(field => this.pacienteForm.get(field)?.updateValueAndValidity());
   }
 
   onHablaLenguaIndigenaChange(value: boolean) {
