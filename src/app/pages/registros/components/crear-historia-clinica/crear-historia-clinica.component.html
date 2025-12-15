@@ -10,9 +10,9 @@
 
     <mat-sidenav-content>
         <div class="Formulario">
-            <div class="header-section">
+            <!-- <div class="header-section">
                 <h2>Historia Clínica</h2>
-            </div>
+            </div> -->
 
             <mat-tab-group animationDuration="0s" color="accent">
 
@@ -46,56 +46,65 @@
                 <!-- Signos vitales -->
                 <mat-tab label="Signos vitales">
                     <form [formGroup]="historiaForm" class="seccion">
+                        <div class="grid-2-col">
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Peso</mat-label>
+                                <input matInput type="number" formControlName="peso">
+                            </mat-form-field>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Peso</mat-label>
-                            <input matInput type="number" formControlName="peso">
-                        </mat-form-field>
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Talla</mat-label>
+                                <input matInput type="number" formControlName="talla">
+                            </mat-form-field>
+                        </div>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Talla</mat-label>
-                            <input matInput type="number" formControlName="talla">
-                        </mat-form-field>
+                        <div class="grid-2-col">
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>IMC</mat-label>
+                                <input matInput type="number" formControlName="imc">
+                            </mat-form-field>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>IMC</mat-label>
-                            <input matInput type="number" formControlName="imc">
-                        </mat-form-field>
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Tensión arterial</mat-label>
+                                <textarea matInput formControlName="tension_arterial"></textarea>
+                            </mat-form-field>
+                        </div>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Tensión arterial</mat-label>
-                            <textarea matInput formControlName="tension_arterial"></textarea>
-                        </mat-form-field>
+                        <div class="grid-2-col">
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Frecuencia cardiaca</mat-label>
+                                <input matInput type="number" formControlName="frecuencia_cardiaca">
+                            </mat-form-field>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Frecuencia cardiaca</mat-label>
-                            <input matInput type="number" formControlName="frecuencia_cardiaca">
-                        </mat-form-field>
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Frecuencia respiratoria</mat-label>
+                                <input matInput type="number" formControlName="frecuencia_respiratoria">
+                            </mat-form-field>
+                        </div>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Frecuencia respiratoria</mat-label>
-                            <input matInput type="number" formControlName="frecuencia_respiratoria">
-                        </mat-form-field>
+                        <div class="grid-2-col">
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Temperatura</mat-label>
+                                <input matInput type="number" formControlName="temperatura">
+                            </mat-form-field>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Temperatura</mat-label>
-                            <input matInput type="number" formControlName="temperatura">
-                        </mat-form-field>
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Saturación</mat-label>
+                                <input matInput type="number" formControlName="saturacion">
+                            </mat-form-field>
+                        </div>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Saturación</mat-label>
-                            <input matInput type="number" formControlName="saturacion">
-                        </mat-form-field>
+                        <div class="grid-2-col">
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Glicemia</mat-label>
+                                <input matInput type="number" formControlName="glicemia">
+                            </mat-form-field>
 
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Glicemia</mat-label>
-                            <input matInput type="number" formControlName="glicemia">
-                        </mat-form-field>
-
-                        <mat-form-field class="form-field" color="accent">
-                            <mat-label>Hemoglobina</mat-label>
-                            <input matInput type="number" formControlName="hemoglobina">
-                        </mat-form-field>
+                            <mat-form-field class="form-field" color="accent">
+                                <mat-label>Hemoglobina</mat-label>
+                                <input matInput type="number" formControlName="hemoglobina">
+                            </mat-form-field>
+                        </div>
 
                         <mat-form-field class="form-field" color="accent">
                             <mat-label>Hemotipo</mat-label>

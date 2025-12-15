@@ -36,54 +36,64 @@
             <!-- Signos vitales -->
             <mat-tab label="Signos vitales">
                 <div class="seccion">
-                    <div class="data-item">
-                        <span class="data-label">Peso</span>
-                        <span class="data-value">{{ historia.peso || 'Sin datos' }}</span>
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Peso</span>
+                            <span class="data-value">{{ historia.peso || 'Sin datos' }}</span>
+                        </div>
+
+                        <div class="data-item">
+                            <span class="data-label">Talla</span>
+                            <span class="data-value">{{ historia.talla || 'Sin datos' }}</span>
+                        </div>
                     </div>
 
-                    <div class="data-item">
-                        <span class="data-label">Talla</span>
-                        <span class="data-value">{{ historia.talla || 'Sin datos' }}</span>
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">IMC</span>
+                            <span class="data-value">{{ historia.imc || 'Sin datos' }}</span>
+                        </div>
+
+                        <div class="data-item">
+                            <span class="data-label">Tensión arterial</span>
+                            <span class="data-value">{{ historia.tension_arterial || 'Sin datos' }}</span>
+                        </div>
                     </div>
 
-                    <div class="data-item">
-                        <span class="data-label">IMC</span>
-                        <span class="data-value">{{ historia.imc || 'Sin datos' }}</span>
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Frecuencia cardiaca</span>
+                            <span class="data-value">{{ historia.frecuencia_cardiaca || 'Sin datos' }}</span>
+                        </div>
+
+                        <div class="data-item">
+                            <span class="data-label">Frecuencia respiratoria</span>
+                            <span class="data-value">{{ historia.frecuencia_respiratoria || 'Sin datos' }}</span>
+                        </div>
                     </div>
 
-                    <div class="data-item">
-                        <span class="data-label">Tensión arterial</span>
-                        <span class="data-value">{{ historia.tension_arterial || 'Sin datos' }}</span>
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Temperatura</span>
+                            <span class="data-value">{{ historia.temperatura || 'Sin datos' }}</span>
+                        </div>
+
+                        <div class="data-item">
+                            <span class="data-label">Saturación</span>
+                            <span class="data-value">{{ historia.saturacion || 'Sin datos' }}</span>
+                        </div>
                     </div>
 
-                    <div class="data-item">
-                        <span class="data-label">Frecuencia cardiaca</span>
-                        <span class="data-value">{{ historia.frecuencia_cardiaca || 'Sin datos' }}</span>
-                    </div>
+                    <div class="grid-2-col">
+                        <div class="data-item">
+                            <span class="data-label">Glicemia</span>
+                            <span class="data-value">{{ historia.glicemia || 'Sin datos' }}</span>
+                        </div>
 
-                    <div class="data-item">
-                        <span class="data-label">Frecuencia respiratoria</span>
-                        <span class="data-value">{{ historia.frecuencia_respiratoria || 'Sin datos' }}</span>
-                    </div>
-
-                    <div class="data-item">
-                        <span class="data-label">Temperatura</span>
-                        <span class="data-value">{{ historia.temperatura || 'Sin datos' }}</span>
-                    </div>
-
-                    <div class="data-item">
-                        <span class="data-label">Saturación</span>
-                        <span class="data-value">{{ historia.saturacion || 'Sin datos' }}</span>
-                    </div>
-
-                    <div class="data-item">
-                        <span class="data-label">Glicemia</span>
-                        <span class="data-value">{{ historia.glicemia || 'Sin datos' }}</span>
-                    </div>
-
-                    <div class="data-item">
-                        <span class="data-label">Hemoglobina</span>
-                        <span class="data-value">{{ historia.hemoglobina || 'Sin datos' }}</span>
+                        <div class="data-item">
+                            <span class="data-label">Hemoglobina</span>
+                            <span class="data-value">{{ historia.hemoglobina || 'Sin datos' }}</span>
+                        </div>
                     </div>
 
                     <div class="data-item">
@@ -165,23 +175,17 @@
                         <span class="data-label">Diagnostico</span>
                         <span class="data-value">{{ historia.diagnostico || 'Sin datos' }}</span>
                     </div>
-                </div>
 
-                <div class="seccion">
                     <div class="data-item">
                         <span class="data-label">Tratamiento</span>
                         <span class="data-value">{{ historia.tratamiento || 'Sin datos' }}</span>
                     </div>
-                </div>
 
-                <div class="seccion">
                     <div class="data-item">
                         <span class="data-label">Plan de Tratamiento</span>
                         <span class="data-value">{{ historia.plan_tratamiento || 'Sin datos' }}</span>
                     </div>
-                </div>
 
-                <div class="seccion">
                     <div class="data-item">
                         <span class="data-label">Observaciones</span>
                         <span class="data-value">{{ historia.observaciones || 'Sin datos' }}</span>
@@ -199,7 +203,9 @@
         </div>
     </ng-template>
 
-    <div class="form-actions">
-        <button mat-raised-button color="warn" routerLink="/layout/pacientes">Regresar</button>
-    </div>
+
+</div>
+
+<div class="form-actions">
+    <button mat-raised-button color="warn" routerLink="/layout/pacientes">Regresar</button>
 </div>

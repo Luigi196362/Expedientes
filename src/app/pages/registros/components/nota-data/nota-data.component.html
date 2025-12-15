@@ -1,7 +1,7 @@
 <div class="Formulario">
-    <div class="header-section">
+    <!-- <div class="header-section">
         <h2>Nota de Evolución</h2>
-    </div>
+    </div> -->
 
     <div *ngIf="nota; else loadingOrError">
         <mat-tab-group animationDuration="0s" color="accent">
@@ -130,7 +130,8 @@
         </div>
     </ng-template>
 
-    <div class="form-actions">
-        <button mat-raised-button color="warn" routerLink="/layout/pacientes">Regresar</button>
-    </div>
+</div>
+
+<div class="form-actions">
+    <button mat-raised-button color="warn" routerLink="/layout/pacientes">Regresar</button>
 </div>

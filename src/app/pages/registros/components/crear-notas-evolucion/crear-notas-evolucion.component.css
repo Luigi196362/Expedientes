@@ -1,16 +1,18 @@
 /* Sidenav Styling */
 .sidenav-container {
-    height: 100%;
-    min-height: 90vh; /* Increased to ensure full height */
+    height: fit-content;
+
+    /* Increased to ensure full height */
     background-color: transparent;
 }
 
 .sidenav-data {
-    width: 400px; /* Adjust width as needed */
+    width: 400px;
+    /* Adjust width as needed */
     padding: 0;
     background-color: #fff;
     border-left: 1px solid #e0e0e0;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     /* position: relative; REMOVED to fix layout issue */
     overflow: hidden;
 }
@@ -56,8 +58,10 @@
     padding: 30px;
     background-color: #ffffff;
     border-radius: 12px;
-    /* height: 60vh; */ /* Optional: fixed height */
-    /* overflow-y: auto; */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    height: 55vh;
+    overflow-y: auto;
 }
 
 /* Form Fields */
@@ -127,7 +131,7 @@
         grid-template-columns: 1fr;
         gap: 16px;
     }
-    
+
     .seccion {
         padding: 20px;
     }
