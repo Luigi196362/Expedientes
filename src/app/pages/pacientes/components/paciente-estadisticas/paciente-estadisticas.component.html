@@ -1,1 +1,226 @@
-<p>paciente-estadisticas works!</p>
+<div class="dashboard-container">
+    <div class="dashboard-title">
+        <mat-icon style="vertical-align: middle; margin-right: 10px;">analytics</mat-icon>
+        Estadísticas generales
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="loading">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-container" *ngIf="error">
+        <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!loading && !error && estadisticas">
+
+        <!-- Summary Cards -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="icon-box blue">
+                    <mat-icon>people</mat-icon>
+                </div>
+                <div class="summary-info">
+                    <h3>Total Pacientes</h3>
+                    <p class="count">{{ estadisticas.totalPacientes }}</p>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="icon-box green">
+                    <mat-icon>description</mat-icon>
+                </div>
+                <div class="summary-info">
+                    <h3>Total Notas</h3>
+                    <p class="count">{{ estadisticas.totalNotas }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+
+            <!-- Por Sexo -->
+            <div class="chart-card">
+                <h2>Por Sexo</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.porSexo)">
+                        <div class="bar-header">
+                            <span>{{ item.key }}</span>
+                            <span>{{ item.value }} ({{ item.percent | number:'1.0-0' }}%)</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.porSexo).length === 0">Sin datos</div>
+                </div>
+            </div>
+
+            <!-- Por Facultad -->
+            <div class="chart-card">
+                <h2>Por Facultad</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.porFacultad)">
+                        <div class="bar-header">
+                            <span>{{ item.key }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.porFacultad).length === 0">Sin datos
+                    </div>
+                </div>
+            </div>
+
+            <!-- Por Tipo Paciente -->
+            <div class="chart-card">
+                <h2>Por Tipo de Paciente</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.porTipoPaciente)">
+                        <div class="bar-header">
+                            <span>{{ item.key }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.porTipoPaciente).length === 0">Sin
+                        datos</div>
+                </div>
+            </div>
+
+            <!-- Por Programa Educativo -->
+            <div class="chart-card">
+                <h2>Por Programa Educativo</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.porProgramaEducativo)">
+                        <div class="bar-header">
+                            <span>{{ item.key }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.porProgramaEducativo).length === 0">
+                        Sin datos</div>
+                </div>
+            </div>
+
+            <!-- Top Sintomas -->
+            <div class="chart-card">
+                <h2>Top Síntomas/Diagnósticos</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.topSintomas)">
+                        <div class="bar-header">
+                            <span>{{ item.key }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.topSintomas).length === 0">Sin datos
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos por Mes (Simple list/bar for now) -->
+            <div class="chart-card">
+                <h2>Casos Recientes (Mes-Día)</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.casosPorDiaMes)">
+                        <div class="bar-header">
+                            <span>{{ item.key }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.casosPorDiaMes).length === 0">Sin
+                        datos</div>
+                </div>
+            </div>
+
+            <!-- Por Semestre -->
+            <div class="chart-card">
+                <h2>Por Semestre</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.porSemestre)">
+                        <div class="bar-header">
+                            <span>{{ item.key }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.porSemestre).length === 0">Sin datos
+                    </div>
+                </div>
+            </div>
+
+            <!-- Por Estado Civil -->
+            <div class="chart-card">
+                <h2>Por Estado Civil</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.porEstadoCivil)">
+                        <div class="bar-header">
+                            <span>{{ item.key || 'No especificado' }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.porEstadoCivil).length === 0">Sin
+                        datos</div>
+                </div>
+            </div>
+
+            <!-- Por Lengua Indigena -->
+            <div class="chart-card">
+                <h2>Por Lengua Indígena</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.porLenguaIndigena)">
+                        <div class="bar-header">
+                            <span>{{ item.key || 'No habla/No especificado' }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.porLenguaIndigena).length === 0">Sin
+                        datos</div>
+                </div>
+            </div>
+
+            <!-- Casos por Año -->
+            <div class="chart-card">
+                <h2>Casos por Año</h2>
+                <div class="bar-chart-list">
+                    <div class="bar-item" *ngFor="let item of getObjectEntries(estadisticas.casosPorAnio)">
+                        <div class="bar-header">
+                            <span>{{ item.key }}</span>
+                            <span>{{ item.value }}</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" [style.width.%]="item.percent"></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" *ngIf="getObjectEntries(estadisticas.casosPorAnio).length === 0">Sin datos
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

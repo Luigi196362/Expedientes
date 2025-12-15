@@ -59,27 +59,55 @@ export class CrearNotasEvolucionComponent implements OnInit {
       console.log('Error al cargar los datos',);
       //this.router.navigate(['/layout/pacientes']);
     }
+    this.calculateIMC();
   }
+  calculateIMC() {
+    const update = () => {
+      const pesoStr = this.notaForm.get('peso')?.value;
+      const tallaStr = this.notaForm.get('talla')?.value;
+
+      const peso = parseFloat(pesoStr);
+      let talla = parseFloat(tallaStr);
+
+      if (!isNaN(peso) && !isNaN(talla) && talla > 0) {
+        // Si la talla es mayor a 3, asumimos centímetros y convertimos a metros
+        if (talla > 3) {
+          talla = talla / 100;
+        }
+        const imc = peso / (talla * talla);
+        this.notaForm.get('imc')?.setValue(imc.toFixed(2), { emitEvent: false });
+      } else {
+        this.notaForm.get('imc')?.setValue('');
+      }
+    };
+
+    this.notaForm.get('peso')?.valueChanges.subscribe(update);
+    this.notaForm.get('talla')?.valueChanges.subscribe(update);
+  }
+
   constructor(private fb: FormBuilder, private dialog: MatDialog, private registrosService: RegistroService, private router: Router, private token: AuthService) {
     this.notaForm = this.fb.group({
+      motivo_consulta: ['', Validators.required],
       interrogatorio: ['', Validators.required],
+      padecimiento_actual: ['', Validators.required],
+      exploracion_fisica: ['', Validators.required],
+
       peso: ['', Validators.required],
       talla: ['', Validators.required],
-      imc: ['', Validators.required],
-      ta: ['', Validators.required],
-      fc: ['', Validators.required],
-      fr: ['', Validators.required],
+      imc: [{ value: '', disabled: true }],
+      tension_arterial: ['', Validators.required],
+      frecuencia_cardiaca: ['', Validators.required],
+      frecuencia_respiratoria: ['', Validators.required],
       temperatura: ['', Validators.required],
       saturacion: ['', Validators.required],
       glicemia: ['', Validators.required],
       hemoglobina: ['', Validators.required],
       hemotipo: ['', Validators.required],
-      padecimiento: ['', Validators.required],
-      exploracion: ['', Validators.required],
-      analisis: ['', Validators.required],
-      plan: ['', Validators.required],
+
       diagnostico: ['', Validators.required],
-      tratamiento: ['', Validators.required]
+      tratamiento: ['', Validators.required],
+      plan_tratamiento: ['', Validators.required],
+      observaciones: ['', Validators.required],
     });
   }
 
@@ -133,11 +161,11 @@ export class CrearNotasEvolucionComponent implements OnInit {
       this.isSaving = true; // Activar la bandera antes de abrir el diálogo
 
       // Abrir el diálogo de confirmación y esperar la respuesta del usuario
-      const dialogRef = this.dialog.open(PacienteDialogComponent, { data: { paciente: this.notaForm.value } });
+      const dialogRef = this.dialog.open(PacienteDialogComponent, { data: { paciente: this.notaForm.getRawValue() } });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {  // Si el usuario confirma
-          const nuevaNota: Nota_Evolucion = { ...this.notaForm.value };
+          const nuevaNota: Nota_Evolucion = { ...this.notaForm.getRawValue() };
 
           this.registrosService.guardarNota(this.idPaciente, nuevaNota).subscribe({
             next: () => {

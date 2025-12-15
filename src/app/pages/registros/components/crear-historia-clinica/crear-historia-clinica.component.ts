@@ -97,7 +97,7 @@ export class CrearHistoriaClinicaComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private registrosService: RegistroService, private router: Router, private token: AuthService) {
     this.historiaForm = this.fb.group({
-      id: [0, Validators.required],
+      //  id: [0, Validators.required],
       motivo_consulta: ['', Validators.required],
       interrogatorio: ['', Validators.required],
       padecimiento_actual: ['', Validators.required],

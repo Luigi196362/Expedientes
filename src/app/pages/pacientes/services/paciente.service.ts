@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpConnectionService } from '../../../core/services/Http/http-connection.service';
 import { Paciente } from '../models/paciente.model';
 import { AllPacientes } from '../models/allPacientes.model';
+import { EstadisticasPaciente } from '../models/estadisticas-paciente';
 
 @Injectable({
   providedIn: 'root',
@@ -45,4 +46,11 @@ export class PacienteService {
     const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Eliminar/${id}`;
     return this.http.delete<string>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
+
+  // Obtener estadísticas de pacientes
+  estadisticasPaciente(): Observable<EstadisticasPaciente> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Estadisticas`;
+    return this.http.get<EstadisticasPaciente>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  }
+
 }

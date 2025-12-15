@@ -5,7 +5,32 @@
 
     <div *ngIf="nota; else loadingOrError">
         <mat-tab-group animationDuration="0s" color="accent">
-            
+
+            <!--Interrogatorio y Exploración-->
+            <mat-tab label="Interrogatorio y Exploración">
+                <div class="seccion">
+                    <div class="data-item">
+                        <span class="data-label">motivo_consulta</span>
+                        <span class="data-value">{{ nota.motivo_consulta || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Padecimiento Actual</span>
+                        <span class="data-value">{{ nota.interrogatorio|| 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Exploración Física</span>
+                        <span class="data-value">{{ nota.padecimiento_actual || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Exploración Física</span>
+                        <span class="data-value">{{ nota.exploracion_fisica || 'Sin datos' }}</span>
+                    </div>
+                </div>
+            </mat-tab>
+
             <!-- Signos Vitales -->
             <mat-tab label="Signos Vitales">
                 <div class="seccion">
@@ -21,24 +46,24 @@
                     </div>
 
                     <div class="grid-2-col">
-                         <div class="data-item">
+                        <div class="data-item">
                             <span class="data-label">IMC</span>
                             <span class="data-value">{{ nota.imc || 'N/A' }}</span>
                         </div>
                         <div class="data-item">
                             <span class="data-label">Tensión Arterial</span>
-                            <span class="data-value">{{ nota.ta || 'N/A' }}</span>
+                            <span class="data-value">{{ nota.tension_arterial || 'N/A' }}</span>
                         </div>
                     </div>
 
                     <div class="grid-2-col">
                         <div class="data-item">
                             <span class="data-label">Frecuencia Cardíaca</span>
-                            <span class="data-value">{{ nota.fc || 'N/A' }}</span>
+                            <span class="data-value">{{ nota.frecuencia_cardiaca || 'N/A' }}</span>
                         </div>
                         <div class="data-item">
                             <span class="data-label">Frecuencia Respiratoria</span>
-                            <span class="data-value">{{ nota.fr || 'N/A' }}</span>
+                            <span class="data-value">{{ nota.frecuencia_respiratoria || 'N/A' }}</span>
                         </div>
                     </div>
 
@@ -58,34 +83,14 @@
                             <span class="data-label">Glicemia</span>
                             <span class="data-value">{{ nota.glicemia || 'N/A' }}</span>
                         </div>
-                         <div class="data-item">
+                        <div class="data-item">
                             <span class="data-label">Hemoglobina</span>
                             <span class="data-value">{{ nota.hemoglobina || 'N/A' }}</span>
                         </div>
                     </div>
-                     <div class="data-item">
+                    <div class="data-item">
                         <span class="data-label">Hemotipo</span>
                         <span class="data-value">{{ nota.hemotipo || 'N/A' }}</span>
-                    </div>
-                </div>
-            </mat-tab>
-
-            <!-- Interrogatorio y Exploración -->
-            <mat-tab label="Interrogatorio y Exploración">
-                <div class="seccion">
-                    <div class="data-item">
-                        <span class="data-label">Interrogatorio</span>
-                        <span class="data-value">{{ nota.interrogatorio || 'Sin datos' }}</span>
-                    </div>
-
-                    <div class="data-item">
-                        <span class="data-label">Padecimiento Actual</span>
-                        <span class="data-value">{{ nota.padecimiento || 'Sin datos' }}</span>
-                    </div>
-
-                    <div class="data-item">
-                        <span class="data-label">Exploración Física</span>
-                        <span class="data-value">{{ nota.exploracion || 'Sin datos' }}</span>
                     </div>
                 </div>
             </mat-tab>
@@ -94,23 +99,23 @@
             <mat-tab label="Diagnóstico y Tratamiento">
                 <div class="seccion">
                     <div class="data-item">
-                        <span class="data-label">Análisis</span>
-                        <span class="data-value">{{ nota.analisis || 'Sin datos' }}</span>
-                    </div>
-
-                    <div class="data-item">
                         <span class="data-label">Diagnóstico</span>
                         <span class="data-value">{{ nota.diagnostico || 'Sin datos' }}</span>
                     </div>
 
                     <div class="data-item">
-                        <span class="data-label">Plan de Tratamiento</span>
-                        <span class="data-value">{{ nota.plan || 'Sin datos' }}</span>
-                    </div>
-
-                     <div class="data-item">
                         <span class="data-label">Tratamiento</span>
                         <span class="data-value">{{ nota.tratamiento || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Plan de Tratamiento</span>
+                        <span class="data-value">{{ nota.plan_tratamiento || 'Sin datos' }}</span>
+                    </div>
+
+                    <div class="data-item">
+                        <span class="data-label">Observaciones</span>
+                        <span class="data-value">{{ nota.observaciones || 'Sin datos' }}</span>
                     </div>
                 </div>
             </mat-tab>
