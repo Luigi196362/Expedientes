@@ -1,0 +1,20 @@
+<div class="pdf-viewer-container">
+    <div class="toolbar">
+        <button mat-icon-button (click)="goBack()" title="Regresar">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h2>Visualizador de Reporte</h2>
+        <div class="actions">
+            <button mat-flat-button color="primary" (click)="downloadPdf()">
+                <mat-icon>download</mat-icon> Descargar
+            </button>
+            <button mat-stroked-button color="accent" (click)="printPdf()">
+                <mat-icon>print</mat-icon> Imprimir
+            </button>
+        </div>
+    </div>
+
+    <div class="pdf-content" *ngIf="pdfUrl">
+        <iframe [src]="pdfUrl" width="100%" height="100%" type="application/pdf"></iframe>
+    </div>
+</div>

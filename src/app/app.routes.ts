@@ -14,6 +14,7 @@ export const routes: Routes = [
     },
 
     { path: 'hello', component: HelloWorldComponent },
+    { path: 'pdf-view', loadComponent: () => import('./shared/pdf-view/pdf-view.component').then(m => m.PdfViewComponent) },
 
     {
         path: '404',

@@ -29,6 +29,10 @@
         <button mat-stroked-button color="warn" (click)="limpiar()" *ngIf="startDate || endDate">
             <mat-icon>clear</mat-icon> Limpiar
         </button>
+
+        <button mat-flat-button color="accent" (click)="generarPdf()" class="pdf-button">
+            <mat-icon>picture_as_pdf</mat-icon> Generar PDF
+        </button>
     </div>
 
     <!-- Loading State -->

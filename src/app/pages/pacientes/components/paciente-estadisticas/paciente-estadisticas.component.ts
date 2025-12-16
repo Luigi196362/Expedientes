@@ -11,6 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PdfDataService } from '../../../../shared/services/pdf-data.service';
 
 @Component({
   selector: 'app-paciente-estadisticas',
@@ -41,7 +43,9 @@ export class PacienteEstadisticasComponent implements OnInit {
 
   constructor(
     private pacienteService: PacienteService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private router: Router,
+    private pdfService: PdfDataService
   ) { }
 
   ngOnInit(): void {
@@ -100,6 +104,46 @@ export class PacienteEstadisticasComponent implements OnInit {
     this.startDate = null;
     this.endDate = null;
     this.cargarEstadisticasGeneral();
+  }
+
+  generarPdf(): void {
+    this.loading = true;
+    let startStr: string | undefined;
+    let endStr: string | undefined;
+
+    if (this.startDate && this.endDate) {
+      startStr = this.datePipe.transform(this.startDate, 'yyyy-MM-dd') + 'T00:00:00';
+      endStr = this.datePipe.transform(this.endDate, 'yyyy-MM-dd') + 'T23:59:59';
+    }
+
+    this.pacienteService.obtenerReportePdf(startStr, endStr).subscribe({
+      next: (response) => {
+        this.loading = false;
+        const blob = response.body;
+        if (blob) {
+          // Extract filename from content-disposition
+          const contentDisposition = response.headers.get('content-disposition');
+          let filename = 'reporte.pdf';
+          if (contentDisposition) {
+            const matches = /filename="?([^"]+)"?/.exec(contentDisposition);
+            if (matches && matches[1]) {
+              filename = matches[1];
+            }
+          }
+
+          // Store blob and filename in service and navigate
+          this.pdfService.setPdfData(blob, this.router.url, filename);
+          this.router.navigate(['/pdf-view']);
+        } else {
+          this.error = 'El reporte está vacío.';
+        }
+      },
+      error: (err) => {
+        console.error('Error al generar PDF', err);
+        this.error = 'No se pudo generar el reporte PDF.';
+        this.loading = false;
+      }
+    });
   }
 
   // Helper to convert object to array for *ngFor

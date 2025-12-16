@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpConnectionService } from '../../../core/services/Http/http-connection.service';
 import { Paciente } from '../models/paciente.model';
@@ -57,6 +57,24 @@ export class PacienteService {
   estadisticasRango(startDate: string, endDate: string): Observable<EstadisticasPaciente> {
     const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Estadisticas/Rango?startDate=${startDate}&endDate=${endDate}`;
     return this.http.get<EstadisticasPaciente>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  }
+
+  // Obtener reporte PDF
+  obtenerReportePdf(startDate?: string, endDate?: string): Observable<HttpResponse<Blob>> {
+    let url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Estadisticas/Pdf`;
+    const params: string[] = [];
+    if (startDate) params.push(`startDate=${startDate}`);
+    if (endDate) params.push(`endDate=${endDate}`);
+
+    if (params.length > 0) {
+      url += `?${params.join('&')}`;
+    }
+
+    return this.http.get(url, {
+      headers: this.httpConnection.getDefaultHeaders(),
+      responseType: 'blob',
+      observe: 'response'
+    });
   }
 
 }

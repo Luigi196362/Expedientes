@@ -54,6 +54,10 @@
     /* Removed to align better in row */
 }
 
+.pdf-button {
+    margin-left: auto;
+}
+
 /* Summary Cards specific layout */
 .summary-grid {
     display: grid;
