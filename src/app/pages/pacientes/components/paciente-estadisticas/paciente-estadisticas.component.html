@@ -1,7 +1,34 @@
-<div class="dashboard-container">
-    <div class="dashboard-title">
-        <mat-icon style="vertical-align: middle; margin-right: 10px;">analytics</mat-icon>
-        Estadísticas generales
+<div class="Formulario">
+    <div class="header-section">
+        <h2>
+            <mat-icon style="vertical-align: middle; margin-right: 10px;">analytics</mat-icon>
+            Estadísticas Generales
+        </h2>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Fecha Inicio</mat-label>
+            <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Fecha Fin</mat-label>
+            <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="filtrar()" [disabled]="!startDate || !endDate">
+            <mat-icon>filter_list</mat-icon> Filtrar
+        </button>
+
+        <button mat-stroked-button color="warn" (click)="limpiar()" *ngIf="startDate || endDate">
+            <mat-icon>clear</mat-icon> Limpiar
+        </button>
     </div>
 
     <!-- Loading State -->

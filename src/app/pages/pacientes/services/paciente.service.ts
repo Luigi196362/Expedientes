@@ -53,4 +53,10 @@ export class PacienteService {
     return this.http.get<EstadisticasPaciente>(url, { headers: this.httpConnection.getDefaultHeaders() });
   }
 
+  // Obtener estadísticas de pacientes por rango de fechas
+  estadisticasRango(startDate: string, endDate: string): Observable<EstadisticasPaciente> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Estadisticas/Rango?startDate=${startDate}&endDate=${endDate}`;
+    return this.http.get<EstadisticasPaciente>(url, { headers: this.httpConnection.getDefaultHeaders() });
+  }
+
 }
