@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RegistroService } from '../../services/registros/registros.service';
 import { Nota_Evolucion } from '../../models/nota-evolucion';
+import { PdfDataService } from '../../../../shared/services/pdf-data.service';
 
 @Component({
   selector: 'app-nota-data',
@@ -30,8 +31,9 @@ export class NotaDataComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private registroService: RegistroService
-  ) {}
+    private registroService: RegistroService,
+    private pdfService: PdfDataService
+  ) { }
 
   ngOnInit(): void {
     if (this.registroIdInput) {
@@ -54,23 +56,51 @@ export class NotaDataComponent implements OnInit {
     this.registroService.getNota(idRegistro).subscribe({
       next: (registros: any[]) => {
         console.log('Nota recibida:', registros);
-        
+
         if (Array.isArray(registros)) {
-            if (registros.length > 0) {
-                this.nota = registros[0];
-            } else {
-                console.warn('El arreglo de nota está vacío.');
-            }
+          if (registros.length > 0) {
+            this.nota = registros[0];
+          } else {
+            console.warn('El arreglo de nota está vacío.');
+          }
         } else if (registros) {
-            this.nota = registros;
+          this.nota = registros;
         } else {
-            console.warn('No se encontró la nota con el ID especificado.');
+          console.warn('No se encontró la nota con el ID especificado.');
         }
 
         this.loading = false;
       },
       error: (err) => {
         console.error('Error al cargar nota:', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  generarPdf() {
+    if (!this.nota || !this.nota.id) return;
+
+    this.loading = true;
+    this.registroService.obtenerNotaPdf(this.nota.id).subscribe({
+      next: (response) => {
+        this.loading = false;
+        const blob = response.body;
+        if (blob) {
+          const contentDisposition = response.headers.get('content-disposition');
+          let filename = 'nota.pdf';
+          if (contentDisposition) {
+            const matches = /filename="?([^"]+)"?/.exec(contentDisposition);
+            if (matches && matches[1]) {
+              filename = matches[1];
+            }
+          }
+          this.pdfService.setPdfData(blob, this.router.url, filename);
+          this.router.navigate(['/pdf-view']);
+        }
+      },
+      error: (err) => {
+        console.error('Error al generar PDF de nota:', err);
         this.loading = false;
       }
     });

@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
 })
 export class PdfViewComponent implements OnInit, OnDestroy {
   pdfUrl: SafeResourceUrl | null = null;
+  zoomLevel: number = 100;
   private blob: Blob | null = null;
   private objectUrl: string | null = null;
 
@@ -34,8 +35,8 @@ export class PdfViewComponent implements OnInit, OnDestroy {
       // Intento de forzar el nombre usando el constructor File (funciona en algunos navegadores modernos)
       const file = new File([this.blob], filename, { type: 'application/pdf' });
       this.objectUrl = URL.createObjectURL(file);
-      // Disable toolbar and navpanes
-      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.objectUrl + '#toolbar=0&navpanes=0');
+      // Disable toolbar and navpanes, force FitH (Fit Width)
+      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.objectUrl + '#toolbar=0&navpanes=0&view=FitH');
     } else {
       // If no PDF data, go back or home
       this.router.navigate(['/']);
@@ -69,5 +70,19 @@ export class PdfViewComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.location.back();
+  }
+
+  zoomIn() {
+    this.zoomLevel += 25;
+  }
+
+  zoomOut() {
+    if (this.zoomLevel > 25) {
+      this.zoomLevel -= 25;
+    }
+  }
+
+  resetZoom() {
+    this.zoomLevel = 100;
   }
 }

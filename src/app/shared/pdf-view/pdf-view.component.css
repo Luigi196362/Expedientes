@@ -28,14 +28,20 @@
 .actions {
     display: flex;
     gap: 10px;
+    align-items: center;
+    /* Ensure vertical centering of text and buttons */
 }
 
 .pdf-content {
     flex-grow: 1;
-    overflow: hidden;
+    overflow: auto;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    /* Align top so scrolling works naturally */
+    padding: 20px;
+    /* Add some spacing */
+    background-color: #525659;
 }
 
 iframe {

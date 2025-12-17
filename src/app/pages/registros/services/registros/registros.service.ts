@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpConnectionService } from '../../../../core/services/Http/http-connection.service';
 import { Nota_Evolucion } from '../../models/nota-evolucion';
@@ -37,6 +37,16 @@ export class RegistroService {
   guardarHistoria(idPaciente: number, historia_clinica: Historia_clinica): Observable<Historia_clinica> {
     const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Crear/Historia/${idPaciente}`;
     return this.http.post<Historia_clinica>(url, historia_clinica, { headers: this.httpConnection.getDefaultHeaders() });
+  }
+
+  // Obtener PDF de Nota de Evolución
+  obtenerNotaPdf(idNota: number): Observable<HttpResponse<Blob>> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver/Nota/${idNota}/Pdf`;
+    return this.http.get(url, {
+      headers: this.httpConnection.getDefaultHeaders(),
+      responseType: 'blob',
+      observe: 'response'
+    });
   }
 
   // // Exportar registros a PDF

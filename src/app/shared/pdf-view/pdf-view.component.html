@@ -3,8 +3,22 @@
         <button mat-icon-button (click)="goBack()" title="Regresar">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <h2>Visualizador de Reporte</h2>
+        <h2></h2>
         <div class="actions">
+            <!-- Zoom Controls -->
+            <button mat-icon-button (click)="zoomOut()" title="Reducir">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <span style="min-width: 40px; text-align: center;">{{zoomLevel}}%</span>
+            <button mat-icon-button (click)="zoomIn()" title="Aumentar">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button mat-icon-button (click)="resetZoom()" title="Restablecer">
+                <mat-icon>restart_alt</mat-icon>
+            </button>
+
+            <div style="width: 1px; height: 24px; background: #666; margin: 0 10px;"></div>
+
             <button mat-flat-button color="primary" (click)="downloadPdf()">
                 <mat-icon>download</mat-icon> Descargar
             </button>
@@ -15,6 +29,6 @@
     </div>
 
     <div class="pdf-content" *ngIf="pdfUrl">
-        <iframe [src]="pdfUrl" width="100%" height="100%" type="application/pdf"></iframe>
+        <iframe [src]="pdfUrl" [style.width.%]="zoomLevel" height="100%" type="application/pdf"></iframe>
     </div>
 </div>

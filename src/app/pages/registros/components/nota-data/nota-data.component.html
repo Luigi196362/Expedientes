@@ -134,4 +134,7 @@
 
 <div class="form-actions">
     <button mat-raised-button color="warn" routerLink="/layout/pacientes">Regresar</button>
+    <button mat-raised-button color="primary" (click)="generarPdf()" *ngIf="nota">
+        <mat-icon>picture_as_pdf</mat-icon> Generar PDF
+    </button>
 </div>
