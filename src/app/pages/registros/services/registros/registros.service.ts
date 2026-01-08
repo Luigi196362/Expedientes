@@ -49,6 +49,16 @@ export class RegistroService {
     });
   }
 
+  // Obtener PDF de Historia Clinica
+  obtenerHistoriaPdf(idHistoria: number): Observable<HttpResponse<Blob>> {
+    const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Ver/Historia/${idHistoria}/Pdf`;
+    return this.http.get(url, {
+      headers: this.httpConnection.getDefaultHeaders(),
+      responseType: 'blob',
+      observe: 'response'
+    });
+  }
+
   // // Exportar registros a PDF
   // exportar(): Observable<Blob> {
   //   const url = `${this.httpConnection.getBaseUrl()}${this.endpoint}/Exportar`;
