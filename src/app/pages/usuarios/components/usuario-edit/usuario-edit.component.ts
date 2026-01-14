@@ -53,6 +53,19 @@ export class UsuarioEditComponent implements OnInit {
   roles: Roles[] = [];
   facultades = FACULTADES;
 
+  fieldLabels: { [key: string]: string } = {
+    nombre: 'Nombre',
+    curp: 'CURP',
+    rfc: 'RFC',
+    cedulaProfesional: 'Cédula profesional',
+    especialidad: 'Especialidad',
+    telefono: 'Teléfono',
+    rolId: 'Rol',
+    facultad: 'Facultad',
+    pasante: 'Pasante',
+    password: 'Contraseña'
+  };
+
   constructor(private fb: FormBuilder, private dialog: MatDialog, private usuarioService: UsuarioService, private router: Router, private rolService: RolService) {
     this.usuarioForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -99,6 +112,7 @@ export class UsuarioEditComponent implements OnInit {
           this.usuario = data;
           console.log('Usuario cargado para edición api:', this.usuario);
           this.usuarioForm.patchValue(this.usuario);
+          this.usuarioForm.updateValueAndValidity();
         },
         (error) => {
           console.error('Error al obtener usuarios:', error);
@@ -130,26 +144,23 @@ export class UsuarioEditComponent implements OnInit {
   }
 
   onSave(): void {
+    console.log('Formulario válido:', this.usuarioForm.controls['curp'].value);
     if (this.usuarioForm.valid) {
       this.isSaving = true;
 
       const formData = this.usuarioForm.value;
 
-      // Buscamos en el arreglo 'roles' el rol cuyo 'value' (id) coincida con el seleccionado.
-      const selectedRole = this.roles.find(role => role.value === formData.rol);
+      const selectedRole = this.roles.find(role => role.value === formData.rolId);
 
-      // Creamos un objeto para la verificación que muestre el nombre del rol en lugar del id.
       const usuarioParaVerificacion = {
         ...formData,
-        rol: selectedRole ? selectedRole.viewValue : formData.rol
+        rol: selectedRole ? selectedRole.viewValue : formData.rolId
       };
 
-      // Abrimos el diálogo de verificación pasando el objeto transformado.
       const dialogRef = this.dialog.open(UsuarioDialogEditComponent, { data: { usuario: usuarioParaVerificacion } });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          // Si el usuario confirma, se utiliza el objeto original (que contiene el id del rol) para actualizar.
           const nuevoUsuario: Usuario = { ...formData };
 
           if (this.usuario && this.usuario.id) {
@@ -180,8 +191,28 @@ export class UsuarioEditComponent implements OnInit {
         }
       });
     } else {
+      const invalidControls = [];
+      const controls = this.usuarioForm.controls;
+      for (const name in controls) {
+        if (controls[name].invalid) {
+          let label = this.fieldLabels[name] || name;
+          if (controls[name].errors?.['required']) {
+            label += ' (Requerido)';
+          } else if (controls[name].errors?.['minlength'] || controls[name].errors?.['maxlength']) {
+            label += ' (Longitud incorrecta)';
+          } else if (controls[name].errors?.['pattern']) {
+            label += ' (Formato inválido)';
+          }
+          invalidControls.push(label);
+        }
+      }
+      console.log('Campos inválidos:', invalidControls);
+
       this.dialog.open(ErrorDialogComponent, {
-        data: { message: 'Formulario inválido' }
+        data: {
+          message: 'Formulario inválido. Por favor revise los siguientes campos:',
+          details: invalidControls
+        }
       });
       this.isSaving = false;
       console.log('Formulario inválido');

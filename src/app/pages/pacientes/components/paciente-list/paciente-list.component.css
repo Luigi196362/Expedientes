@@ -41,7 +41,7 @@ table {
 
 .actions {
     display: grid;
-    grid-template-columns: 8fr 1fr 1fr;
+    grid-template-columns: 1fr auto auto;
     gap: 10px;
     justify-items: center;
     margin-bottom: 20px;
@@ -51,6 +51,22 @@ table {
     width: 90%;
     height: 50%;
     margin-top: 1vh;
+}
+
+.btn-stats {
+    height: 50%;
+    margin-top: 1vh;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-stats mat-icon {
+    font-size: 35px;
+    width: fit-content;
+    height: fit-content;
+    line-height: normal;
 }
 
 .table-actions {

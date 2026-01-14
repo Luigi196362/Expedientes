@@ -45,6 +45,28 @@ export class CrearNotasEvolucionComponent implements OnInit {
   nameUser: string = "";
   idPaciente: number = 0;
   nombrePaciente: string = "";
+
+  fieldLabels: { [key: string]: string } = {
+    motivo_consulta: 'Motivo de consulta',
+    interrogatorio: 'Interrogatorio',
+    padecimiento_actual: 'Padecimiento actual',
+    exploracion_fisica: 'Exploración física',
+    peso: 'Peso',
+    talla: 'Talla',
+    imc: 'IMC',
+    tension_arterial: 'Tensión arterial',
+    frecuencia_cardiaca: 'Frecuencia cardiaca',
+    frecuencia_respiratoria: 'Frecuencia respiratoria',
+    temperatura: 'Temperatura',
+    saturacion: 'Saturación',
+    glicemia: 'Glicemia',
+    hemoglobina: 'Hemoglobina',
+    hemotipo: 'Hemotipo',
+    diagnostico: 'Diagnóstico',
+    tratamiento: 'Tratamiento',
+    plan_tratamiento: 'Plan de tratamiento',
+    observaciones: 'Observaciones'
+  };
   ngOnInit(): void {
     const state = window.history.state;
     if (state.paciente) {
@@ -189,13 +211,22 @@ export class CrearNotasEvolucionComponent implements OnInit {
 
     } else {
       // Mostrar diálogo de error si el formulario no es válido
-      //const dialogRef = this.dialog.open(VerificarPacienteComponent, { data: { paciente: this.pacienteForm.value } });
-      console.log(this.notaForm.value);
+      const invalidControls = [];
+      const controls = this.notaForm.controls;
+      for (const name in controls) {
+        if (controls[name].invalid) {
+          invalidControls.push(this.fieldLabels[name] || name);
+        }
+      }
+      console.log('Campos inválidos:', invalidControls);
+
       this.dialog.open(ErrorDialogComponent, {
-        data: { message: 'Formulario inválido' }
+        data: {
+          message: 'Formulario inválido. Por favor revise los siguientes campos:',
+          details: invalidControls
+        }
       });
       this.isSaving = false;  // Desactivar la bandera en caso de error
-      console.log('Formulario inválido');
     }
   }
 

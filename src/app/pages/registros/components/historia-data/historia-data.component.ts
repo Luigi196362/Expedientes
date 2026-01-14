@@ -78,27 +78,31 @@ export class HistoriaDataComponent implements OnInit {
     });
   }
 
-  imprimirPdf() {
-    const id = this.registroIdInput || (this.historia ? this.historia.id : null);
-    if (!id) {
-      console.error('No ID available for PDF generation');
-      return;
-    }
 
-    this.registroService.obtenerHistoriaPdf(id).subscribe({
-      next: (response: HttpResponse<Blob>) => {
+  generarPdf() {
+    if (!this.historia || !this.historia.id) return;
+
+    this.loading = true;
+    this.registroService.obtenerHistoriaPdf(this.historia.id).subscribe({
+      next: (response) => {
+        this.loading = false;
         const blob = response.body;
-        const filename = this.getFilenameFromHeaders(response.headers) || 'historia_clinica.pdf';
-
         if (blob) {
+          const contentDisposition = response.headers.get('content-disposition');
+          let filename = 'nota.pdf';
+          if (contentDisposition) {
+            const matches = /filename="?([^"]+)"?/.exec(contentDisposition);
+            if (matches && matches[1]) {
+              filename = matches[1];
+            }
+          }
           this.pdfDataService.setPdfData(blob, this.router.url, filename);
           this.router.navigate(['/pdf-view']);
-        } else {
-          console.error('El blob del PDF es nulo');
         }
       },
-      error: (error) => {
-        console.error('Error al obtener el PDF:', error);
+      error: (err) => {
+        console.error('Error al generar PDF de nota:', err);
+        this.loading = false;
       }
     });
   }

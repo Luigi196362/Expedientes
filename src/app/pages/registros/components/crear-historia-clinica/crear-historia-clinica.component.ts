@@ -40,6 +40,39 @@ export class CrearHistoriaClinicaComponent implements OnInit {
   historiaForm: FormGroup;
   isSaving: boolean = false;
   nameUser: string = "";
+  hemotipo: string = "";
+
+  fieldLabels: { [key: string]: string } = {
+    motivo_consulta: 'Motivo de consulta',
+    interrogatorio: 'Interrogatorio',
+    padecimiento_actual: 'Padecimiento actual',
+    exploracion_fisica: 'Exploración física',
+    peso: 'Peso',
+    talla: 'Talla',
+    imc: 'IMC',
+    tension_arterial: 'Tensión arterial',
+    frecuencia_cardiaca: 'Frecuencia cardiaca',
+    frecuencia_respiratoria: 'Frecuencia respiratoria',
+    temperatura: 'Temperatura',
+    saturacion: 'Saturación',
+    glicemia: 'Glicemia',
+    hemoglobina: 'Hemoglobina',
+    hemotipo: 'Hemotipo',
+    antecedentes_heredo_familiares: 'Antecedentes heredofamiliares',
+    antecedentes_no_patologicos: 'Antecedentes no patológicos',
+    antecedentes_patologicos: 'Antecedentes patológicos',
+    antecedentes_quirurgicos: 'Antecedentes quirúrgicos',
+    medicamentos_actuales: 'Medicamentos actuales',
+    alergias: 'Alergias',
+    antecedentes_gineco_obstetricos: 'Antecedentes gineco-obstétricos',
+    cancer_prostata: 'Cáncer de próstata',
+    vacunas: 'Vacunas',
+    adicciones: 'Adicciones',
+    diagnostico: 'Diagnóstico',
+    tratamiento: 'Tratamiento',
+    plan_tratamiento: 'Plan de tratamiento',
+    observaciones: 'Observaciones'
+  };
   idPaciente: number = 0;
   nombrePaciente: string = "";
   sexoPaciente: string = "";
@@ -215,13 +248,17 @@ export class CrearHistoriaClinicaComponent implements OnInit {
       const controls = this.historiaForm.controls;
       for (const name in controls) {
         if (controls[name].invalid) {
-          invalidControls.push(name);
+          invalidControls.push(this.fieldLabels[name] || name);
         }
       }
       console.log('Campos inválidos:', invalidControls);
 
+
       this.dialog.open(ErrorDialogComponent, {
-        data: { message: 'Formulario inválido. Por favor revise los campos: ' + invalidControls.join(', ') }
+        data: {
+          message: 'Formulario inválido. Por favor revise los siguientes campos:',
+          details: invalidControls
+        }
       });
       this.isSaving = false;  // Desactivar la bandera en caso de error
     }

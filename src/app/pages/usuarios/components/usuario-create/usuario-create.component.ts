@@ -53,7 +53,21 @@ export class UsuarioCreateComponent implements OnInit {
   roles: Roles[] = [];
   facultades = FACULTADES;
 
+
   hide = signal(true);
+
+  fieldLabels: { [key: string]: string } = {
+    nombre: 'Nombre',
+    curp: 'CURP',
+    rfc: 'RFC',
+    cedulaProfesional: 'Cédula profesional',
+    especialidad: 'Especialidad',
+    telefono: 'Teléfono',
+    rolId: 'Rol',
+    facultad: 'Facultad',
+    pasante: 'Pasante',
+    password: 'Contraseña'
+  };
 
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private rolService: RolService, private usuarioService: UsuarioService, private router: Router) {
@@ -145,8 +159,28 @@ export class UsuarioCreateComponent implements OnInit {
 
     } else {
       // Mostrar diálogo de error si el formulario no es válido
+      const invalidControls = [];
+      const controls = this.usuarioForm.controls;
+      for (const name in controls) {
+        if (controls[name].invalid) {
+          let label = this.fieldLabels[name] || name;
+          if (controls[name].errors?.['required']) {
+            label += ' (Requerido)';
+          } else if (controls[name].errors?.['minlength'] || controls[name].errors?.['maxlength']) {
+            label += ' (Longitud incorrecta)';
+          } else if (controls[name].errors?.['pattern']) {
+            label += ' (Formato inválido)';
+          }
+          invalidControls.push(label);
+        }
+      }
+      console.log('Campos inválidos:', invalidControls);
+
       this.dialog.open(ErrorDialogComponent, {
-        data: { message: 'Formulario inválido' }
+        data: {
+          message: 'Formulario inválido. Por favor revise los siguientes campos:',
+          details: invalidControls
+        }
       });
       this.isSaving = false;  // Desactivar la bandera en caso de error
       console.log('Formulario inválido');

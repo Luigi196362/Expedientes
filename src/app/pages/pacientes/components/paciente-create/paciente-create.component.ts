@@ -61,6 +61,47 @@ export class PacienteCreateComponent {
   postalCodeError_responsable: string | null = null;
   facultades = FACULTADES;
 
+  fieldLabels: { [key: string]: string } = {
+    tipo_paciente: 'Tipo de paciente',
+    curp: 'CURP',
+    nombre: 'Nombre',
+    fecha_nacimiento: 'Fecha de nacimiento',
+    sexo: 'Sexo',
+    estado_civil: 'Estado civil',
+    origen: 'Origen',
+    telefono: 'Teléfono',
+    email: 'Correo electrónico',
+    calle: 'Calle',
+    numero_exterior: 'Número exterior',
+    numero_interior: 'Número interior',
+    colonia: 'Colonia',
+    cp: 'Código postal',
+    municipio: 'Municipio',
+    entidad_federativa: 'Entidad federativa',
+    nombre_responsable: 'Nombre del responsable',
+    parentesco_responsable: 'Parentesco del responsable',
+    telefono_responsable: 'Teléfono del responsable',
+    calle_responsable: 'Calle del responsable',
+    numero_exterior_responsable: 'Número exterior del responsable',
+    numero_interior_responsable: 'Número interior del responsable',
+    colonia_responsable: 'Colonia del responsable',
+    cp_responsable: 'Código postal del responsable',
+    municipio_responsable: 'Municipio del responsable',
+    entidad_federativa_responsable: 'Entidad federativa del responsable',
+    matricula: 'Matrícula',
+    facultad: 'Facultad',
+    programa_educativo: 'Programa educativo',
+    semestre: 'Semestre',
+    grupo: 'Grupo',
+    numero_personal: 'Número de personal',
+    puesto: 'Puesto',
+    tipo_contratacion: 'Tipo de contratación',
+    nss: 'NSS',
+    religion: 'Religión',
+    escolaridad: 'Escolaridad',
+    lengua_indigena: 'Lengua indígena'
+  };
+
   constructor(private fb: FormBuilder, private dialog: MatDialog, private pacienteSevice: PacienteService, private router: Router, private postalCodeService: PostalCodeService) {
     this.pacienteForm = this.fb.group({
       // Identificación
@@ -282,12 +323,32 @@ export class PacienteCreateComponent {
 
     } else {
       // Mostrar diálogo de error si el formulario no es válido
-      //const dialogRef = this.dialog.open(VerificarPacienteComponent, { data: { paciente: this.pacienteForm.value } });
+      const invalidControls = [];
+      const controls = this.pacienteForm.controls;
+      for (const name in controls) {
+        if (controls[name].invalid) {
+          let label = this.fieldLabels[name] || name;
+          if (controls[name].errors?.['required']) {
+            label += ' (Requerido)';
+          } else if (controls[name].errors?.['minlength'] || controls[name].errors?.['maxlength']) {
+            label += ' (Longitud incorrecta)';
+          } else if (controls[name].errors?.['pattern']) {
+            label += ' (Formato inválido)';
+          } else if (controls[name].errors?.['email']) {
+            label += ' (Email inválido)';
+          }
+          invalidControls.push(label);
+        }
+      }
+      console.log('Campos inválidos:', invalidControls);
+
       this.dialog.open(ErrorDialogComponent, {
-        data: { message: 'Formulario inválido' }
+        data: {
+          message: 'Formulario inválido. Por favor revise los siguientes campos:',
+          details: invalidControls
+        }
       });
       this.isSaving = false;  // Desactivar la bandera en caso de error
-      console.log('Formulario inválido');
     }
   }
 

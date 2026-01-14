@@ -58,6 +58,12 @@ export class RolCreateComponent {
     { recurso: "Roles", id: 4, acciones: this.acciones },
   ];
 
+
+  fieldLabels: { [key: string]: string } = {
+    nombre: 'Nombre',
+    descripcion: 'Descripción'
+  };
+
   constructor(private fb: FormBuilder, private dialog: MatDialog, private rolService: RolService, private router: Router) {
     this.rolForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -146,8 +152,24 @@ export class RolCreateComponent {
         }
       });
     } else {
+      const invalidControls = [];
+      const controls = this.rolForm.controls;
+      for (const name in controls) {
+        if (controls[name].invalid) {
+          let label = this.fieldLabels[name] || name;
+          if (controls[name].errors?.['required']) {
+            label += ' (Requerido)';
+          }
+          invalidControls.push(label);
+        }
+      }
+      console.log('Campos inválidos:', invalidControls);
+
       this.dialog.open(ErrorDialogComponent, {
-        data: { message: 'Formulario inválido' }
+        data: {
+          message: 'Formulario inválido. Por favor revise los siguientes campos:',
+          details: invalidControls
+        }
       });
       this.isSaving = false;
       console.log('Formulario inválido');

@@ -3,12 +3,6 @@
         <h2>Historia Clínica</h2>
     </div> -->
 
-    <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
-        <button mat-raised-button color="primary" (click)="imprimirPdf()">
-            <mat-icon>print</mat-icon>
-            Imprimir
-        </button>
-    </div>
 
     <div *ngIf="historia; else loadingOrError">
         <mat-tab-group animationDuration="0s" color="accent">
@@ -215,4 +209,7 @@
 
 <div class="form-actions">
     <button mat-raised-button color="warn" routerLink="/layout/pacientes">Regresar</button>
+    <button mat-raised-button color="primary" (click)="generarPdf()" *ngIf="historia">
+        <mat-icon>picture_as_pdf</mat-icon> Generar PDF
+    </button>
 </div>

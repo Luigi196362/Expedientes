@@ -4,11 +4,14 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Juan Pérez" #input>
   </mat-form-field>
 
+  <button [disabled]="!authService.tienePermiso('pacientes', 'Estadisticas')" mat-raised-button color="accent"
+    class="btn-stats" routerLink="estadisticas">
+    <mat-icon>bar_chart</mat-icon>
+  </button>
+
   <button [disabled]="!authService.tienePermiso('pacientes', 'Crear')" mat-raised-button color="accent" class="bar"
     routerLink="crear">Crear paciente</button>
 
-  <button [disabled]="!authService.tienePermiso('pacientes', 'Estadisticas')" mat-raised-button color="accent"
-    class="bar" routerLink="estadisticas">Estadísticas</button>
 </div>
 
 <div class="mat-elevation-z8">
