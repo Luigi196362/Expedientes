@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AppConfigService } from '../app-config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpConnectionService {
-  private readonly BASE_URL = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private appConfigService: AppConfigService
+  ) { }
 
   getBaseUrl(): string {
-    return this.BASE_URL;
+    return this.appConfigService.apiBaseUrl;
   }
 
   getDefaultHeaders(): HttpHeaders {

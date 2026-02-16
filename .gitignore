@@ -49,3 +49,6 @@ Thumbs.db
 !api/jre
 /api/jre/*
 !api/jre/.gitkeep
+
+/src/environments/environment.prod.ts
+/src/environments/environment.ts

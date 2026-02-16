@@ -21,7 +21,7 @@ module.exports = {
         authors: 'Universidad Veracruzana - Luis Enrique Romero Pérez',
         description: 'Gestión de expedientes médicos',
         setupIcon: "./src/assets/img/UvSaludV3.ico",
-        iconUrl: "https://firebasestorage.googleapis.com/v0/b/paradigmas-luigi196362.appspot.com/o/javascript%2Fimages%2FUvSalud.ico?alt=media&token=57ef11ed-ffea-42f4-a9e7-7e059e15c9c9",
+        iconUrl: "https://raw.githubusercontent.com/Luigi196362/Expedientes/c5dcbfbffc81fb53336d31e4256b064441689374/src/assets/img/UvSaludV3.ico",
         setupShortcut: true,
       },
     },

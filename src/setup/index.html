@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración Inicial - Expedientes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <img src="../assets/img/UvSaludV3.png" alt="Logo" class="logo">
+                <h1>Bienvenido</h1>
+                <p>Por favor, configura tus credenciales de administrador para continuar.</p>
+            </div>
+
+            <form id="setupForm">
+                <div class="form-group">
+                    <label for="DBhost">Host de la Base de Datos</label>
+                    <input type="text" id="DBhost" name="DBhost" required value="localhost">
+                </div>
+
+                <div class="form-group">
+                    <label for="DBport">Puerto</label>
+                    <input type="number" id="DBport" name="DBport" required value="5432">
+                </div>
+
+                <div class="form-group">
+                    <label for="DBname">Nombre de la Base de Datos</label>
+                    <input type="text" id="DBname" name="DBname" required value="ExpedientesDB">
+                </div>
+
+                <div class="form-group">
+                    <label for="DBuser">Usuario</label>
+                    <input type="text" id="DBuser" name="DBuser" required value="postgres">
+                </div>
+
+                <div class="form-group">
+                    <label for="DBpassword">Contraseña</label>
+                    <input type="password" id="DBpassword" name="DBpassword" required value="123456">
+                </div>
+
+                <div class="form-group">
+                    <label for="apiBaseUrl">URL de la API</label>
+                    <input type="text" id="apiBaseUrl" name="apiBaseUrl" required value="http://localhost:8080">
+                </div>
+
+                <button type="submit" id="submitBtn">Guardar Configuración</button>
+            </form>
+            <div id="message" class="message"></div>
+        </div>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+
+</html>

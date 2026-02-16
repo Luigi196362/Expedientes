@@ -1,8 +1,79 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { spawn, execFile, exec } = require('child_process');
 const os = require('os');
+
+// UPDATE: createSetupWindow para usar la ruta de distribución (dist) e IPC
+// Esta función crea la ventana de configuración inicial si no existe config.json
+function createSetupWindow() {
+  const win = new BrowserWindow({
+    width: 600,
+    height: 700,
+    resizable: false,
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true
+    }
+  });
+
+  win.setMenuBarVisibility(false);
+
+  if (process.env.NODE_ENV === 'development') {
+    // En desarrollo, carga desde el servidor de Angular
+    win.loadURL('http://localhost:4200/setup/index.html');
+    console.log('[MAIN] Loading setup from: http://localhost:4200/setup/index.html');
+  } else {
+    // Usar la ruta donde angular.json copia la carpeta de setup
+    // En prod: resources/app/dist/expedientes/browser/setup/index.html
+    const setupPath = path.join(__dirname, 'dist', 'expedientes', 'browser', 'setup', 'index.html');
+    console.log('[MAIN] Loading setup from:', setupPath);
+    win.loadFile(setupPath);
+  }
+}
+
+// Handler IPC para guardar la configuración
+// Esto se llama desde el renderer.js de la ventana de setup
+ipcMain.handle('save-config', async (event, config) => {
+  try {
+    // Ruta donde se guardará el archivo de configuración (ej: AppData/Roaming/Expedientes/config.json)
+    const configPath = path.join(app.getPath('userData'), 'config.json');
+
+    // Escribir el archivo config.json con los datos recibidos
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+    console.log('[MAIN] Config saved to:', configPath);
+
+    // Cerrar todas las ventanas (en este caso, la de setup)
+    const wins = BrowserWindow.getAllWindows();
+    wins.forEach(w => w.close());
+
+    // Iniciar el backend (Java) y crear la ventana principal de la aplicación
+    startBackend();
+    createWindow();
+
+    return { success: true };
+  } catch (err) {
+    console.error('[MAIN] Error saving config:', err);
+    return { success: false, error: err.message };
+  }
+});
+
+// Handler IPC para obtener la configuración
+ipcMain.handle('get-config', async (event) => {
+  try {
+    const configPath = path.join(app.getPath('userData'), 'config.json');
+    if (fs.existsSync(configPath)) {
+      const data = fs.readFileSync(configPath, 'utf-8');
+      return JSON.parse(data);
+    }
+    return null;
+  } catch (err) {
+    console.error('[MAIN] Error reading config:', err);
+    return null;
+  }
+});
+
 
 function handleSquirrelEvent() {
   if (process.platform !== 'win32') return false;
@@ -41,6 +112,19 @@ function handleSquirrelEvent() {
     case '--squirrel-uninstall':
       console.log('[SQUIRREL] Desinstalación detectada. Eliminando acceso directo...');
       spawnUpdate(['--removeShortcut', exeName]);
+
+      // Eliminar el archivo de configuración al desinstalar
+      try {
+        const userDataPath = app.getPath('userData');
+        const configPath = path.join(userDataPath, 'config.json');
+        if (fs.existsSync(configPath)) {
+          fs.unlinkSync(configPath);
+          console.log('[SQUIRREL] Configuración eliminada.');
+        }
+      } catch (e) {
+        console.error('[SQUIRREL] Error eliminando configuración:', e);
+      }
+
       setTimeout(() => app.quit(), 1000);
       return true;
 
@@ -50,10 +134,7 @@ function handleSquirrelEvent() {
       return true;
 
     case '--squirrel-firstrun':
-      // Abrir la UI en firstrun, cambiar a `return false;`
-      console.log('[SQUIRREL] First run - no iniciar automáticamente.');
-      setTimeout(() => app.quit(), 500);
-      return true;
+      return false;
 
     default:
       return false;
@@ -133,7 +214,8 @@ function startBackend() {
   };
 
   try {
-    javaProcess = spawn(javaBin, ['-jar', jarPath, '--spring.profiles.active=desktop'], spawnOpts);
+    const configPath = path.join(app.getPath('userData'), 'config.json');
+    javaProcess = spawn(javaBin, ['-jar', jarPath, '--spring.profiles.active=desktop', `--app.config.path=${configPath}`], spawnOpts);
   } catch (e) {
     console.error('[APP] Error al iniciar backend:', e.message);
     return false;
@@ -232,18 +314,19 @@ function createWindow() {
   // OR we rely on window-all-closed to stop it.
 }
 
-// App lifecycle
 app.whenReady().then(() => {
-  const startedBackend = startBackend();
-  if (!startedBackend) {
-    console.warn('[APP] No se pudo iniciar backend. La aplicación continuará, pero puede fallar.');
-  }
-  createWindow();
+  const configPath = path.join(app.getPath('userData'), 'config.json');
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
+  if (!fs.existsSync(configPath)) {
+    createSetupWindow();
+  } else {
+    startBackend();
+    createWindow();
+  }
 });
+
+
+
 
 app.on('before-quit', () => {
   stopBackend(true);
