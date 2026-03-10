@@ -49,7 +49,7 @@ ipcMain.handle('save-config', async (event, config) => {
     wins.forEach(w => w.close());
 
     // Iniciar el backend (Java) y crear la ventana principal de la aplicación
-    startBackend();
+    await startBackend();
     createWindow();
 
     return { success: true };
@@ -181,58 +181,59 @@ function resolveJarPath() {
 }
 
 function startBackend() {
-  if (javaProcess) {
-    console.log('[APP] Backend ya está corriendo.');
-    return true;
-  }
 
-  const jarFile = 'api-expedientes-0.0.1-SNAPSHOT.jar';
-  const jarPath = app.isPackaged
-    ? path.join(process.resourcesPath, 'api', jarFile)
-    : path.join(__dirname, 'api', jarFile);
+  return new Promise((resolve, reject) => {
 
-  const javaBin = app.isPackaged
-    ? path.join(process.resourcesPath, 'api', 'jre', 'bin', 'java.exe')
-    : path.join(__dirname, 'api', 'jre', 'bin', 'java.exe');
+    if (javaProcess) {
+      console.log('[APP] Backend ya está corriendo.');
+      resolve(true);
+      return;
+    }
 
-  console.log('[APP] Ruta Java embebido ->', javaBin);
-  console.log('[APP] Ruta JAR ->', jarPath);
+    const jarFile = 'api-expedientes-0.0.1-SNAPSHOT.jar';
 
-  if (!fs.existsSync(javaBin)) {
-    console.error('[APP] ERROR: No se encontró el Java embebido en', javaBin);
-    return false;
-  }
-  if (!fs.existsSync(jarPath)) {
-    console.error('[APP] ERROR: No se encontró el JAR en', jarPath);
-    return false;
-  }
+    const jarPath = app.isPackaged
+      ? path.join(process.resourcesPath, 'api', jarFile)
+      : path.join(__dirname, 'api', jarFile);
 
-  const spawnOpts = {
-    detached: false,
-    stdio: ['ignore', 'pipe', 'pipe'],
-    shell: false
-  };
+    const javaBin = app.isPackaged
+      ? path.join(process.resourcesPath, 'api', 'jre', 'bin', 'java.exe')
+      : path.join(__dirname, 'api', 'jre', 'bin', 'java.exe');
 
-  try {
     const configPath = path.join(app.getPath('userData'), 'config.json');
-    javaProcess = spawn(javaBin, ['-jar', jarPath, '--spring.profiles.active=desktop', `--app.config.path=${configPath}`], spawnOpts);
-  } catch (e) {
-    console.error('[APP] Error al iniciar backend:', e.message);
-    return false;
-  }
 
-  javaPid = javaProcess.pid;
-  console.log('[APP] Backend iniciado con PID:', javaPid);
+    javaProcess = spawn(
+      javaBin,
+      ['-jar', jarPath, '--spring.profiles.active=desktop', `--app.config.path=${configPath}`],
+      {
+        detached: false,
+        stdio: ['ignore', 'pipe', 'pipe'],
+        shell: false
+      }
+    );
 
-  javaProcess.stdout.on('data', d => process.stdout.write(`[API] ${d}`));
-  javaProcess.stderr.on('data', d => process.stderr.write(`[API ERROR] ${d}`));
-  javaProcess.on('close', (c, s) => {
-    console.log(`[APP] Backend cerrado (code=${c}, signal=${s})`);
-    javaProcess = null;
-    javaPid = null;
+    javaPid = javaProcess.pid;
+    console.log('[APP] Backend iniciado con PID:', javaPid);
+
+    javaProcess.stdout.on('data', (data) => {
+
+      const log = data.toString();
+      process.stdout.write(`[API] ${log}`);
+
+      // Cuando Spring Boot terminó de iniciar
+      if (log.includes('Started')) {
+        console.log('[APP] Backend listo.');
+        resolve(true);
+      }
+
+    });
+
+    javaProcess.stderr.on('data', d => process.stderr.write(`[API ERROR] ${d}`));
+
+    javaProcess.on('error', reject);
+
   });
 
-  return true;
 }
 
 
@@ -314,16 +315,23 @@ function createWindow() {
   // OR we rely on window-all-closed to stop it.
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+
   const configPath = path.join(app.getPath('userData'), 'config.json');
 
   if (!fs.existsSync(configPath)) {
+
     createSetupWindow();
+
   } else {
-    startBackend();
+
+    await startBackend();
     createWindow();
+
   }
+
 });
+
 
 
 
